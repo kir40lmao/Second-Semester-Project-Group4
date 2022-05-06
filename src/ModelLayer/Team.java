@@ -1,5 +1,5 @@
 package ModelLayer;
 
-public class Test {
+public class Team {
 
 }
