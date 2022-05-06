@@ -16,6 +16,9 @@ public class Tournament {
 		this.date = date;
 		this.venue = venue;
 		this.tournamentName = tournamentName;
+//	isInProgress is checking if it's in progress or ongoing and isFinished is checking if the event has been concluded.
+		this.isInProgress = isInProgress;
+		this.isFinished = isFinished;
 	}
 
 	public int getTournamentID() {
