@@ -1,5 +1,5 @@
 package DatabaseLayer;
 
-public class TournamentDAO {
+public class TournamentDAO implements TournamentDAOIF{
 
 }
