@@ -2,16 +2,22 @@ package ModelLayer;
 
 import java.sql.Date;
 
+
 public class Tournament {
 	
 	private int tournamentID;
-	private Date date;
+	private String dateString;
+	// we are storing date in a string for now and when we add it to the database we make it a Date.
+	private String date;
 	private String venue;
 	private String tournamentName;
 	private boolean isInProgress;
 	private boolean isFinished;
 	
-	private Tournament(int tournamentID, Date date, String venue, String tournamentName) {
+	public Tournament() {
+		
+	}
+	public Tournament(int tournamentID, String date, String venue, String tournamentName) {
 		this.tournamentID = tournamentID;
 		this.date = date;
 		this.venue = venue;
@@ -29,11 +35,11 @@ public class Tournament {
 		this.tournamentID = tournamentID;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
