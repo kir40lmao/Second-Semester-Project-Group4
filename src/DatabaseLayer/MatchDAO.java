@@ -41,6 +41,7 @@ public class MatchDAO implements MatchDAOIF{
 
 	@Override
 	public Match getMatchDetails(int matchID) {
+		Match match;
 		try {
 			int teamOneID, teamTwoID, teamOneScore, teamTwoScore;
 			Date date;
@@ -91,16 +92,16 @@ public class MatchDAO implements MatchDAOIF{
 				count++;
 			}
 			
-			Match match = new Match(matchID, teamOneID, teamTwoID, teamOneScore, teamTwoScore, date, playerStats);
+			match = new Match(matchID, teamOneID, teamTwoID, teamOneScore, teamTwoScore, date, playerStats);
 		     
 		} catch (SQLException ex) {
 		    ex.printStackTrace();
 		}
-		return null;
+		return match;
 	}
 
 	@Override
-	public void updateMatchDetails(int matchID) {
+	public void updateMatchDetails(int matchID, int teamOneScore, int teamTwoScore) {
 		
 		
 	}

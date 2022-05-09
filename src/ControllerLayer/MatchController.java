@@ -17,8 +17,8 @@ public class MatchController {
 		return match;
 	}
 	
-	public void updateMatchDetails(int matchID) {
-		mdao.updateMatchDetails(matchID);
+	public void updateMatchDetails(int matchID, int teamOneScore, int teamTwoScore) {
+		mdao.updateMatchDetails(matchID, teamOneScore, teamTwoScore);
 		
 	}
 
