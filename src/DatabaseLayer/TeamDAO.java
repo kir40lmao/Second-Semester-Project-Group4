@@ -37,7 +37,7 @@ public class TeamDAO implements TeamDAOIF{
 	@Override
 	public void findTeamByID(int teamID) {
 		try {	
-			String sql = "SELECT * FROM Item WHERE ID = '"+teamID+"'";
+			String sql = "SELECT * FROM Item WHERE ID = '"+teamID+"'"; //change to name maybe
 			 
 			Statement statement = con.createStatement();
 			ResultSet result = statement.executeQuery(sql);
@@ -63,7 +63,7 @@ public class TeamDAO implements TeamDAOIF{
 	}
 
 	@Override
-	public void findAvailiableTeams() {
+	public void getElidgeable() {
 		//higher order function + lambda could be used here;
 		//maybe change to getElidgeable(Teams with at least 5 players) since teams will always be available
 	}
