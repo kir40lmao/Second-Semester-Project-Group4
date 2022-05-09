@@ -1,32 +1,40 @@
 package ModelLayer;
 
-import java.sql.Date;
-
-
 public class Tournament {
 	
+	// We are storing date in a string for now and when we add it to the database we make it a Date.
+	
 	private int tournamentID;
-	private String dateString;
-	// we are storing date in a string for now and when we add it to the database we make it a Date.
 	private String date;
 	private String venue;
 	private String tournamentName;
-	private boolean isInProgress;
-	private boolean isFinished;
+	private String status;
 	
-	public Tournament() {
-		
+	// We use this constructor in the DAO read methods.
+	
+	public Tournament() {	
+	
 	}
-	public Tournament(int tournamentID, String date, String venue, String tournamentName) {
+	
+	// We use this constructor when creating a tournament.
+	
+	public Tournament(String tournamentName, String date) {
+		this.tournamentName = tournamentName;
+		this.date = date;
+	}
+	
+	// We use this constructor when updating the tournament.
+	
+	public Tournament(int tournamentID, String date, String venue, String tournamentName, String status) {
 		this.tournamentID = tournamentID;
 		this.date = date;
 		this.venue = venue;
 		this.tournamentName = tournamentName;
-//	isInProgress is checking if it's in progress or ongoing and isFinished is checking if the event has been concluded.
-		this.isInProgress = isInProgress;
-		this.isFinished = isFinished;
+		this.status = status;
 	}
-
+	
+	// Getters and setters.
+	
 	public int getTournamentID() {
 		return tournamentID;
 	}
@@ -58,20 +66,12 @@ public class Tournament {
 	public void setTournamentName(String tournamentName) {
 		this.tournamentName = tournamentName;
 	}
-
-	public boolean isInProgress() {
-		return isInProgress;
+	
+	public String getStatus() {
+		return status;
 	}
-
-	public void setInProgress(boolean isInProgress) {
-		this.isInProgress = isInProgress;
-	}
-
-	public boolean isFinished() {
-		return isFinished;
-	}
-
-	public void setFinished(boolean isFinished) {
-		this.isFinished = isFinished;
+	
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }
