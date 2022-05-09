@@ -1,11 +1,11 @@
 package DatabaseLayer;
 
-import java.sql.Date;
+
+import ModelLayer.Match;
 
 public interface MatchDAOIF {
-	void createMatch(int teamOneID,int teamTwoID,Date date);
-	void getMatchDetails(int matchID);
+	void createMatch(Match match);
+	Match getMatchDetails(int matchID);
 	void updateMatchDetails(int matchID);
-	void setMatchWinner(int winningTeamID);
-	void setMatchDetails(int playerKills,int playerDeaths);
+	void setMatchDetails(int matchID, int playerID, int playerKills, int playerDeaths);
 }

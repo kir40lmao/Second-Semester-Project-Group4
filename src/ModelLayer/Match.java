@@ -5,72 +5,85 @@ import java.sql.Date;
 public class Match {
 	int matchID, teamOneID, teamTwoID, teamOneScore, teamTwoScore;
 	Date date;
+	long dateMilis;
 	Integer[][] playerStats;
 	
-	public Match(int teamOneID, int teamTwoID, Date date) {
+	public Match(int teamOneID, int teamTwoID) {
 		//this.matchID = we will generate this somehow
 		this.teamOneID = teamOneID;
 		this.teamTwoID = teamTwoID;
-		this.date = date;
+		this.dateMilis = date.getTime();
 		this.teamOneScore = 0;
 		this.teamTwoScore = 0;
 		playerStats = new Integer[10][3];
 	}
-
 	
-	int getMatchID() {
+	
+	public Match(int matchID, int teamOneID, int teamTwoID, int teamOneScore, int teamTwoScore, Date date, Integer[][] playerStats) {
+		this.matchID = matchID;
+		this.teamOneID = teamOneID;
+		this.teamTwoID = teamTwoID;
+		this.teamOneScore = teamOneScore;
+		this.teamTwoScore = teamTwoScore;
+		this.date = date;
+		this.playerStats = playerStats;
+	
+	}
+
+
+	public int getMatchID() {
 		return matchID;
 	}
 
-	void setMatchID(int matchID) {
+	public void setMatchID(int matchID) {
 		this.matchID = matchID;
 	}
 
-	int getTeamOneID() {
+	public int getTeamOneID() {
 		return teamOneID;
 	}
 
-	void setTeamOneID(int teamOneID) {
+	public void setTeamOneID(int teamOneID) {
 		this.teamOneID = teamOneID;
 	}
 
-	int getTeamTwoID() {
+	public int getTeamTwoID() {
 		return teamTwoID;
 	}
 
-	void setTeamTwoID(int teamTwoID) {
+	public void setTeamTwoID(int teamTwoID) {
 		this.teamTwoID = teamTwoID;
 	}
 
-	int getTeamOneScore() {
+	public int getTeamOneScore() {
 		return teamOneScore;
 	}
 
-	void setTeamOneScore(int teamOneScore) {
+	public void setTeamOneScore(int teamOneScore) {
 		this.teamOneScore = teamOneScore;
 	}
 
-	int getTeamTwoScore() {
+	public int getTeamTwoScore() {
 		return teamTwoScore;
 	}
 
-	void setTeamTwoScore(int teamTwoScore) {
+	public void setTeamTwoScore(int teamTwoScore) {
 		this.teamTwoScore = teamTwoScore;
 	}
 
-	Date getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	void setDate(Date date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 
-	Integer[][] getPlayerStats() {
+	public Integer[][] getPlayerStats() {
 		return playerStats;
 	}
 
-	void setPlayerStats(Integer[][] playerStats) {
+	public void setPlayerStats(Integer[][] playerStats) {
 		this.playerStats = playerStats;
 	}
 	
