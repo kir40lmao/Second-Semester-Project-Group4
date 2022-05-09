@@ -14,9 +14,8 @@ public class TournamentController {
 		tdao = new TournamentDAO();
 	}
 	
-	public void createTournament(String tournamentName, String date) {
-		Tournament t = new Tournament(tournamentName, date);
-		tdao.createTournament(t);
+	public void createTournament(int tournamentID, String tournamentName, String date) {
+		tdao.createTournament(tournamentID, tournamentName, date);
 	}
 	
 	public Tournament findTournamentByID(int tournamentID) {

@@ -18,7 +18,8 @@ public class Tournament {
 	
 	// We use this constructor when creating a tournament.
 	
-	public Tournament(String tournamentName, String date) {
+	public Tournament(int tournamentID, String tournamentName, String date) {
+		this.tournamentID = tournamentID;
 		this.tournamentName = tournamentName;
 		this.date = date;
 	}

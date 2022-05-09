@@ -19,18 +19,16 @@ public class TournamentDAO implements TournamentDAOIF{
 	
 	@Override
 	//where should we create the object? bc when reading, we create the object in the DAO bc we have to. should we create the object in the createTournament in the DAO too so its more unified?
-	public void createTournament(Tournament t) {
-		String sql = "INSERT INTO Tournament (TournamentID,[Tournament Name], Date, Venue, Status) VALUES (?, ?, ?, ?, ?)";
-		 
-		PreparedStatement statement;
+	public void createTournament(int tournamentID, String tournamentName, String date) {
 		try {
-			statement = conn.prepareStatement(sql);
-			statement.setInt(1,t.getTournamentID());
-			statement.setString(2,t.getTournamentName());
-			statement.setDate(3, java.sql.Date.valueOf(t.getDate()));
-			statement.setString(4,t.getVenue());
-			statement.setString(5,t.getStatus());
-			statement.executeUpdate();
+			String sql = "INSERT INTO Tournament (TournamentID,[Tournament Name], Date) VALUES (?, ?, ?)";
+			 
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setInt(1, tournamentID);
+			statement.setString(2, tournamentName);
+			statement.setDate(3, java.sql.Date.valueOf(date));
+
+
 
 		} catch (SQLException e) {
 			e.printStackTrace();
