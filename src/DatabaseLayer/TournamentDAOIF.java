@@ -11,6 +11,6 @@ public interface TournamentDAOIF {
 	public List<Tournament> getUpcoming(String status);
 	public List<Tournament> getOngoing(String status);
 	public List<Tournament> getFinished(String status);
-	public void updateTournament(int tournamentID, String tournamentName, String date, String Venue, String status);
+	public void updateTournament(int tournamentID, String tournamentName, String date, String Venue, String status, String previousTournamentName);
 	public void deleteTournament(int tournamentID);
 }

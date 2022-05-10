@@ -1,7 +1,7 @@
 package DatabaseLayer;
 
+
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,7 +9,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import ModelLayer.Customer;
 import ModelLayer.Tournament;
 
 public class TournamentDAO implements TournamentDAOIF{
@@ -18,7 +17,7 @@ public class TournamentDAO implements TournamentDAOIF{
 	Connection conn = dbcon.getDBcon();
 	
 	@Override
-	//where should we create the object? bc when reading, we create the object in the DAO bc we have to. should we create the object in the createTournament in the DAO too so its more unified?
+	//where should we create the object? because when reading, we create the object in the DAO because we have to. should we create the object in the createTournament in the DAO too so its more unified?
 	public void createTournament(int tournamentID, String tournamentName, String date) {
 		try {
 			String sql = "INSERT INTO Tournament (TournamentID,[Tournament Name], Date) VALUES (?, ?, ?)";
@@ -27,7 +26,7 @@ public class TournamentDAO implements TournamentDAOIF{
 			statement.setInt(1, tournamentID);
 			statement.setString(2, tournamentName);
 			statement.setDate(3, java.sql.Date.valueOf(date));
-
+			statement.executeUpdate();
 
 
 		} catch (SQLException e) {
@@ -42,7 +41,7 @@ public class TournamentDAO implements TournamentDAOIF{
 			String sql = "SELECT * FROM Tournament WHERE TournamentID = ?";
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setInt(1, tournamentID);
-			ResultSet rs = statement.executeQuery(sql); 
+			ResultSet rs = statement.executeQuery(); 
 			if (rs.next()) {
 				Tournament t = new Tournament();
 				t.setTournamentID(rs.getInt(1));
@@ -77,7 +76,6 @@ public class TournamentDAO implements TournamentDAOIF{
 			    tList.add(t);
 			}
 			return tList;
-		     
 		} catch (SQLException ex) {
 		    ex.printStackTrace();
 		}
@@ -166,9 +164,9 @@ public class TournamentDAO implements TournamentDAOIF{
 	}
 	
 	@Override
-	public void updateTournament(int tournamentID, String tournamentName, String date, String venue, String status){
+	public void updateTournament(int tournamentID, String tournamentName, String date, String venue, String status, String previousTournamentName){
 		try {  
-			String sql = "UPDATE Tournament SET TournamentID=?, TournamentName=?, Date=?, Venue=?, Status=? WHERE TournamentName=?";
+			String sql = "UPDATE Tournament SET TournamentID=?, [Tournament Name]=?, Date=?, Venue=?, Status=? WHERE [Tournament Name]=?";
 			 
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setInt(1, tournamentID);
@@ -176,7 +174,7 @@ public class TournamentDAO implements TournamentDAOIF{
 			statement.setDate(3, java.sql.Date.valueOf(date));
 			statement.setString(4, venue);
 			statement.setString(5, status);
-			statement.setString(6, tournamentName);
+			statement.setString(6, previousTournamentName);
 			statement.executeUpdate();
 			
 		} catch (SQLException ex) {

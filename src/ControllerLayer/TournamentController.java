@@ -38,8 +38,8 @@ public class TournamentController {
 		return tdao.getFinished(status);
 	}
 	
-	public void updateTournament(int tournamentID, String tournamentName, String date, String venue, String status) {
-		tdao.updateTournament(tournamentID, tournamentName, date, venue, status);
+	public void updateTournament(int tournamentID, String tournamentName, String date, String venue, String status, String previousTournamentName) {
+		tdao.updateTournament(tournamentID, tournamentName, date, venue, status, previousTournamentName);
 	}
 	
 	public void deleteTournament(int tournamentID) {
