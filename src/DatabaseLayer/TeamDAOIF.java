@@ -1,5 +1,7 @@
 package DatabaseLayer;
 
+import java.util.function.Supplier;
+
 public interface TeamDAOIF {
 
 	void createTeam(String name);
@@ -7,5 +9,6 @@ public interface TeamDAOIF {
 	void getAllTeams();
 	void updateTeamName(int teamID, String name);
 	void getElidgeable();
+	void HigherOrderFunctionForGetMethods(Supplier<String> stringSQL);
 	
 }

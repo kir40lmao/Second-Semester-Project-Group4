@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 public class Team {
 	
-	private ArrayList<Object> players = new ArrayList<Object>();
+	private ArrayList<Integer> players = new ArrayList<Integer>();
 	private String teamName;
 	private int wins;
 	private int loses;
 	private int teamID;
 	
-	public Team(String teamName, int wins, int loses, int teamID, ArrayList<Object> players) {
+	public Team(String teamName, int wins, int loses, int teamID, ArrayList<Integer> players) {
 		//used for read methods
 		this.loses = loses;
 		this.wins = wins;
@@ -19,7 +19,7 @@ public class Team {
 		this.players = players;
 	}
 	
-	public Team(String teamName, int teamID, ArrayList<Object> players) {
+	public Team(String teamName, int teamID, ArrayList<Integer> players) {
 		//used for creation of a new team since wins and loses are set to 0 by default
 		this.teamID = teamID;
 		this.teamName = teamName;
@@ -51,11 +51,11 @@ public class Team {
 		this.teamID = teamID;
 	}
 
-	public ArrayList<Object> getPlayers() {
+	public ArrayList<Integer> getPlayers() {
 		return players;
 	}
 
-	public void setPlayers(ArrayList<Object> players) {
+	public void setPlayers(ArrayList<Integer> players) {
 		this.players = players;
 	}
 	

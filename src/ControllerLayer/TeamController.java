@@ -10,19 +10,23 @@ public class TeamController {
 		teamDAO = new TeamDAO();
 	}
 	
-	public void createTeam() {
-		teamDAO.createTeam(null);
+	public void createTeam(String teamName) {
+		teamDAO.createTeam(teamName);
 	}
 	
-	public void findTeamByID() {
-		teamDAO.findTeamByID(0);
+	public void findTeamByID(int id) {
+		teamDAO.findTeamByID(id);
 	}
 	
 	public void getElidgeable() {
 		teamDAO.getElidgeable();
 	}
 	
-	public void updateTeamName() {
-		teamDAO.updateTeamName(0, null);
+	public void updateTeamName(int id, String teamName) {
+		teamDAO.updateTeamName(id, teamName);
+	}
+	
+	public void getAllTeams() {
+		teamDAO.getAllTeams();
 	}
 }
