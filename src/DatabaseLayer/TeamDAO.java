@@ -15,12 +15,16 @@ public class TeamDAO implements TeamDAOIF{
 	Connection con = dbcon.getDBcon();
 	Team team;
 	@Override
+	
 	public void createTeam(String name) {
 		String sql = "INSERT INTO Teams(TeamID,TeamName, Wins, Loses) VALUES(?, ?, ?, ?)";
-		String sqlID ="SELECT LAST TeamID FROM Teams";
-		PreparedStatement statement;
+		String sqlID ="SELECT TeamID FROM Teams WHERE TeamID=(SELECT max(TeamID) FROM Teams)";
 		try{
-			int id = Integer.parseInt(sqlID);
+			PreparedStatement statement = con.prepareStatement(sql);
+			Statement statementID = con.createStatement();
+			ResultSet resultID = statementID.executeQuery(sqlID);
+			String teamID;
+			int id = Integer.parseInt(teamID =(resultID.toString()));
 			statement = con.prepareStatement(sql);
 			statement.setInt(1, id+1);
 			statement.setString(2, name);
@@ -58,9 +62,6 @@ public class TeamDAO implements TeamDAOIF{
 			    ArrayList<Integer> players = (ArrayList<Integer>) playerSQL.getArray("PlayerID");
 			    
 			    Team team = new Team(teamName, loses, players);
-			    //testing purposes, REMOVE LATER
-			    String output = "Team #%d: %d - %s - %s - %s - %s";
-			    System.out.println(String.format(output, id,teamName,wins,loses));
 			}
 		     
 		} catch (SQLException ex) {
@@ -77,40 +78,40 @@ public class TeamDAO implements TeamDAOIF{
 			    String teamName = result.getString("TeamName");
 			    int wins = result.getInt("Wins");
 			    int loses = result.getInt("Loses");
-			    ArrayList<Object> players;
+			    ArrayList<Integer> players = null;
 			    
-			    Team team = new Team(teamName, loses, null);
-}
+			    team = new Team(teamName, loses, players);
+	}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	@Override
-	public void getElidgeable() {
+	public void getEligible() {
 		String sql = "";
 		HigherOrderFunctionForGetMethods(() -> sql);
 	}
 	
 	public void getAllTeams() {
-		//higher order function + lambda could be used here;
 		String sql = "SELECT * FROM Teams";
 		HigherOrderFunctionForGetMethods(() -> sql);
+		
 	}
 
 	@Override
 	public void updateTeamName(int teamID, String name) {
-		String sql ="UPDATE Team WHERE ID = '"+teamID+"'";
+		String sql ="UPDATE Team WHERE ID = '"+teamID+"' VALUES(?,?,?,?)" ;
 		
-		int wins = 0;
+		int wins = 7;
 		int loses = 0;
 		PreparedStatement statement;
 		//what CAN we update?
 		try {
 		statement = con.prepareStatement(sql);
-		statement.setString(0, name);
-		statement.setInt(4, wins);
-		statement.setInt(5, loses);
+		statement.setString(2, name);
+		statement.setInt(3, wins);
+		statement.setInt(4, loses);
 		
 		} catch(SQLException e) {
 			e.printStackTrace();

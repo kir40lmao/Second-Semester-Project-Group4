@@ -18,8 +18,8 @@ public class TeamController {
 		teamDAO.findTeamByID(id);
 	}
 	
-	public void getElidgeable() {
-		teamDAO.getElidgeable();
+	public void getEligible() {
+		teamDAO.getEligible();
 	}
 	
 	public void updateTeamName(int id, String teamName) {

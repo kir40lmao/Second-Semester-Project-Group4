@@ -8,7 +8,7 @@ public interface TeamDAOIF {
 	void findTeamByID(int teamID);
 	void getAllTeams();
 	void updateTeamName(int teamID, String name);
-	void getElidgeable();
 	void HigherOrderFunctionForGetMethods(Supplier<String> stringSQL);
+	void getEligible();
 	
 }
