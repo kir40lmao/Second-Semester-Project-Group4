@@ -14,16 +14,16 @@ public class TournamentController {
 		tdao = new TournamentDAO();
 	}
 	
-	public void createTournament(int tournamentID, String tournamentName, String date) {
-		tdao.createTournament(tournamentID, tournamentName, date);
+	public void createTournament(String tournamentName, String date) {
+		tdao.createTournament(tournamentName, date);
 	}
 	
 	public Tournament findTournamentByID(int tournamentID) {
 		return tdao.findTournamentByID(tournamentID);
 	}
 	
-	public List<Tournament> getAllTournaments() {
-		return tdao.getAllTournaments();
+	public void getAllTournaments() {
+		 tdao.getAllTournaments();
 	}
 	
 	public List<Tournament> getUpcoming(String status) {
@@ -38,8 +38,8 @@ public class TournamentController {
 		return tdao.getFinished(status);
 	}
 	
-	public void updateTournament(int tournamentID, String tournamentName, String date, String venue, String status, String previousTournamentName) {
-		tdao.updateTournament(tournamentID, tournamentName, date, venue, status, previousTournamentName);
+	public void updateTournament(String tournamentName, String date, String venue, String status, String previousTournamentName) {
+		tdao.updateTournament(tournamentName, date, venue, status, previousTournamentName);
 	}
 	
 	public void deleteTournament(int tournamentID) {

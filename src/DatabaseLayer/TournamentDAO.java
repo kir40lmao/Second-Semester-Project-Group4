@@ -8,38 +8,66 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 import ModelLayer.Tournament;
 
 public class TournamentDAO implements TournamentDAOIF{
 	
 	DBConnection dbcon = DBConnection.getInstance();
-	Connection conn = dbcon.getDBcon();
+	Connection con = dbcon.getDBcon();
 	
 	@Override
-	//where should we create the object? because when reading, we create the object in the DAO because we have to. should we create the object in the createTournament in the DAO too so its more unified?
-	public void createTournament(int tournamentID, String tournamentName, String date) {
+	public void createTournament(String tournamentName, String date) {
 		try {
-			String sql = "INSERT INTO Tournament (TournamentID,[Tournament Name], Date) VALUES (?, ?, ?)";
+			String sql = "INSERT INTO Tournament ([Tournament Name], Date) VALUES (?, ?)";
 			 
-			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setInt(1, tournamentID);
-			statement.setString(2, tournamentName);
-			statement.setDate(3, java.sql.Date.valueOf(date));
+			PreparedStatement statement = con.prepareStatement(sql);
+			statement.setString(1, tournamentName);
+			statement.setDate(2, java.sql.Date.valueOf(date));
 			statement.executeUpdate();
-
+			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
+	public List<Tournament> HigherOrderFunctionForGetMethods(Supplier<String> stringSQL) {
+		List<Tournament> allTournaments = new ArrayList<>();
+        try {
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(stringSQL.get());
+            while (rs.next()){
+            	Tournament t = new Tournament();
+				t.setTournamentID(rs.getInt(1));
+				t.setTournamentName(rs.getString(2));			    
+				t.setDate(rs.getDate(3).toString());
+			    t.setVenue(rs.getString(4));
+			    t.setStatus(rs.getString(5));
+			    allTournaments.add(t);
+			}
+            System.out.println(allTournaments);
+			return allTournaments;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+	public void getAllTournaments() {
+	        String sql = "SELECT * FROM Tournament";
+	        HigherOrderFunctionForGetMethods(() -> sql);
+	}
+		
+	
+	
+	
 	@Override
 	public Tournament findTournamentByID(int tournamentID){
 		try {
 		     
 			String sql = "SELECT * FROM Tournament WHERE TournamentID = ?";
-			PreparedStatement statement = conn.prepareStatement(sql);
+			PreparedStatement statement = con.prepareStatement(sql);
 			statement.setInt(1, tournamentID);
 			ResultSet rs = statement.executeQuery(); 
 			if (rs.next()) {
@@ -57,13 +85,13 @@ public class TournamentDAO implements TournamentDAOIF{
 		return null;
 	}
 	
-	@Override
+	/*@Override
 	public List<Tournament> getAllTournaments(){
 		List<Tournament> tList = new ArrayList<>();
 		try {
 			String sql = "SELECT * FROM Tournament";
 			 
-			Statement statement = conn.createStatement();
+			Statement statement = con.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
 			 
 			while (rs.next()){
@@ -80,7 +108,7 @@ public class TournamentDAO implements TournamentDAOIF{
 		    ex.printStackTrace();
 		}
 		return null;
-	}
+	}*/
 	
 	@Override
 	public List<Tournament> getUpcoming(String status){
@@ -88,7 +116,7 @@ public class TournamentDAO implements TournamentDAOIF{
 		try {
 			String sql = "SELECT * FROM Tournament WHERE Status = ?";
 			 
-			PreparedStatement statement = conn.prepareStatement(sql);
+			PreparedStatement statement = con.prepareStatement(sql);
 			statement.setString(1, status);
 			ResultSet rs = statement.executeQuery(sql);
 			 
@@ -115,7 +143,7 @@ public class TournamentDAO implements TournamentDAOIF{
 		try {
 			String sql = "SELECT * FROM Tournament WHERE Status = ?";
 			 
-			PreparedStatement statement = conn.prepareStatement(sql);
+			PreparedStatement statement = con.prepareStatement(sql);
 			statement.setString(1, status);
 			ResultSet rs = statement.executeQuery(sql);
 			 
@@ -142,7 +170,7 @@ public class TournamentDAO implements TournamentDAOIF{
 		try {
 			String sql = "SELECT * FROM Tournament WHERE Status = ?";
 			 
-			PreparedStatement statement = conn.prepareStatement(sql);
+			PreparedStatement statement = con.prepareStatement(sql);
 			statement.setString(1, status);
 			ResultSet rs = statement.executeQuery(sql);
 			 
@@ -164,17 +192,16 @@ public class TournamentDAO implements TournamentDAOIF{
 	}
 	
 	@Override
-	public void updateTournament(int tournamentID, String tournamentName, String date, String venue, String status, String previousTournamentName){
+	public void updateTournament(String tournamentName, String date, String venue, String status, String previousTournamentName){
 		try {  
-			String sql = "UPDATE Tournament SET TournamentID=?, [Tournament Name]=?, Date=?, Venue=?, Status=? WHERE [Tournament Name]=?";
+			String sql = "UPDATE Tournament SET [Tournament Name]=?, Date=?, Venue=?, Status=? WHERE [Tournament Name]=?";
 			 
-			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setInt(1, tournamentID);
-			statement.setString(2, tournamentName);
-			statement.setDate(3, java.sql.Date.valueOf(date));
-			statement.setString(4, venue);
-			statement.setString(5, status);
-			statement.setString(6, previousTournamentName);
+			PreparedStatement statement = con.prepareStatement(sql);
+			statement.setString(1, tournamentName);
+			statement.setDate(2, java.sql.Date.valueOf(date));
+			statement.setString(3, venue);
+			statement.setString(4, status);
+			statement.setString(5, previousTournamentName);
 			statement.executeUpdate();
 			
 		} catch (SQLException ex) {
@@ -188,7 +215,7 @@ public class TournamentDAO implements TournamentDAOIF{
 		     
 			String sql = "DELETE FROM Tournament WHERE TournamentID=?";
 			 
-			PreparedStatement statement = conn.prepareStatement(sql);
+			PreparedStatement statement = con.prepareStatement(sql);
 			statement.setInt(1, tournamentID);
 			statement.executeUpdate();
 			

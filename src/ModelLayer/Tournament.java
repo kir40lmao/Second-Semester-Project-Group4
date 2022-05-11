@@ -18,16 +18,14 @@ public class Tournament {
 	
 	// We use this constructor when creating a tournament.
 	
-	public Tournament(int tournamentID, String tournamentName, String date) {
-		this.tournamentID = tournamentID;
+	public Tournament(String tournamentName, String date) {
 		this.tournamentName = tournamentName;
 		this.date = date;
 	}
 	
 	// We use this constructor when updating the tournament.
 	
-	public Tournament(int tournamentID, String date, String venue, String tournamentName, String status) {
-		this.tournamentID = tournamentID;
+	public Tournament(String date, String venue, String tournamentName, String status) {
 		this.date = date;
 		this.venue = venue;
 		this.tournamentName = tournamentName;
