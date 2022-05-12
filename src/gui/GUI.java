@@ -4,6 +4,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import ControllerLayer.MatchController;
+
 import java.awt.CardLayout;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -32,10 +34,15 @@ public class GUI extends JFrame {
 	
 
 	public static void main(String[] args) {
-		System.setProperty("sun.java2d.uiScale", "1.0");
-		GUI frame = new GUI();
-		frame.setVisible(true);
-		frame.setTitle("XtremeSports app - user version");
+		MatchController mc = new MatchController();
+		mc.createMatch(1000, 1001, "2022-05-16");
+		//mc.updatePlayerMatchStats(1002, 1001, 10, 12);
+		//mc.updateMatchScore(1002, 16, 9);
+		//mc.getMatchDetails(1002);
+		//System.setProperty("sun.java2d.uiScale", "1.0");
+		//GUI frame = new GUI();
+		//frame.setVisible(true);
+		//frame.setTitle("XtremeSports app - user version");
 	}
 
 	public GUI() {

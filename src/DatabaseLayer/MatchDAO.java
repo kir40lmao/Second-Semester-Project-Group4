@@ -1,14 +1,13 @@
 package DatabaseLayer;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import ModelLayer.Match;
-import dataaccess.DBConnection;
+
 
 public class MatchDAO implements MatchDAOIF{
 	DBConnection dbcon = DBConnection.getInstance();
@@ -16,24 +15,59 @@ public class MatchDAO implements MatchDAOIF{
 	
 	@Override
 	public void createMatch(Match match) {
-		String sql = "INSERT INTO Match (matchID, teamOneID, teamTwoID, teamOneScore, teamTwoScore, date) VALUES (?, ?, ?, ?, ?, ?)";
-		 
+		String sql = "INSERT INTO Matches ([Team One Score], [Team Two Score], DATE) VALUES (?, ?, ?)";
+		String sql2 = "INSERT INTO MatchTeam (MatchID, TeamID) VALUES ((SELECT MatchID FROM Matches WHERE MatchID = ?), (SELECT TeamID FROM Teams WHERE TeamID = ?))";
+		String sql3 = "INSERT INTO MatchPlayerStats (MatchID, PlayerID, [Player Kills], [Player Deaths]) VALUES (?, ?, ?, ?)";
+		
+		String sql_getPlayers = "SELECT * FROM PlayerTeam where TeamID = ? or TeamID = ?";
+		String sql_getMatchID = "SELECT Max(MatchID) FROM Matches";
+		
 		PreparedStatement statement;
 		
 		try {
 			statement = conn.prepareStatement(sql);
-			statement.setInt(1, match.getMatchID());
+			statement.setInt(1, match.getTeamOneScore());
+			statement.setInt(2, match.getTeamTwoScore());
+			statement.setDate(3, java.sql.Date.valueOf(match.getDate()));
+			statement.executeUpdate();
+			
+			
+			statement = conn.prepareStatement(sql_getMatchID);
+			ResultSet rs = statement.executeQuery();
+			rs.next();
+			int matchID = rs.getInt(1);
+			
+			statement = conn.prepareStatement(sql2);
+			statement.setInt(1, matchID);
 			statement.setInt(2, match.getTeamOneID());
-			statement.setInt(3, match.getTeamTwoID());
-			statement.setInt(4, match.getTeamOneScore());
-			statement.setInt(5, match.getTeamTwoScore());
-			statement.setDate(6, match.getDate());
+			statement.executeUpdate();
+			
+			statement = conn.prepareStatement(sql2);
+			statement.setInt(1, matchID);
+			statement.setInt(2, match.getTeamTwoID());
+			statement.executeUpdate();
 
-			int rows = statement.executeUpdate();
-			if (rows > 0) {
-			    System.out.println("A new match was added");
+			
+			PreparedStatement statement_players = conn.prepareStatement(sql_getPlayers);
+			statement_players.setInt(1, match.getTeamOneID());
+			statement_players.setInt(2, match.getTeamTwoID());
+			
+			ResultSet resultSetPlayers = statement_players.executeQuery();
+	
+			
+			while (resultSetPlayers.next()) {
+				int playerID = resultSetPlayers.getInt("PlayerID");
+				System.out.println(playerID);
+				statement = conn.prepareStatement(sql3);
+				statement.setInt(1, matchID);
+				statement.setInt(2, playerID);
+				statement.setInt(3, 0);
+				statement.setInt(4, 0);
+				statement.executeUpdate();
 			}
-		} catch (SQLException e) {
+			
+		}
+		 catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
@@ -41,59 +75,67 @@ public class MatchDAO implements MatchDAOIF{
 
 	@Override
 	public Match getMatchDetails(int matchID) {
-		Match match;
+		Match match = null;
 		try {
-			int teamOneID, teamTwoID, teamOneScore, teamTwoScore;
-			Date date;
-			Integer[][] playerStats;
+			int teamOneID = 0, teamTwoID = 0, teamOneScore = 0, teamTwoScore = 0;
+			String date = null;
+			Integer[][] playerStats = new Integer[10][3];;
 			
 			
-			String sql = "SELECT * FROM Match where matchID = " + matchID;
-			String sql2 = "SELECT * FROM MatchTeam where matchID = " + matchID;
-			String sql3 = "SELECT * FROM MatchPlayer where matchID = " + matchID;
+			String sql = "SELECT * FROM Matches where MatchID = " + matchID;
+			String sql2 = "SELECT * FROM MatchTeam where MatchID = " + matchID;
 			
 			
 			Statement statement = conn.createStatement();
 			ResultSet result = statement.executeQuery(sql);
 			
 			Statement statement2 = conn.createStatement();
-			ResultSet result2 = statement.executeQuery(sql2);
-			
-			Statement statement3 = conn.createStatement();
-			ResultSet result3 = statement.executeQuery(sql3);
+			ResultSet result2 = statement2.executeQuery(sql2);
 
 			 
 			while (result.next()){
-			    teamOneScore = result2.getInt("Team One Score");
-			    teamTwoScore = result2.getInt("Team Two Score");
-			    date = result.getDate("Date");
+			    teamOneScore = result.getInt("Team One Score");
+			    teamTwoScore = result.getInt("Team Two Score");
+			    date = result.getDate("Date").toString();
 			}
-			
-			while (result2.next()){
-				teamOneID = result.getInt("Team One ID");
-			    teamTwoID = result.getInt("Team Two ID");
-			}
-			
-			playerStats = new Integer[10][3];
 			int count = 0;
+			while (result2.next()){
+				if (count == 0) {
+					teamOneID = result2.getInt("TeamID");
+					count++;
+				}
+				if (count == 1)
+					teamTwoID = result2.getInt("TeamID");
+			}
+			
+			count = 0;
+			
+			String sql3 = "SELECT * FROM MatchPlayerStats where MatchID = " + matchID;
+			Statement statement3 = conn.createStatement();
+			ResultSet result3 = statement3.executeQuery(sql3);
 			
 			while (result3.next()) {
 				int playerID = result3.getInt("PlayerID");
-				String sql4 = "SELECT * FROM MatchPlayerStats where match ID = " + matchID + " and playerID = " + playerID;
-				Statement statement4 = conn.createStatement();
-				ResultSet result4 = statement.executeQuery(sql4);
-				while(result4.next()) {
-					int kills = result4.getInt("Player kills");
-					int deaths = result4.getInt("Player deaths");
-					playerStats[count][0] = playerID;
-					playerStats[count][1] = kills;
-					playerStats[count][2] = deaths;
-				}
+				int kills = result3.getInt("Player kills");
+				int deaths = result3.getInt("Player deaths");
+				playerStats[count][0] = playerID;
+				playerStats[count][1] = kills;
+				playerStats[count][2] = deaths;
 				count++;
 			}
-			
+	
 			match = new Match(matchID, teamOneID, teamTwoID, teamOneScore, teamTwoScore, date, playerStats);
-		     
+			
+			/*System.out.println(matchID);
+			System.out.println(teamOneID);
+			System.out.println(teamOneScore);
+			System.out.println(teamTwoID);
+			System.out.println(teamTwoScore);
+			System.out.println(date);
+			for (int i = 0; i<10; i++) {
+				System.out.println(playerStats[i][0] + " " + playerStats[i][1] + " " + playerStats[i][2]);
+			} */
+			  
 		} catch (SQLException ex) {
 		    ex.printStackTrace();
 		}
@@ -101,26 +143,41 @@ public class MatchDAO implements MatchDAOIF{
 	}
 
 	@Override
-	public void updateMatchDetails(int matchID, int teamOneScore, int teamTwoScore) {
-		
+	public void updateMatchScore(int matchID, int teamOneScore, int teamTwoScore) {
+		try {  
+			String sql = "UPDATE Matches SET [Team One Score]=?, [Team Two Score]=? where MatchID = " + matchID;
+			PreparedStatement statement = conn.prepareStatement(sql);
+			
+			statement.setInt(1, teamOneScore);
+			statement.setInt(2, teamTwoScore);
+				
+
+			int rows = statement.executeUpdate();
+			if (rows > 0) {
+			    System.out.println("Update team score successful");
+			}
+		     
+		} catch (SQLException ex) {
+		    ex.printStackTrace();
+		}
 		
 	}
 
 
 	@Override
-	public void setMatchDetails(int matchID, int playerID, int playerKills, int playerDeaths) {
+	public void updatePlayerMatchStats(int matchID, int playerID, int playerKills, int playerDeaths) {
 		try {  
-			String sql = "UPDATE MatchPlayerStats SET MatchID=?, PlayerID=?, Player Kills=?, Player Deaths=?";
-			 
+			String sql = "UPDATE MatchPlayerStats SET [Player Kills]=?, [Player Deaths]=? WHERE(MatchID=? and PlayerID=?)";
+			
 			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setInt(1, matchID);
-			statement.setInt(2, playerID);
-			statement.setInt(3, playerKills);
-			statement.setInt(4, playerDeaths);
+			statement.setInt(3, matchID);
+			statement.setInt(4, playerID);
+			statement.setInt(1, playerKills);
+			statement.setInt(2, playerDeaths);
 
 			 
-			int rowsUpdated = statement.executeUpdate();
-			if (rowsUpdated > 0) {
+			int rows = statement.executeUpdate();
+			if (rows > 0) {
 			    System.out.println("Update player kd successful");
 			}
 		     

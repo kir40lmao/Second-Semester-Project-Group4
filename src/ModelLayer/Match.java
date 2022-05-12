@@ -1,25 +1,26 @@
 package ModelLayer;
 
-import java.sql.Date;
+
+import java.util.Random;
 
 public class Match {
 	int matchID, teamOneID, teamTwoID, teamOneScore, teamTwoScore;
-	Date date;
-	long dateMilis;
+	String date;
 	Integer[][] playerStats;
+	Random random = new Random();
 	
-	public Match(int teamOneID, int teamTwoID) {
-		//this.matchID = we will generate this somehow
+	public Match(int teamOneID, int teamTwoID, String date) {
+		this.matchID = random.nextInt(99999999);
 		this.teamOneID = teamOneID;
 		this.teamTwoID = teamTwoID;
-		this.dateMilis = date.getTime();
+		this.date = date;
 		this.teamOneScore = 0;
 		this.teamTwoScore = 0;
 		playerStats = new Integer[10][3];
 	}
 	
 	
-	public Match(int matchID, int teamOneID, int teamTwoID, int teamOneScore, int teamTwoScore, Date date, Integer[][] playerStats) {
+	public Match(int matchID, int teamOneID, int teamTwoID, int teamOneScore, int teamTwoScore, String date, Integer[][] playerStats) {
 		this.matchID = matchID;
 		this.teamOneID = teamOneID;
 		this.teamTwoID = teamTwoID;
@@ -71,11 +72,11 @@ public class Match {
 		this.teamTwoScore = teamTwoScore;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
