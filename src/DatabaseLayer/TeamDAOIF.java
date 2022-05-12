@@ -1,14 +1,18 @@
 package DatabaseLayer;
 
+import java.util.List;
 import java.util.function.Supplier;
+
+import ModelLayer.Team;
 
 public interface TeamDAOIF {
 
 	void createTeam(String name);
-	void findTeamByID(int teamID);
-	void getAllTeams();
+	Team findTeamByID(int teamID);
+	List<Team> getAllTeams();
 	void updateTeamName(int teamID, String name);
-	void HigherOrderFunctionForGetMethods(Supplier<String> stringSQL);
-	void getEligible();
+	List<Team> HigherOrderFunctionForGetMethods(Supplier<String> stringSQL);
+	List<Team> getEligible();
+	void updateTeamStats(int teamID, int wins, int loses);
 	
 }

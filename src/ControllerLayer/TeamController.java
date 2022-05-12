@@ -26,6 +26,10 @@ public class TeamController {
 		teamDAO.updateTeamName(id, teamName);
 	}
 	
+	public void updateTeamStats(int id, int wins, int loses) {
+		teamDAO.updateTeamStats(id,wins,loses);
+	}
+	
 	public void getAllTeams() {
 		teamDAO.getAllTeams();
 	}
