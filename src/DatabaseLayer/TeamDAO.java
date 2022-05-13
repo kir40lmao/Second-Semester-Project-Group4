@@ -19,7 +19,7 @@ public class TeamDAO implements TeamDAOIF {
 	@Override
 
 	public void createTeam(String name) {
-		String sql = "INSERT INTO Teams(Wins,Loses,[Team Name]) VALUES(?, ?, ?)";
+		String sql = "INSERT INTO Teams(Wins,Loses,Team Name) VALUES(?, ?, ?)";
 		try {
 			PreparedStatement statement = con.prepareStatement(sql);
 			statement.setInt(1, 0);
@@ -111,7 +111,7 @@ public class TeamDAO implements TeamDAOIF {
 	}
 
 	public void updateTeamName(int id, String teamName) {
-		String sql = "UPDATE Teams Set [Team Name] = ? WHERE TeamID = ?";
+		String sql = "UPDATE Teams Set Team Name = ? WHERE TeamID = ?";
 
 		PreparedStatement statement;
 		try {
