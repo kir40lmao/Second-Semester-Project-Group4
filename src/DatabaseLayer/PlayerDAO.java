@@ -14,17 +14,14 @@ public class PlayerDAO implements PlayerDAOIF{
 	DBConnection dbcon = DBConnection.getInstance();
 	Connection conn = dbcon.getDBcon();
 	@Override
-	public void createPlayer(String gamerTag) { //fookin useless
-		String sql = "INSERT INTO Player (PlayerID,GamerTag,Total Kills,Total Deaths) VALUES (?, ?, ?, ?)";
-		String sqlID = "SELECT LAST PlayerID FROM Player";
+	public void createPlayer(String gamerTag) { //should work
+		String sql = "INSERT INTO Player (GamerTag,Total Kills,Total Deaths) VALUES (?, ?, ?)";
 		PreparedStatement statement;
 		try {
-			int id=Integer.parseInt(sqlID);
 			statement = conn.prepareStatement(sql);
-			statement.setInt(1,id++);
-			statement.setString(2, gamerTag);
+			statement.setString(1, gamerTag);
+			statement.setInt(2, 0);
 			statement.setInt(3, 0);
-			statement.setInt(4, 0);
 
 			int rowsInserted = statement.executeUpdate();
 			if (rowsInserted > 0) {
@@ -142,10 +139,11 @@ public class PlayerDAO implements PlayerDAOIF{
 
 	@Override
 	public boolean deletePlayer(int playerID) {
+		boolean success=false;
 		try {
 		     
-			String sql = "DELETE FROM Players WHERE PlayerID=?";
-			boolean success=false;
+			String sql = "DELETE FROM Players WHERE PlayerID='"+playerID+"'";
+			success=false;
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setInt(1, playerID);
 			
@@ -167,7 +165,7 @@ public class PlayerDAO implements PlayerDAOIF{
 		int prevKills=0,prevDeaths=0;
 		String gamerTag="0";
 		String sql ="UPDATE Players WHERE PlayerID = '"+playerID+"' VALUES(?,?,?,?)" ;
-		PreparedStatement statement;
+		PreparedStatement statement=null;
 		Player player=null;
 		try {
 		ResultSet result=statement.executeQuery(dataFetcher);
