@@ -106,7 +106,7 @@ public class TeamDAO implements TeamDAOIF {
 	public void updateTeamStats(int teamID, int wins, int loses) {
 		String updateWinner = "UPDATE Teams Set Wins = Wins+1 WHERE TeamID = ?";
 		String updateLoser = "UPDATE Teams Set Loses = Loses+1 Where TeamID = ?";
-		//Better way to update wins and loses?
+		// Better way to update wins and loses?
 		try {
 			PreparedStatement winner;
 			PreparedStatement loser;
@@ -123,7 +123,7 @@ public class TeamDAO implements TeamDAOIF {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public List<Integer> getWinningTeam() {
 		String sql = "SELECT TeamOneID, TeamTwoID FROM MatchTeam WHERE MatchID = ?";
 		String score = "SELECT Team One Score, Team Two Score FROM Matches WHERE MatchID = ?";
@@ -139,21 +139,21 @@ public class TeamDAO implements TeamDAOIF {
 			int teamTwoID = result.getInt("TeamTwoID");
 			int teamOneScore = resultScore.getInt("Team One Score");
 			int teamTwoScore = resultScore.getInt("Team Two Score");
-			
-			if(teamOneScore < teamTwoScore) {
+
+			if (teamOneScore < teamTwoScore) {
 				winningTeamID = teamTwoID;
 				losingTeamID = teamOneID;
-			}else if(teamOneScore > teamTwoScore){
+			} else if (teamOneScore > teamTwoScore) {
 				winningTeamID = teamOneID;
 				losingTeamID = teamTwoID;
-			}else {
-				//what to do if there's a draw??
+			} else {
+				// what to do if there's a draw??
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		winnersAndLosers.add(winningTeamID,losingTeamID);
+		winnersAndLosers.add(winningTeamID, losingTeamID);
 		return winnersAndLosers;
 	}
 
