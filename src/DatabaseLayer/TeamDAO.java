@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
+import ModelLayer.Player;
 import ModelLayer.Team;
 
 public class TeamDAO implements TeamDAOIF {
@@ -31,35 +32,9 @@ public class TeamDAO implements TeamDAOIF {
 		}
 	}
 
-	@Override
-	public Team findTeamByID(int teamID) {
-		try {
-			String sql = "SELECT * FROM Teams WHERE TeamID = ? ";
-			String sqlPlayer = "SELECT * FROM PlayerTeam WHERE TeamID = ? ";
-
-			PreparedStatement statement = con.prepareStatement(sql, teamID);
-			ResultSet result = statement.executeQuery(sql);
-			// ResultSet playerSQL = statement.executeQuery(sqlPlayer);
-
-			while (result.next()) {
-				int id = result.getInt("TeamID");
-				String teamName = result.getString("TeamName");
-				int wins = result.getInt("Wins");
-				int loses = result.getInt("Loses");
-				// ArrayList<Integer> players = (ArrayList<Integer>)
-				ArrayList<Integer> players = null;
-				Team team = new Team(teamName, loses, players);
-			}
-
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-		return team;
-
-	}
-
 	public List<Team> HigherOrderFunctionForGetMethods(Supplier<String> stringSQL) {
 		List<Team> teamList = new ArrayList<>();
+		String teamSQL = "SELECT Players FROM Players WHERE PlayerID = (SELECT PlayerID FROM PlayerTeam WHERE TeamID = ?)";
 		try {
 			Statement statement = con.createStatement();
 			ResultSet result = statement.executeQuery(stringSQL.get());
@@ -68,8 +43,8 @@ public class TeamDAO implements TeamDAOIF {
 				String teamName = result.getString("Team Name");
 				int wins = result.getInt("Wins");
 				int loses = result.getInt("Loses");
-				ArrayList<Integer> players = null;
-				
+				ArrayList<Player> players = PopulateArray();
+
 				team = new Team(teamName, wins, loses, id, players);
 				teamList.add(team);
 			}
@@ -77,6 +52,26 @@ public class TeamDAO implements TeamDAOIF {
 			e.printStackTrace();
 		}
 		return teamList;
+	}
+
+	public ArrayList<Player> PopulateArray() {
+		String teamSQL = "SELECT Players FROM Players WHERE PlayerID = (SELECT PlayerID FROM PlayerTeam WHERE TeamID = ?)";
+		ArrayList<Player> players = new ArrayList<>();
+
+		try {
+			PreparedStatement statement = con.prepareStatement(teamSQL);
+			ResultSet result = statement.executeQuery();
+			while (result.next()) {
+				String gamerTag = result.getString("Gammer Tag");
+				int totalKills = result.getInt("Total Kills");
+				int totalDeaths = result.getInt("Total Deaths");
+				Player player = new Player(gamerTag, totalKills, totalDeaths);
+				players.add(player);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return players;
 	}
 
 	@Override
@@ -95,9 +90,22 @@ public class TeamDAO implements TeamDAOIF {
 	}
 
 	@Override
+	public Team findTeamByID(int teamID) {
+		String sql = "SELECT * FROM Teams WHERE TeamID = ? ";
+		HigherOrderFunctionForGetMethods(() -> sql);
+		return team;
+	}
+
+	public Team findTeamByName(String teamName) {
+		String sql = "SELECT * FROM Teams WHERE Team Name = ? ";
+		HigherOrderFunctionForGetMethods(() -> sql);
+		return team;
+	}
+
+	@Override
 	public void updateTeamStats(int teamID, int wins, int loses) {
 		String sql = "UPDATE Teams Set Wins = ?, Loses = ? WHERE TeamID = ?";
-
+		
 		PreparedStatement statement;
 		try {
 			statement = con.prepareStatement(sql);

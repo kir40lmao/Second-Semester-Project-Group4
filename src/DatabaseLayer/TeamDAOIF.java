@@ -14,5 +14,5 @@ public interface TeamDAOIF {
 	List<Team> HigherOrderFunctionForGetMethods(Supplier<String> stringSQL);
 	List<Team> getEligible();
 	void updateTeamStats(int teamID, int wins, int loses);
-	
+	Team findTeamByName(String teamName);
 }

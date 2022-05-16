@@ -33,4 +33,8 @@ public class TeamController {
 	public void getAllTeams() {
 		teamDAO.getAllTeams();
 	}
+	
+	public void findTeamByName(String teamName) {
+		teamDAO.findTeamByName(teamName);
+	}
 }
