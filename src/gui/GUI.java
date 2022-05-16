@@ -35,7 +35,8 @@ public class GUI extends JFrame {
 
 	public static void main(String[] args) {
 		MatchController mc = new MatchController();
-		mc.createMatch(1000, 1001, "2022-05-16");
+		//System.out.println(mc.getAllMatchesFromTournament(1008));
+		mc.createMatch(1001, 1002, "2022-11-10");
 		//mc.updatePlayerMatchStats(1002, 1001, 10, 12);
 		//mc.updateMatchScore(1002, 16, 9);
 		//mc.getMatchDetails(1002);

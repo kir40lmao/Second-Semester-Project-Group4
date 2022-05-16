@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import ModelLayer.Match;
 
@@ -16,7 +18,7 @@ public class MatchDAO implements MatchDAOIF{
 	@Override
 	public void createMatch(Match match) {
 		String sql = "INSERT INTO Matches ([Team One Score], [Team Two Score], DATE) VALUES (?, ?, ?)";
-		String sql2 = "INSERT INTO MatchTeam (MatchID, TeamID) VALUES ((SELECT MatchID FROM Matches WHERE MatchID = ?), (SELECT TeamID FROM Teams WHERE TeamID = ?))";
+		String sql2 = "INSERT INTO MatchTeam (MatchID, TeamOneID, TeamTwoID) VALUES ((SELECT MatchID FROM Matches WHERE MatchID = ?), (SELECT TeamID FROM Teams WHERE TeamID = ?), (SELECT TeamID FROM Teams WHERE TeamID = ?))";
 		String sql3 = "INSERT INTO MatchPlayerStats (MatchID, PlayerID, [Player Kills], [Player Deaths]) VALUES (?, ?, ?, ?)";
 		
 		String sql_getPlayers = "SELECT * FROM PlayerTeam where TeamID = ? or TeamID = ?";
@@ -40,13 +42,8 @@ public class MatchDAO implements MatchDAOIF{
 			statement = conn.prepareStatement(sql2);
 			statement.setInt(1, matchID);
 			statement.setInt(2, match.getTeamOneID());
+			statement.setInt(3, match.getTeamTwoID());
 			statement.executeUpdate();
-			
-			statement = conn.prepareStatement(sql2);
-			statement.setInt(1, matchID);
-			statement.setInt(2, match.getTeamTwoID());
-			statement.executeUpdate();
-
 			
 			PreparedStatement statement_players = conn.prepareStatement(sql_getPlayers);
 			statement_players.setInt(1, match.getTeamOneID());
@@ -140,6 +137,29 @@ public class MatchDAO implements MatchDAOIF{
 		    ex.printStackTrace();
 		}
 		return match;
+	}
+	
+	public List<Match> getAllMatchesFromTournament(int tournamentID){
+		List<Match> matches = new ArrayList<>();
+		
+		String sql = "SELECT MatchID FROM TournamentMatch where TournamentID = " + tournamentID;
+		
+		Statement statement;
+		try {
+			statement = conn.createStatement();
+			ResultSet result = statement.executeQuery(sql);
+
+			while (result.next()){
+			    int matchID = result.getInt("MatchID");
+			    Match match = getMatchDetails(matchID);
+			    matches.add(match);
+			}
+		}   
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return matches;
 	}
 
 	@Override

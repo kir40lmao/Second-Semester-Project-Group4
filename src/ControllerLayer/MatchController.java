@@ -1,6 +1,8 @@
 package ControllerLayer;
 
 
+import java.util.List;
+
 import DatabaseLayer.MatchDAO;
 import DatabaseLayer.MatchDAOIF;
 import ModelLayer.Match;
@@ -26,5 +28,10 @@ public class MatchController {
 	public void updatePlayerMatchStats(int matchID, int playerID, int playerKills, int playerDeaths) {
 		mdao.updatePlayerMatchStats(matchID, playerID, playerKills, playerDeaths);
 		
+	}
+	
+	public List<Match> getAllMatchesFromTournament(int tournamentID){
+		List<Match> matches = mdao.getAllMatchesFromTournament(tournamentID);
+		return matches;
 	}
 }
