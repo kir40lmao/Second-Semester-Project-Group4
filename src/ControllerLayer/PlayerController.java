@@ -20,10 +20,10 @@ public class PlayerController {
 		playerDAO.getAllPlayers();
 	}
 	public void updatePlayerDetails(int playerID, String gamerTag, int teamID) {
-		playerDAO.updatePlayerDetails(playerID, gamerTag, teamID);
+		playerDAO.updatePlayer(playerID, gamerTag, teamID);
 	}
-	public void updatePlayersAfterMatch(int playerID, int totalKills, int totalDeaths) { //outdated
-		playerDAO.updatePlayerDetails(playerID, totalKills, totalDeaths);
+	public void updatePlayersAfterMatch(int playerID, int totalKills, int totalDeaths) {
+		playerDAO.updatePlayerAfterMatch(playerID, totalKills, totalDeaths);
 	}
 	public void deletePlayer(int playerID) {
 		playerDAO.deletePlayer(playerID);
