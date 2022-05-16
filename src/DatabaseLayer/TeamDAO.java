@@ -104,18 +104,57 @@ public class TeamDAO implements TeamDAOIF {
 
 	@Override
 	public void updateTeamStats(int teamID, int wins, int loses) {
-		String sql = "UPDATE Teams Set Wins = ?, Loses = ? WHERE TeamID = ?";
-		
-		PreparedStatement statement;
+		String updateWinner = "UPDATE Teams Set Wins = Wins+1 WHERE TeamID = ?";
+		String updateLoser = "UPDATE Teams Set Loses = Loses+1 Where TeamID = ?";
+		//Better way to update wins and loses?
 		try {
-			statement = con.prepareStatement(sql);
-			statement.setInt(1, wins);
-			statement.setInt(2, loses);
-			statement.setInt(3, teamID);
-			statement.executeUpdate();
+			PreparedStatement winner;
+			PreparedStatement loser;
+			List<Integer> winnersAndLosers = getWinningTeam();
+			int losingTeamID = winnersAndLosers.get(1);
+			int winningTeamID = winnersAndLosers.get(0);
+			winner = con.prepareStatement(updateWinner);
+			winner.setInt(1, winningTeamID);
+			winner.executeUpdate();
+			loser = con.prepareStatement(updateLoser);
+			loser.setInt(1, losingTeamID);
+			loser.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public List<Integer> getWinningTeam() {
+		String sql = "SELECT TeamOneID, TeamTwoID FROM MatchTeam WHERE MatchID = ?";
+		String score = "SELECT Team One Score, Team Two Score FROM Matches WHERE MatchID = ?";
+		int winningTeamID = 0;
+		int losingTeamID = 0;
+		List<Integer> winnersAndLosers = new ArrayList<>();
+		try {
+			PreparedStatement statement = con.prepareStatement(sql);
+			PreparedStatement getScore = con.prepareStatement(score);
+			ResultSet result = statement.executeQuery();
+			ResultSet resultScore = getScore.executeQuery();
+			int teamOneID = result.getInt("TeamOneID");
+			int teamTwoID = result.getInt("TeamTwoID");
+			int teamOneScore = resultScore.getInt("Team One Score");
+			int teamTwoScore = resultScore.getInt("Team Two Score");
+			
+			if(teamOneScore < teamTwoScore) {
+				winningTeamID = teamTwoID;
+				losingTeamID = teamOneID;
+			}else if(teamOneScore > teamTwoScore){
+				winningTeamID = teamOneID;
+				losingTeamID = teamTwoID;
+			}else {
+				//what to do if there's a draw??
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		winnersAndLosers.add(winningTeamID,losingTeamID);
+		return winnersAndLosers;
 	}
 
 	public void updateTeamName(int id, String teamName) {
@@ -125,6 +164,7 @@ public class TeamDAO implements TeamDAOIF {
 		try {
 			statement = con.prepareStatement(sql);
 			statement.setString(1, teamName);
+			statement.setInt(1, id);
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
