@@ -1,6 +1,7 @@
 package ControllerLayer;
 
 import DatabaseLayer.PlayerDAO;
+import ModelLayer.Player;
 
 public class PlayerController {
 	PlayerDAO playerDAO = new PlayerDAO();
@@ -10,8 +11,9 @@ public class PlayerController {
 	public void createPlayer(String gamerTag) {
 		playerDAO.createPlayer(gamerTag);
 	}
-	public void findPlayerByName(String gamerTag) {
-		playerDAO.findPlayerByName(gamerTag);
+	public Player findPlayerByName(String gamerTag) {
+		Player player = playerDAO.findPlayerByName(gamerTag);
+		return player;
 	}
 	public void findAvailablePlayers() { //missing
 		playerDAO.findAvailablePlayers();

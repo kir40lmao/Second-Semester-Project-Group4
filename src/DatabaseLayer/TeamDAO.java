@@ -20,12 +20,13 @@ public class TeamDAO implements TeamDAOIF {
 	@Override
 
 	public void createTeam(String name) {
-		String sql = "INSERT INTO Teams(Wins,Loses,Team Name) VALUES(?, ?, ?)";
+		String sql = "INSERT INTO Teams(Wins,Loses,[Team Name]) VALUES(?, ?, ?)";
 		try {
 			PreparedStatement statement = con.prepareStatement(sql);
 			statement.setInt(1, 0);
 			statement.setInt(2, 0);
 			statement.setString(3, name);
+			statement.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();

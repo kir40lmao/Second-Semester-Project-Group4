@@ -11,6 +11,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.SwingConstants;
 
+import ControllerLayer.MatchController;
+import ControllerLayer.PlayerController;
+import ControllerLayer.TeamController;
+import ControllerLayer.TournamentController;
+import ModelLayer.Player;
 
 import javax.swing.JSeparator;
 import javax.swing.JScrollPane;
@@ -28,7 +33,7 @@ import java.awt.event.ActionEvent;
 public class Menu {
 
 	public JFrame frame;
-	private JTextField txtFuckWindowbuilder;
+	private JTextField txt_gamer_tag;
 	private JTextField textField_1;
 	private JTextField txtSearchTeamMenu;
 	private JTextField textField_3;
@@ -41,6 +46,13 @@ public class Menu {
 	private JTextField gamerTagField;
 	
 	Login login_window;
+	private JTextField textField_search_gamer;
+	
+	static PlayerController pc = new PlayerController();
+	MatchController mc = new MatchController();
+	TeamController teamc = new TeamController();
+	TournamentController tournamentc = new TournamentController();
+	private JTextField txt_player_team_ID;
 
 	/**
 	 * Launch the application.
@@ -690,16 +702,22 @@ public class Menu {
 		JLabel lblPlayerGamerTag = new JLabel("Player Gamer Tag");
 		lblPlayerGamerTag.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPlayerGamerTag.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblPlayerGamerTag.setBounds(379, 241, 135, 35);
+		lblPlayerGamerTag.setBounds(68, 180, 135, 35);
 		playerCreationMenu.add(lblPlayerGamerTag);
 		
 		gamerTagField = new JTextField();
-		gamerTagField.setBounds(505, 250, 317, 20);
+		gamerTagField.setBounds(194, 189, 317, 20);
 		playerCreationMenu.add(gamerTagField);
 		gamerTagField.setColumns(10);
 		
 		JButton btnNewButton_6 = new JButton("Confirm Creation");
-		btnNewButton_6.setBounds(832, 243, 135, 35);
+		btnNewButton_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String gamerTag = gamerTagField.getText();
+				pc.createPlayer(gamerTag);
+			}
+		});
+		btnNewButton_6.setBounds(521, 182, 135, 35);
 		playerCreationMenu.add(btnNewButton_6);
 		
 		JPanel playerManagementMenu = new JPanel();
@@ -804,17 +822,93 @@ public class Menu {
 		btnNewButton_2_51.setBounds(40, 647, 135, 41);
 		playerManagementMenu.add(btnNewButton_2_51);
 		
-		txtFuckWindowbuilder = new JTextField();
-		txtFuckWindowbuilder.setText("fuck windowbuilder");
-		txtFuckWindowbuilder.setBounds(337, 174, 293, 57);
-		playerManagementMenu.add(txtFuckWindowbuilder);
-		txtFuckWindowbuilder.setColumns(10);
+		txt_gamer_tag = new JTextField();
+		txt_gamer_tag.setBounds(538, 214, 135, 30);
+		playerManagementMenu.add(txt_gamer_tag);
+		txt_gamer_tag.setColumns(10);
 		
 		JLabel lblNewLabel_1_2 = new JLabel("Player Management Menu");
 		lblNewLabel_1_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.BOLD, 17));
 		lblNewLabel_1_2.setBounds(463, 44, 359, 35);
 		playerManagementMenu.add(lblNewLabel_1_2);
+		
+		JLabel info_label_player = new JLabel("Gamer tag");
+		info_label_player.setBounds(463, 214, 83, 30);
+		playerManagementMenu.add(info_label_player);
+		
+		JLabel label_for_player_id = new JLabel("<<player id>>");
+		label_for_player_id.setBounds(538, 173, 135, 30);
+		playerManagementMenu.add(label_for_player_id);
+		
+		JLabel info_label_player_id = new JLabel("Player ID");
+		info_label_player_id.setBounds(463, 173, 83, 30);
+		playerManagementMenu.add(info_label_player_id);
+		
+		JButton save_changes_button_player = new JButton("Save changes");
+		save_changes_button_player.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int playerID = Integer.parseInt(label_for_player_id.getText());
+				int teamID = Integer.parseInt(txt_player_team_ID.getText());
+				String gamerTag = txt_gamer_tag.getText();
+				pc.updatePlayerDetails(playerID, gamerTag, teamID);
+			}
+		});
+		save_changes_button_player.setFocusPainted(false);
+		save_changes_button_player.setContentAreaFilled(false);
+		save_changes_button_player.setBounds(463, 307, 210, 23);
+		playerManagementMenu.add(save_changes_button_player);
+		
+		JLabel info_label_player_1 = new JLabel("Gamer tag");
+		info_label_player_1.setBounds(125, 214, 83, 30);
+		playerManagementMenu.add(info_label_player_1);
+		
+		textField_search_gamer = new JTextField();
+		textField_search_gamer.setColumns(10);
+		textField_search_gamer.setBounds(200, 214, 135, 30);
+		playerManagementMenu.add(textField_search_gamer);
+		
+		JLabel info_label_search_player = new JLabel("");
+		info_label_search_player.setHorizontalAlignment(SwingConstants.CENTER);
+		info_label_search_player.setForeground(Color.RED);
+		info_label_search_player.setFont(new Font("Tahoma", Font.BOLD, 12));
+		info_label_search_player.setBounds(125, 300, 210, 30);
+		playerManagementMenu.add(info_label_search_player);
+		
+		JButton search_player_button = new JButton("Find");
+		search_player_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String gamer_tag = textField_search_gamer.getText();
+				try {
+					Player player = pc.findPlayerByName(gamer_tag);
+					label_for_player_id.setText("" + player.getPlayerID());
+					txt_gamer_tag.setText(player.getGamerTag());
+					txt_player_team_ID.setText(""+ player.getTeamID());
+					
+				}
+				catch(Exception exc) {
+					info_label_search_player.setText("Could not find player");
+				}
+			}
+		});
+		search_player_button.setFocusPainted(false);
+		search_player_button.setContentAreaFilled(false);
+		search_player_button.setBounds(125, 275, 210, 23);
+		playerManagementMenu.add(search_player_button);
+		
+		JLabel search_player_label = new JLabel("Search player");
+		search_player_label.setFont(new Font("Tahoma", Font.BOLD, 12));
+		search_player_label.setBounds(125, 173, 210, 35);
+		playerManagementMenu.add(search_player_label);
+		
+		JLabel info_label_player_2 = new JLabel("Team ID");
+		info_label_player_2.setBounds(463, 255, 83, 30);
+		playerManagementMenu.add(info_label_player_2);
+		
+		txt_player_team_ID = new JTextField();
+		txt_player_team_ID.setColumns(10);
+		txt_player_team_ID.setBounds(538, 255, 135, 30);
+		playerManagementMenu.add(txt_player_team_ID);
 		
 		JPanel tournamentCreationMenu = new JPanel();
 		tournamentCreationMenu.setLayout(null);
@@ -1229,5 +1323,4 @@ public class Menu {
 		
 		
 	}
-
 }
