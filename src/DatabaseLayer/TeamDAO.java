@@ -42,7 +42,7 @@ public class TeamDAO implements TeamDAOIF {
 				if (tName.get().equals("null")) {
 					
 				} else {
-					statement.setString(1, tName.get());
+					//statement.setString(1, tName.get());
 				}
 				int id = result.getInt("TeamID");
 				String teamName = result.getString("Team Name");
@@ -60,14 +60,14 @@ public class TeamDAO implements TeamDAOIF {
 	}
 
 	public ArrayList<Player> PopulateArray(int teamID) {
-		String teamSQL = "SELECT Players FROM Players WHERE PlayerID = (SELECT PlayerID FROM PlayerTeam WHERE TeamID = ?)";
+		String teamSQL = "SELECT * FROM Players WHERE PlayerID = (SELECT PlayerID FROM PlayerTeam WHERE TeamID = ?)";
 		ArrayList<Player> players = new ArrayList<>();
 
 		try {
 			PreparedStatement statement = con.prepareStatement(teamSQL);
+			statement.setInt(1, teamID);
 			ResultSet result = statement.executeQuery();
 			while (result.next()) {
-				statement.setInt(1, teamID);
 				int playerID = result.getInt("PlayerID");
 				String gamerTag = result.getString("Gammer Tag");
 				int totalKills = result.getInt("Total Kills");
@@ -102,7 +102,7 @@ public class TeamDAO implements TeamDAOIF {
 	}
 
 	public Team findTeamByName(String teamName) {
-		String sql = "SELECT * FROM Teams WHERE Team Name = ? ";
+		String sql = "SELECT * FROM Teams WHERE [Team Name] = " + "'" + teamName +"'";
 		HigherOrderFunctionForGetMethods(() -> sql, () -> teamName);
 		return team;
 	}
@@ -163,13 +163,13 @@ public class TeamDAO implements TeamDAOIF {
 	}
 
 	public void updateTeamName(int id, String teamName) {
-		String sql = "UPDATE Teams Set Team Name = ? WHERE TeamID = ?";
+		String sql = "UPDATE Teams Set [Team Name] = ? WHERE TeamID = ?";
 
 		PreparedStatement statement;
 		try {
 			statement = con.prepareStatement(sql);
 			statement.setString(1, teamName);
-			statement.setInt(1, id);
+			statement.setInt(2, id);
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

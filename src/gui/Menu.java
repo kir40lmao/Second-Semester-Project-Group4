@@ -246,6 +246,14 @@ public class Menu {
 		label_for_team_id.setBounds(516, 157, 135, 30);
 		teamManagementMenu.add(label_for_team_id);
 		
+		JLabel lblNewLabel_5 = new JLabel("");
+		lblNewLabel_5.setForeground(Color.GREEN);
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_5.setBounds(441, 284, 210, 30);
+		teamManagementMenu.add(lblNewLabel_5);
+		
+		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Manage Teams");
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -253,6 +261,7 @@ public class Menu {
 				textField_4.setText("");
 				label_for_team_id.setText("");
 				txt_search_team.setText("");
+				lblNewLabel_5.setText("");
 			}
 		});
 		mnNewMenu.add(mntmNewMenuItem_1);
@@ -278,6 +287,13 @@ public class Menu {
 		label_for_player_id.setBounds(538, 173, 135, 30);
 		playerManagementMenu.add(label_for_player_id);
 		
+		JLabel lblNewLabel_4 = new JLabel("");
+		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNewLabel_4.setForeground(Color.GREEN);
+		lblNewLabel_4.setBounds(463, 341, 210, 23);
+		playerManagementMenu.add(lblNewLabel_4);
+		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Manage Players");
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -286,6 +302,7 @@ public class Menu {
 				txt_gamer_tag.setText("");
 				txt_player_team_ID.setText("");
 				label_for_player_id.setText("");
+				lblNewLabel_4.setText("");
 			}
 		});
 		mnNewMenu_1.add(mntmNewMenuItem_3);
@@ -385,6 +402,7 @@ public class Menu {
 				textField_4.setText("");
 				label_for_team_id.setText("");
 				txt_search_team.setText("");
+				lblNewLabel_5.setText("");
 			}
 		});
 		mnNewMenu1.add(mntmNewMenuItem_11);
@@ -410,6 +428,7 @@ public class Menu {
 				txt_gamer_tag.setText("");
 				txt_player_team_ID.setText("");
 				label_for_player_id.setText("");
+				lblNewLabel_4.setText("");
 			}
 		});
 		mnNewMenu_11.add(mntmNewMenuItem_31);
@@ -489,6 +508,9 @@ public class Menu {
 			public void actionPerformed(ActionEvent e) {
 				String teamName = teamNameField.getText();
 				teamc.createTeam(teamName);
+				cl_base.show(frame.getContentPane(), "teamManagementMenu");
+				textField_4.setText(teamName);
+				label_for_team_id.setText("" + teamc.findTeamByName(teamName).getTeamID());
 			}
 		});
 		btnNewButton_2_1_1.setBounds(365, 171, 151, 41);
@@ -519,6 +541,7 @@ public class Menu {
 				textField_4.setText("");
 				label_for_team_id.setText("");
 				txt_search_team.setText("");
+				lblNewLabel_5.setText("");
 			}
 		});
 		mnNewMenu11.add(mntmNewMenuItem_111);
@@ -544,6 +567,7 @@ public class Menu {
 				txt_gamer_tag.setText("");
 				txt_player_team_ID.setText("");
 				label_for_player_id.setText("");
+				lblNewLabel_4.setText("");
 			}
 		});
 		mnNewMenu_111.add(mntmNewMenuItem_311);
@@ -626,7 +650,6 @@ public class Menu {
 		textField_4.setBounds(516, 198, 135, 30);
 		teamManagementMenu.add(textField_4);
 		
-		
 		JButton search_team_button_1 = new JButton("Find");
 		search_team_button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -634,6 +657,7 @@ public class Menu {
 				Team team = teamc.findTeamByName(team_name);
 				label_for_team_id.setText("" + team.getTeamID());
 				textField_4.setText(team.getTeamName());
+				lblNewLabel_5.setText("");
 			}
 		});
 		search_team_button_1.setFocusPainted(false);
@@ -654,6 +678,9 @@ public class Menu {
 				int teamID = Integer.parseInt(label_for_team_id.getText());
 				String teamName = textField_4.getText();
 				teamc.updateTeamName(teamID, teamName);
+				label_for_team_id.setText("");
+				textField_4.setText("");
+				lblNewLabel_5.setText("Successfully changed");
 			}
 		});
 		save_changes_button_player_1.setFocusPainted(false);
@@ -698,6 +725,7 @@ public class Menu {
 				textField_4.setText("");
 				label_for_team_id.setText("");
 				txt_search_team.setText("");
+				lblNewLabel_5.setText("");
 			}
 		});
 		mnNewMenu111.add(mntmNewMenuItem_1111);
@@ -723,6 +751,7 @@ public class Menu {
 				txt_gamer_tag.setText("");
 				txt_player_team_ID.setText("");
 				label_for_player_id.setText("");
+				lblNewLabel_4.setText("");
 			}
 		});
 		mnNewMenu_1111.add(mntmNewMenuItem_3111);
@@ -802,6 +831,10 @@ public class Menu {
 			public void actionPerformed(ActionEvent e) {
 				String gamerTag = gamerTagField.getText();
 				pc.createPlayer(gamerTag);
+				cl_base.show(frame.getContentPane(), "playerManagementMenu");
+				txt_gamer_tag.setText(gamerTag);
+				txt_player_team_ID.setText("" + pc.findPlayerByName(gamerTag).getTeamID());
+				label_for_player_id.setText("" + pc.findPlayerByName(gamerTag).getPlayerID());
 			}
 		});
 		btnNewButton_6.setBounds(521, 182, 135, 35);
@@ -832,6 +865,8 @@ public class Menu {
 				textField_4.setText("");
 				label_for_team_id.setText("");
 				txt_search_team.setText("");
+				lblNewLabel_5.setText("");
+				lblNewLabel_5.setText("");
 			}
 		});
 		mnNewMenu1111.add(mntmNewMenuItem_11111);
@@ -857,6 +892,7 @@ public class Menu {
 				txt_gamer_tag.setText("");
 				txt_player_team_ID.setText("");
 				label_for_player_id.setText("");
+				lblNewLabel_4.setText("");
 			}
 		});
 		mnNewMenu_11111.add(mntmNewMenuItem_31111);
@@ -933,6 +969,8 @@ public class Menu {
 		info_label_player_id.setBounds(463, 173, 83, 30);
 		playerManagementMenu.add(info_label_player_id);
 		
+		
+		
 		JButton save_changes_button_player = new JButton("Save changes");
 		save_changes_button_player.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -940,6 +978,10 @@ public class Menu {
 				int teamID = Integer.parseInt(txt_player_team_ID.getText());
 				String gamerTag = txt_gamer_tag.getText();
 				pc.updatePlayerDetails(playerID, gamerTag, teamID);
+				txt_gamer_tag.setText("");
+				txt_player_team_ID.setText("");
+				label_for_player_id.setText("");
+				lblNewLabel_4.setText("Successfully changed");
 			}
 		});
 		save_changes_button_player.setFocusPainted(false);
@@ -973,6 +1015,7 @@ public class Menu {
 					label_for_player_id.setText("" + player.getPlayerID());
 					txt_gamer_tag.setText(player.getGamerTag());
 					txt_player_team_ID.setText(""+ player.getTeamID());
+					lblNewLabel_4.setText("");
 					
 				}
 				catch(Exception exc) {
@@ -1028,6 +1071,7 @@ public class Menu {
 				textField_4.setText("");
 				label_for_team_id.setText("");
 				txt_search_team.setText("");
+				lblNewLabel_5.setText("");
 			}
 		});
 		mnNewMenu11111.add(mntmNewMenuItem_111111);
@@ -1053,6 +1097,7 @@ public class Menu {
 				txt_gamer_tag.setText("");
 				txt_player_team_ID.setText("");
 				label_for_player_id.setText("");
+				lblNewLabel_4.setText("");
 			}
 		});
 		mnNewMenu_111111.add(mntmNewMenuItem_311111);
@@ -1211,6 +1256,7 @@ public class Menu {
 				textField_4.setText("");
 				label_for_team_id.setText("");
 				txt_search_team.setText("");
+				lblNewLabel_5.setText("");
 			}
 		});
 		mnNewMenu111111.add(mntmNewMenuItem_1111111);
@@ -1236,6 +1282,7 @@ public class Menu {
 				txt_gamer_tag.setText("");
 				txt_player_team_ID.setText("");
 				label_for_player_id.setText("");
+				lblNewLabel_4.setText("");
 			}
 		});
 		mnNewMenu_1111111.add(mntmNewMenuItem_3111111);
