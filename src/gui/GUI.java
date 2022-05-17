@@ -17,6 +17,10 @@ import java.awt.Font;
 import java.awt.Toolkit;
 
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 
 
@@ -34,16 +38,11 @@ public class GUI extends JFrame {
 	
 
 	public static void main(String[] args) {
-		MatchController mc = new MatchController();
-		//System.out.println(mc.getAllMatchesFromTournament(1008));
-		mc.createMatch(1001, 1002, "2022-11-10");
-		//mc.updatePlayerMatchStats(1002, 1001, 10, 12);
-		//mc.updateMatchScore(1002, 16, 9);
-		//mc.getMatchDetails(1002);
-		//System.setProperty("sun.java2d.uiScale", "1.0");
-		//GUI frame = new GUI();
-		//frame.setVisible(true);
-		//frame.setTitle("XtremeSports app - user version");
+		
+		System.setProperty("sun.java2d.uiScale", "1.0");
+		GUI frame = new GUI();
+		frame.setVisible(true);
+		frame.setTitle("XtremeSports app - user version");
 	}
 
 	public GUI() {
