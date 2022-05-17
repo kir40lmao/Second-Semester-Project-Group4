@@ -49,7 +49,7 @@ public class Menu {
 	Login login_window;
 	private JTextField textField_search_gamer;
 	
-	static PlayerController pc = new PlayerController();
+	PlayerController pc = new PlayerController();
 	MatchController mc = new MatchController();
 	TeamController teamc = new TeamController();
 	TournamentController tournamentc = new TournamentController();
@@ -233,14 +233,26 @@ public class Menu {
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "teamCreationMenu");
+				teamNameField.setText("");
 			}
 		});
 		mnNewMenu.add(mntmNewMenuItem);
+		
+		JPanel teamManagementMenu = new JPanel();
+		teamManagementMenu.setLayout(null);
+		frame.getContentPane().add(teamManagementMenu, "teamManagementMenu");
+		
+		JLabel label_for_team_id = new JLabel("<<team id>>");
+		label_for_team_id.setBounds(516, 157, 135, 30);
+		teamManagementMenu.add(label_for_team_id);
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Manage Teams");
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "teamManagementMenu");
+				textField_4.setText("");
+				label_for_team_id.setText("");
+				txt_search_team.setText("");
 			}
 		});
 		mnNewMenu.add(mntmNewMenuItem_1);
@@ -253,14 +265,27 @@ public class Menu {
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "playerCreationMenu");
+				gamerTagField.setText("");
 			}
 		});
 		mnNewMenu_1.add(mntmNewMenuItem_2);
+		
+		JPanel playerManagementMenu = new JPanel();
+		playerManagementMenu.setLayout(null);
+		frame.getContentPane().add(playerManagementMenu, "playerManagementMenu");
+		
+		JLabel label_for_player_id = new JLabel("<<player id>>");
+		label_for_player_id.setBounds(538, 173, 135, 30);
+		playerManagementMenu.add(label_for_player_id);
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Manage Players");
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "playerManagementMenu");
+				textField_search_gamer.setText("");
+				txt_gamer_tag.setText("");
+				txt_player_team_ID.setText("");
+				label_for_player_id.setText("");
 			}
 		});
 		mnNewMenu_1.add(mntmNewMenuItem_3);
@@ -348,6 +373,7 @@ public class Menu {
 		mntmNewMenuItem1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "teamCreationMenu");
+				teamNameField.setText("");
 			}
 		});
 		mnNewMenu1.add(mntmNewMenuItem1);
@@ -356,6 +382,9 @@ public class Menu {
 		mntmNewMenuItem_11.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "teamManagementMenu");
+				textField_4.setText("");
+				label_for_team_id.setText("");
+				txt_search_team.setText("");
 			}
 		});
 		mnNewMenu1.add(mntmNewMenuItem_11);
@@ -368,6 +397,7 @@ public class Menu {
 		mntmNewMenuItem_21.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "playerCreationMenu");
+				gamerTagField.setText("");
 			}
 		});
 		mnNewMenu_11.add(mntmNewMenuItem_21);
@@ -376,6 +406,10 @@ public class Menu {
 		mntmNewMenuItem_31.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "playerManagementMenu");
+				textField_search_gamer.setText("");
+				txt_gamer_tag.setText("");
+				txt_player_team_ID.setText("");
+				label_for_player_id.setText("");
 			}
 		});
 		mnNewMenu_11.add(mntmNewMenuItem_31);
@@ -451,12 +485,14 @@ public class Menu {
 		teamNameField.setColumns(10);
 		
 		JButton btnNewButton_2_1_1 = new JButton("Confirm Team Creation");
-		btnNewButton_2_1_1.setBounds(367, 203, 151, 41);
+		btnNewButton_2_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String teamName = teamNameField.getText();
+				teamc.createTeam(teamName);
+			}
+		});
+		btnNewButton_2_1_1.setBounds(365, 171, 151, 41);
 		teamCreationMenu.add(btnNewButton_2_1_1);
-				
-		JPanel teamManagementMenu = new JPanel();
-		teamManagementMenu.setLayout(null);
-		frame.getContentPane().add(teamManagementMenu, "teamManagementMenu");
 		
 		JMenuBar menuBar11 = new JMenuBar();
 		menuBar11.setBackground(Color.LIGHT_GRAY);
@@ -471,6 +507,7 @@ public class Menu {
 		mntmNewMenuItem11.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "teamCreationMenu");
+				teamNameField.setText("");
 			}
 		});
 		mnNewMenu11.add(mntmNewMenuItem11);
@@ -479,6 +516,9 @@ public class Menu {
 		mntmNewMenuItem_111.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "teamManagementMenu");
+				textField_4.setText("");
+				label_for_team_id.setText("");
+				txt_search_team.setText("");
 			}
 		});
 		mnNewMenu11.add(mntmNewMenuItem_111);
@@ -491,6 +531,7 @@ public class Menu {
 		mntmNewMenuItem_211.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "playerCreationMenu");
+				gamerTagField.setText("");
 			}
 		});
 		mnNewMenu_111.add(mntmNewMenuItem_211);
@@ -499,6 +540,10 @@ public class Menu {
 		mntmNewMenuItem_311.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "playerManagementMenu");
+				textField_search_gamer.setText("");
+				txt_gamer_tag.setText("");
+				txt_player_team_ID.setText("");
+				label_for_player_id.setText("");
 			}
 		});
 		mnNewMenu_111.add(mntmNewMenuItem_311);
@@ -581,9 +626,6 @@ public class Menu {
 		textField_4.setBounds(516, 198, 135, 30);
 		teamManagementMenu.add(textField_4);
 		
-		JLabel label_for_team_id = new JLabel("<<team id>>");
-		label_for_team_id.setBounds(516, 157, 135, 30);
-		teamManagementMenu.add(label_for_team_id);
 		
 		JButton search_team_button_1 = new JButton("Find");
 		search_team_button_1.addActionListener(new ActionListener() {
@@ -609,7 +651,9 @@ public class Menu {
 		JButton save_changes_button_player_1 = new JButton("Save changes");
 		save_changes_button_player_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//teamc.updateTeamName();
+				int teamID = Integer.parseInt(label_for_team_id.getText());
+				String teamName = textField_4.getText();
+				teamc.updateTeamName(teamID, teamName);
 			}
 		});
 		save_changes_button_player_1.setFocusPainted(false);
@@ -642,6 +686,7 @@ public class Menu {
 		mntmNewMenuItem111.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "teamCreationMenu");
+				teamNameField.setText("");
 			}
 		});
 		mnNewMenu111.add(mntmNewMenuItem111);
@@ -650,6 +695,9 @@ public class Menu {
 		mntmNewMenuItem_1111.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "teamManagementMenu");
+				textField_4.setText("");
+				label_for_team_id.setText("");
+				txt_search_team.setText("");
 			}
 		});
 		mnNewMenu111.add(mntmNewMenuItem_1111);
@@ -662,6 +710,7 @@ public class Menu {
 		mntmNewMenuItem_2111.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "playerCreationMenu");
+				gamerTagField.setText("");
 			}
 		});
 		mnNewMenu_1111.add(mntmNewMenuItem_2111);
@@ -670,6 +719,10 @@ public class Menu {
 		mntmNewMenuItem_3111.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "playerManagementMenu");
+				textField_search_gamer.setText("");
+				txt_gamer_tag.setText("");
+				txt_player_team_ID.setText("");
+				label_for_player_id.setText("");
 			}
 		});
 		mnNewMenu_1111.add(mntmNewMenuItem_3111);
@@ -754,10 +807,6 @@ public class Menu {
 		btnNewButton_6.setBounds(521, 182, 135, 35);
 		playerCreationMenu.add(btnNewButton_6);
 		
-		JPanel playerManagementMenu = new JPanel();
-		playerManagementMenu.setLayout(null);
-		frame.getContentPane().add(playerManagementMenu, "playerManagementMenu");
-		
 		JMenuBar menuBar1111 = new JMenuBar();
 		menuBar1111.setBackground(Color.LIGHT_GRAY);
 		menuBar1111.setBounds(0, 0, 1281, 35);
@@ -771,6 +820,7 @@ public class Menu {
 		mntmNewMenuItem1111.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "teamCreationMenu");
+				teamNameField.setText("");
 			}
 		});
 		mnNewMenu1111.add(mntmNewMenuItem1111);
@@ -779,6 +829,9 @@ public class Menu {
 		mntmNewMenuItem_11111.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "teamManagementMenu");
+				textField_4.setText("");
+				label_for_team_id.setText("");
+				txt_search_team.setText("");
 			}
 		});
 		mnNewMenu1111.add(mntmNewMenuItem_11111);
@@ -791,6 +844,7 @@ public class Menu {
 		mntmNewMenuItem_21111.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "playerCreationMenu");
+				gamerTagField.setText("");
 			}
 		});
 		mnNewMenu_11111.add(mntmNewMenuItem_21111);
@@ -799,6 +853,10 @@ public class Menu {
 		mntmNewMenuItem_31111.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "playerManagementMenu");
+				textField_search_gamer.setText("");
+				txt_gamer_tag.setText("");
+				txt_player_team_ID.setText("");
+				label_for_player_id.setText("");
 			}
 		});
 		mnNewMenu_11111.add(mntmNewMenuItem_31111);
@@ -871,10 +929,6 @@ public class Menu {
 		info_label_player.setBounds(463, 214, 83, 30);
 		playerManagementMenu.add(info_label_player);
 		
-		JLabel label_for_player_id = new JLabel("<<player id>>");
-		label_for_player_id.setBounds(538, 173, 135, 30);
-		playerManagementMenu.add(label_for_player_id);
-		
 		JLabel info_label_player_id = new JLabel("Player ID");
 		info_label_player_id.setBounds(463, 173, 83, 30);
 		playerManagementMenu.add(info_label_player_id);
@@ -914,6 +968,7 @@ public class Menu {
 			public void actionPerformed(ActionEvent e) {
 				String gamer_tag = textField_search_gamer.getText();
 				try {
+					info_label_search_player.setText("");
 					Player player = pc.findPlayerByName(gamer_tag);
 					label_for_player_id.setText("" + player.getPlayerID());
 					txt_gamer_tag.setText(player.getGamerTag());
@@ -961,6 +1016,7 @@ public class Menu {
 		mntmNewMenuItem11111.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "teamCreationMenu");
+				teamNameField.setText("");
 			}
 		});
 		mnNewMenu11111.add(mntmNewMenuItem11111);
@@ -969,6 +1025,9 @@ public class Menu {
 		mntmNewMenuItem_111111.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "teamManagementMenu");
+				textField_4.setText("");
+				label_for_team_id.setText("");
+				txt_search_team.setText("");
 			}
 		});
 		mnNewMenu11111.add(mntmNewMenuItem_111111);
@@ -981,6 +1040,7 @@ public class Menu {
 		mntmNewMenuItem_211111.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "playerCreationMenu");
+				gamerTagField.setText("");
 			}
 		});
 		mnNewMenu_111111.add(mntmNewMenuItem_211111);
@@ -989,6 +1049,10 @@ public class Menu {
 		mntmNewMenuItem_311111.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "playerManagementMenu");
+				textField_search_gamer.setText("");
+				txt_gamer_tag.setText("");
+				txt_player_team_ID.setText("");
+				label_for_player_id.setText("");
 			}
 		});
 		mnNewMenu_111111.add(mntmNewMenuItem_311111);
@@ -1135,6 +1199,7 @@ public class Menu {
 		mntmNewMenuItem111111.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "teamCreationMenu");
+				teamNameField.setText("");
 			}
 		});
 		mnNewMenu111111.add(mntmNewMenuItem111111);
@@ -1143,6 +1208,9 @@ public class Menu {
 		mntmNewMenuItem_1111111.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "teamManagementMenu");
+				textField_4.setText("");
+				label_for_team_id.setText("");
+				txt_search_team.setText("");
 			}
 		});
 		mnNewMenu111111.add(mntmNewMenuItem_1111111);
@@ -1155,6 +1223,7 @@ public class Menu {
 		mntmNewMenuItem_2111111.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "playerCreationMenu");
+				gamerTagField.setText("");
 			}
 		});
 		mnNewMenu_1111111.add(mntmNewMenuItem_2111111);
@@ -1163,6 +1232,10 @@ public class Menu {
 		mntmNewMenuItem_3111111.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "playerManagementMenu");
+				textField_search_gamer.setText("");
+				txt_gamer_tag.setText("");
+				txt_player_team_ID.setText("");
+				label_for_player_id.setText("");
 			}
 		});
 		mnNewMenu_1111111.add(mntmNewMenuItem_3111111);
