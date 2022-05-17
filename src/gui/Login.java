@@ -1,5 +1,6 @@
 package gui;
 
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -28,6 +29,7 @@ public class Login extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JPasswordField passwordField;
+
 
 	
 	public Login() {
@@ -82,11 +84,8 @@ public class Login extends JFrame {
 				name = textField.getText();
 				password = passwordField.getText();
 				if(password.equals("admin") && name.equals("admin")) {
-					logged_in = true;
-					setVisible(false);
-					GUI gui = new GUI();
-					gui.setVisible(true);
-					gui.setTitle("XtremeSports app - Manager version");
+					setVisible(false);				
+					
 				}
 			}
 		});
