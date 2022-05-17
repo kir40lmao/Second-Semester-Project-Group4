@@ -34,7 +34,7 @@ public class PlayerDAO implements PlayerDAOIF{
 			
 			statement = conn.prepareStatement(sql2);
 			statement.setInt(1, playerID);
-			statement.setInt(2, 1003);
+			statement.setInt(2, 1000);
 			statement.executeUpdate();
 			
 		} catch (SQLException e) {
