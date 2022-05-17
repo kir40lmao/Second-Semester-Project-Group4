@@ -1,9 +1,10 @@
 package ControllerLayer;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import DatabaseLayer.TournamentDAO;
 import DatabaseLayer.TournamentDAOIF;
+import ModelLayer.Team;
 import ModelLayer.Tournament;
 
 public class TournamentController {
@@ -15,27 +16,36 @@ public class TournamentController {
 	}
 	
 	public void createTournament(String tournamentName, String date) {
-		tdao.createTournament(tournamentName, date);
+		Tournament tournament = new Tournament(tournamentName, date);
+		tdao.createTournament(tournament);
+	}
+	
+	public void createMatchUps(ArrayList<Team> teams, int tournamentID) {
+		tdao.createMatchUps(teams, tournamentID);
 	}
 	
 	public Tournament findTournamentByID(int tournamentID) {
 		return tdao.findTournamentByID(tournamentID);
 	}
 	
+	public void addTournamentMatches() {
+		tdao.addTournamentMatches();
+	}
+	
 	public void getAllTournaments() {
-		 tdao.getAllTournaments();
+		tdao.getAllTournaments();
 	}
 	
-	public List<Tournament> getUpcoming(String status) {
-		return tdao.getUpcoming(status);
+	public void getUpcoming(String status) {
+		tdao.getUpcoming(status);
 	}
 	
-	public List<Tournament> getOngoing(String status) {
-		return tdao.getOngoing(status);
+	public void getOngoing(String status) {
+		tdao.getOngoing(status);
 	}
 	
-	public List<Tournament> getFinished(String status) {
-		return tdao.getFinished(status);
+	public void getFinished(String status) {
+		tdao.getFinished(status);
 	}
 	
 	public void updateTournament(String tournamentName, String date, String venue, String status, String previousTournamentName) {

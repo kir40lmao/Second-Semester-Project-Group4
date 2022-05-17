@@ -1,6 +1,5 @@
 package DatabaseLayer;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
+import ControllerLayer.MatchController;
+import ModelLayer.Match;
+import ModelLayer.Team;
 import ModelLayer.Tournament;
 
 public class TournamentDAO implements TournamentDAOIF{
@@ -17,18 +19,93 @@ public class TournamentDAO implements TournamentDAOIF{
 	DBConnection dbcon = DBConnection.getInstance();
 	Connection con = dbcon.getDBcon();
 	
+	String sql = "INSERT INTO Tournament ([Tournament Name], Date) VALUES (?, ?)";
+	String sql2 = "INSERT INTO TournamentMatch (TournamentID, MatchID) VALUES ((SELECT TournamentID FROM Tournament WHERE TournamentID = ?), (SELECT MatchID FROM Matches WHERE MatchID = ?))";
+	String sql3 = "INSERT INTO TournamentTeam (TournamentID, TeamID) VALUES ((SELECT TournamentID FROM Tournament WHERE TournamentID = ?), (SELECT TeamID FROM Teams WHERE TeamID = ?))";
+	
+	String sql_getMatchID = "SELECT MatchID FROM Matches WHERE MatchID = ?";
+	String sql_getTeamID = "SELECT TeamID FROM Teams WHERE TeamID = ?";
+	String sql_getTournamentID = "SELECT TournamentID FROM Tournament WHERE TournamentID = ?";
+	
+	PreparedStatement statement;
+	int SQLtournamentID;
+	MatchController mc = new MatchController();
+	
 	@Override
-	public void createTournament(String tournamentName, String date) {
+	public void createTournament(Tournament tournament) {
 		try {
-			String sql = "INSERT INTO Tournament ([Tournament Name], Date) VALUES (?, ?)";
-			 
-			PreparedStatement statement = con.prepareStatement(sql);
-			statement.setString(1, tournamentName);
-			statement.setDate(2, java.sql.Date.valueOf(date));
+			statement = con.prepareStatement(sql);
+			statement.setString(1, tournament.getTournamentName());
+			statement.setDate(2, java.sql.Date.valueOf(tournament.getDate()));
 			statement.executeUpdate();
-			
-
 		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	@Override
+	public void createMatchUps(ArrayList<Team> teams, int tournamentID) {
+		try {
+			statement = con.prepareStatement(sql_getTournamentID);
+			statement.setInt(1, tournamentID);
+			ResultSet result1 = statement.executeQuery();
+			result1.next();
+			SQLtournamentID = result1.getInt(1);
+			
+			for(int i = 0; i < teams.size(); i++) {
+				Team team = teams.get(i);
+				
+				statement = con.prepareStatement(sql_getTeamID);
+				statement.setInt(1, team.getTeamID());
+				ResultSet result3 = statement.executeQuery();
+				result3.next();
+				int teamID = result3.getInt(1);
+				
+				statement = con.prepareStatement(sql3);
+				statement.setInt(1, SQLtournamentID);
+				statement.setInt(2, teamID);
+				statement.executeUpdate();
+				
+			}
+			
+		}catch (SQLException e) {
+				e.printStackTrace();
+		}
+		
+		for(int i = 0; i < teams.size() / 2; i += 2) {
+			Team team1, team2;
+			team1 = teams.get(i);
+			team2 = teams.get(i+1);
+			Match match = mc.createMatch(team1.getTeamID(), team2.getTeamID(), null);
+			addTournamentMatches();	
+		}
+		
+		for(int i = 0; i < teams.size()/2 - 1; i++) {
+			Match nullMatch = mc.createMatch(null,null,null);
+			addTournamentMatches();
+		}
+	}
+	@Override
+	public void addTournamentMatches() {
+		try {
+			String sql_getMaxMatchID = "SELECT Max(MatchID) FROM Matches";
+	
+	        statement = con.prepareStatement(sql_getMaxMatchID);
+	        ResultSet rs = statement.executeQuery();
+	        rs.next();
+	        int maxMatchID = rs.getInt(1);
+			
+			statement = con.prepareStatement(sql_getMatchID);
+			statement.setInt(1, maxMatchID);
+			ResultSet result2 = statement.executeQuery();
+			result2.next();
+			int matchID = result2.getInt(1);
+			
+			statement = con.prepareStatement(sql2);
+			statement.setInt(1, SQLtournamentID);
+			statement.setInt(2, matchID);
+			statement.executeUpdate();
+		
+		}catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
@@ -47,31 +124,41 @@ public class TournamentDAO implements TournamentDAOIF{
 			    t.setStatus(rs.getString(5));
 			    allTournaments.add(t);
 			}
-            System.out.println(allTournaments);
 			return allTournaments;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
+	@Override
 	public void getAllTournaments() {
-	        String sql = "SELECT * FROM Tournament";
-	        HigherOrderFunctionForGetMethods(() -> sql);
+		String sql = "SELECT * FROM Tournament";
+	    HigherOrderFunctionForGetMethods(() -> sql);
 	}
-		
-	
-	
-	
+	@Override
+	public void getUpcoming(String status){
+		String sql = "SELECT * FROM Tournament WHERE Status = '"+status+"'";
+		HigherOrderFunctionForGetMethods(() -> sql);
+	}
+	@Override
+	public void getOngoing(String status) {
+		String sql = "SELECT * FROM Tournament WHERE Status = '"+status+"'";
+		HigherOrderFunctionForGetMethods(() -> sql);
+	}
+	@Override
+	public void getFinished(String status) {
+		String sql = "SELECT * FROM Tournament WHERE Status = '"+status+"'";
+		HigherOrderFunctionForGetMethods(() -> sql);
+	}
 	@Override
 	public Tournament findTournamentByID(int tournamentID){
+		String sql = "SELECT * FROM Tournament WHERE TournamentID = ?";
 		try {
-		     
-			String sql = "SELECT * FROM Tournament WHERE TournamentID = ?";
-			PreparedStatement statement = con.prepareStatement(sql);
-			statement.setInt(1, tournamentID);
-			ResultSet rs = statement.executeQuery(); 
-			if (rs.next()) {
-				Tournament t = new Tournament();
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, tournamentID);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()){
+            	Tournament t = new Tournament();
 				t.setTournamentID(rs.getInt(1));
 				t.setTournamentName(rs.getString(2));			    
 				t.setDate(rs.getDate(3).toString());
@@ -79,123 +166,17 @@ public class TournamentDAO implements TournamentDAOIF{
 			    t.setStatus(rs.getString(5));
 			    return t;
 			}
-		} catch (SQLException ex) {
-		    ex.printStackTrace();
-		}
-		return null;
-	}
-	
-	/*@Override
-	public List<Tournament> getAllTournaments(){
-		List<Tournament> tList = new ArrayList<>();
-		try {
-			String sql = "SELECT * FROM Tournament";
-			 
-			Statement statement = con.createStatement();
-			ResultSet rs = statement.executeQuery(sql);
-			 
-			while (rs.next()){
-			    Tournament t = new Tournament();
-				t.setTournamentID(rs.getInt(1));
-				t.setTournamentName(rs.getString(2));			    
-				t.setDate(rs.getDate(3).toString());
-			    t.setVenue(rs.getString(4));
-			    t.setStatus(rs.getString(5));
-			    tList.add(t);
-			}
-			return tList;
-		} catch (SQLException ex) {
-		    ex.printStackTrace();
-		}
-		return null;
-	}*/
-	
-	@Override
-	public List<Tournament> getUpcoming(String status){
-		List<Tournament> tListUpcoming = new ArrayList<>();
-		try {
-			String sql = "SELECT * FROM Tournament WHERE Status = ?";
-			 
-			PreparedStatement statement = con.prepareStatement(sql);
-			statement.setString(1, status);
-			ResultSet rs = statement.executeQuery(sql);
-			 
-			while (rs.next()){
-			    Tournament t = new Tournament();
-				t.setTournamentID(rs.getInt(1));
-				t.setTournamentName(rs.getString(2));			    
-				t.setDate(rs.getDate(3).toString());
-			    t.setVenue(rs.getString(4));
-			    t.setStatus(rs.getString(5));
-			    tListUpcoming.add(t);
-			}
-			return tListUpcoming;
-		     
-		} catch (SQLException ex) {
-		    ex.printStackTrace();
-		}
-		return null;
-	}
-
-	@Override
-	public List<Tournament> getOngoing(String status) {
-		List<Tournament> tListOngoing = new ArrayList<>();
-		try {
-			String sql = "SELECT * FROM Tournament WHERE Status = ?";
-			 
-			PreparedStatement statement = con.prepareStatement(sql);
-			statement.setString(1, status);
-			ResultSet rs = statement.executeQuery(sql);
-			 
-			while (rs.next()){
-			    Tournament t = new Tournament();
-				t.setTournamentID(rs.getInt(1));
-				t.setTournamentName(rs.getString(2));			    
-				t.setDate(rs.getDate(3).toString());
-			    t.setVenue(rs.getString(4));
-			    t.setStatus(rs.getString(5));
-			    tListOngoing.add(t);
-			}
-			return tListOngoing;
-		     
-		} catch (SQLException ex) {
-		    ex.printStackTrace();
-		}
-		return null;
-	}
-	
-	@Override
-	public List<Tournament> getFinished(String status) {
-		List<Tournament> tListFinished = new ArrayList<>();
-		try {
-			String sql = "SELECT * FROM Tournament WHERE Status = ?";
-			 
-			PreparedStatement statement = con.prepareStatement(sql);
-			statement.setString(1, status);
-			ResultSet rs = statement.executeQuery(sql);
-			 
-			while (rs.next()){
-			    Tournament t = new Tournament();
-				t.setTournamentID(rs.getInt(1));
-				t.setTournamentName(rs.getString(2));			    
-				t.setDate(rs.getDate(3).toString());
-			    t.setVenue(rs.getString(4));
-			    t.setStatus(rs.getString(5));
-			    tListFinished.add(t);
-			}
-			return tListFinished;
-		     
-		} catch (SQLException ex) {
-		    ex.printStackTrace();
-		}
-		return null;
+			
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
 	}
 	
 	@Override
 	public void updateTournament(String tournamentName, String date, String venue, String status, String previousTournamentName){
 		try {  
 			String sql = "UPDATE Tournament SET [Tournament Name]=?, Date=?, Venue=?, Status=? WHERE [Tournament Name]=?";
-			 
 			PreparedStatement statement = con.prepareStatement(sql);
 			statement.setString(1, tournamentName);
 			statement.setDate(2, java.sql.Date.valueOf(date));
@@ -212,9 +193,7 @@ public class TournamentDAO implements TournamentDAOIF{
 	@Override
 	public void deleteTournament(int tournamentID){
 		try {
-		     
 			String sql = "DELETE FROM Tournament WHERE TournamentID=?";
-			 
 			PreparedStatement statement = con.prepareStatement(sql);
 			statement.setInt(1, tournamentID);
 			statement.executeUpdate();
