@@ -15,11 +15,11 @@ public interface TeamDAOIF {
 
 	void updateTeamName(int teamID, String name);
 
-	List<Team> HigherOrderFunctionForGetMethods(Supplier<String> stringSQL);
+	List<Team> HigherOrderFunctionForGetMethods(Supplier<String> stringSQL,int teamID,String tName);
 
 	List<Team> getEligible();
 
-	void updateTeamStats(int teamID, int wins, int loses);
+	void updateTeamStats(int teamID, int wins, int loses, int matchID);
 
 	Team findTeamByName(String teamName);
 }

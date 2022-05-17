@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 
 
 public class DBConnection {   
+
 	
 	private static final String  driver = "jdbc:sqlserver://hildur.ucn.dk\\SQLExpress:1433;";
     private static final String  databaseName = ";databaseName=CSC-CSD-S212_10407567;";
@@ -16,13 +17,21 @@ public class DBConnection {
     private DatabaseMetaData dma;
     private static Connection con;
     
+
+
     private static DBConnection  instance = null;
+
+
+
+    private static DBConnection  instance = null;
+
 
     private DBConnection()
     {
     	String url = driver + databaseName + userName + password;
 
         try{
+
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             System.out.println("Driver class loaded ok");
           
@@ -32,6 +41,14 @@ public class DBConnection {
             System.out.println(e.getMessage());
         }
         try{
+
+            con = DriverManager.getConnection(url);
+            con.setAutoCommit(true);
+            dma = con.getMetaData();
+            System.out.println("Connection to " + dma.getURL());
+            System.out.println("Driver " + dma.getDriverName());
+            System.out.println("Database product name " + dma.getDatabaseProductName());
+
             con = DriverManager.getConnection(url);
             con.setAutoCommit(true);
             dma = con.getMetaData();
@@ -39,10 +56,15 @@ public class DBConnection {
             System.out.println("Driver " + dma.getDriverName());
             System.out.println("Database product name " + dma.getDatabaseProductName());
         }
+
         catch(Exception e){
             System.out.println("Problems with the connection to the database:");
             System.out.println(e.getMessage());
             System.out.println(url);
+
+        }
+    }
+
         }
     }
     public static void closeConnection()
@@ -55,8 +77,13 @@ public class DBConnection {
          catch (Exception e){
             System.out.println("Error trying to close the database " +  e.getMessage());
          }
+
     }
 		
+    
+
+    }
+
     public Connection getDBcon()
     {
        return con;
@@ -67,6 +94,8 @@ public class DBConnection {
        return (instance == null);
     }    
 
+
+
     public static DBConnection getInstance()
     {
         if (instance == null)
@@ -76,5 +105,7 @@ public class DBConnection {
         return instance;
     }
 
+
+}
 }
 
