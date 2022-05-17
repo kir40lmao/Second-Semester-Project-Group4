@@ -65,7 +65,7 @@ public class MatchDAO implements MatchDAOIF{
 			
 		}
 		 catch (SQLException e) {
-			e.printStackTrace();
+			
 		}
 		
 	}
