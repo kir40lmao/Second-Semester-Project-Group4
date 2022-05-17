@@ -2,6 +2,7 @@ package ControllerLayer;
 
 import DatabaseLayer.TeamDAO;
 import DatabaseLayer.TeamDAOIF;
+import ModelLayer.Team;
 
 public class TeamController {
 	TeamDAOIF teamDAO;
@@ -14,8 +15,9 @@ public class TeamController {
 		teamDAO.createTeam(teamName);
 	}
 
-	public void findTeamByID(int id) {
-		teamDAO.findTeamByID(id);
+	public Team findTeamByID(int id) {
+		Team team = teamDAO.findTeamByID(id);
+		return team;
 	}
 
 	public void getEligible() {
@@ -34,7 +36,8 @@ public class TeamController {
 		teamDAO.getAllTeams();
 	}
 
-	public void findTeamByName(String teamName) {
-		teamDAO.findTeamByName(teamName);
+	public Team findTeamByName(String teamName) {
+		Team team = teamDAO.findTeamByName(teamName);
+		return team;
 	}
 }

@@ -46,7 +46,6 @@ public class PlayerDAO implements PlayerDAOIF{
 	public Player findPlayerByName(String name) {
 		Player player=null;
 		try {	
-			System.out.println(name);
 			String sql = "SELECT * FROM Players WHERE [Gammer Tag] = '"+name+"'"; 
 			
 			Statement statement = conn.createStatement();
