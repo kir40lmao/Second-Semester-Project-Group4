@@ -19,7 +19,7 @@ public interface TeamDAOIF {
 
 	List<Team> getEligible();
 
-	void updateTeamStats(int teamID, int wins, int loses);
+	void updateTeamStats(int teamID, int wins, int loses, int matchID);
 
 	Team findTeamByName(String teamName);
 }

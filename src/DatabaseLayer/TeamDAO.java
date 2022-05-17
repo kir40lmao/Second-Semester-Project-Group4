@@ -32,18 +32,19 @@ public class TeamDAO implements TeamDAOIF {
 		}
 	}
 
-	public List<Team> HigherOrderFunctionForGetMethods(Supplier<String> stringSQL) {
+	public List<Team> HigherOrderFunctionForGetMethods(Supplier<String> stringSQL,int teamID,String tName) {
 		List<Team> teamList = new ArrayList<>();
 		String teamSQL = "SELECT Players FROM Players WHERE PlayerID = (SELECT PlayerID FROM PlayerTeam WHERE TeamID = ?)";
 		try {
-			Statement statement = con.createStatement();
-			ResultSet result = statement.executeQuery(stringSQL.get());
+			PreparedStatement statement = con.prepareStatement(stringSQL.get());
+			ResultSet result = statement.executeQuery();
 			while (result.next()) {
+				statement.setString(1, tName);
 				int id = result.getInt("TeamID");
 				String teamName = result.getString("Team Name");
 				int wins = result.getInt("Wins");
 				int loses = result.getInt("Loses");
-				ArrayList<Player> players = PopulateArray();
+				ArrayList<Player> players = PopulateArray(teamID);
 
 				team = new Team(teamName, wins, loses, id, players);
 				teamList.add(team);
@@ -54,7 +55,7 @@ public class TeamDAO implements TeamDAOIF {
 		return teamList;
 	}
 
-	public ArrayList<Player> PopulateArray() {
+	public ArrayList<Player> PopulateArray(int teamID) {
 		String teamSQL = "SELECT Players FROM Players WHERE PlayerID = (SELECT PlayerID FROM PlayerTeam WHERE TeamID = ?)";
 		ArrayList<Player> players = new ArrayList<>();
 
@@ -62,10 +63,12 @@ public class TeamDAO implements TeamDAOIF {
 			PreparedStatement statement = con.prepareStatement(teamSQL);
 			ResultSet result = statement.executeQuery();
 			while (result.next()) {
+				statement.setInt(1, teamID);
+				int playerID = result.getInt("PlayerID");
 				String gamerTag = result.getString("Gammer Tag");
 				int totalKills = result.getInt("Total Kills");
 				int totalDeaths = result.getInt("Total Deaths");
-				Player player = new Player(gamerTag, totalKills, totalDeaths);
+				Player player = new Player(playerID, gamerTag, totalKills, totalDeaths, teamID);
 				players.add(player);
 			}
 		} catch (SQLException e) {
@@ -91,7 +94,7 @@ public class TeamDAO implements TeamDAOIF {
 
 	@Override
 	public Team findTeamByID(int teamID) {
-		String sql = "SELECT * FROM Teams WHERE TeamID = ? ";
+		String sql = "SELECT * FROM Teams WHERE TeamID = "+ teamID;
 		HigherOrderFunctionForGetMethods(() -> sql);
 		return team;
 	}
@@ -103,14 +106,14 @@ public class TeamDAO implements TeamDAOIF {
 	}
 
 	@Override
-	public void updateTeamStats(int teamID, int wins, int loses) {
+	public void updateTeamStats(int teamID, int wins, int loses, int matchID) {
 		String updateWinner = "UPDATE Teams Set Wins = Wins+1 WHERE TeamID = ?";
 		String updateLoser = "UPDATE Teams Set Loses = Loses+1 Where TeamID = ?";
 		// Better way to update wins and loses?
 		try {
 			PreparedStatement winner;
 			PreparedStatement loser;
-			List<Integer> winnersAndLosers = getWinningTeam();
+			List<Integer> winnersAndLosers = getWinningTeam(matchID);
 			int losingTeamID = winnersAndLosers.get(1);
 			int winningTeamID = winnersAndLosers.get(0);
 			winner = con.prepareStatement(updateWinner);
@@ -124,7 +127,7 @@ public class TeamDAO implements TeamDAOIF {
 		}
 	}
 
-	public List<Integer> getWinningTeam() {
+	public List<Integer> getWinningTeam(int matchID) {
 		String sql = "SELECT TeamOneID, TeamTwoID FROM MatchTeam WHERE MatchID = ?";
 		String score = "SELECT Team One Score, Team Two Score FROM Matches WHERE MatchID = ?";
 		int winningTeamID = 0;
@@ -135,6 +138,8 @@ public class TeamDAO implements TeamDAOIF {
 			PreparedStatement getScore = con.prepareStatement(score);
 			ResultSet result = statement.executeQuery();
 			ResultSet resultScore = getScore.executeQuery();
+			statement.setInt(1 , matchID );
+			getScore.setInt(1 , matchID );
 			int teamOneID = result.getInt("TeamOneID");
 			int teamTwoID = result.getInt("TeamTwoID");
 			int teamOneScore = resultScore.getInt("Team One Score");
@@ -146,10 +151,8 @@ public class TeamDAO implements TeamDAOIF {
 			} else if (teamOneScore > teamTwoScore) {
 				winningTeamID = teamOneID;
 				losingTeamID = teamTwoID;
-			} else {
-				// what to do if there's a draw??
 			}
-
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
