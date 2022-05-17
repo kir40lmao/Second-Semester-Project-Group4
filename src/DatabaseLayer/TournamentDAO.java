@@ -5,12 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.function.Supplier;
 
 import ControllerLayer.MatchController;
-import ModelLayer.Match;
 import ModelLayer.Team;
 import ModelLayer.Tournament;
 
@@ -71,16 +74,21 @@ public class TournamentDAO implements TournamentDAOIF{
 				e.printStackTrace();
 		}
 		
+		 DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+	     Calendar cal = Calendar.getInstance();
+	     Date date = cal.getTime();
+	     String todaysdate = dateFormat.format(date);
+		
 		for(int i = 0; i < teams.size() / 2; i += 2) {
 			Team team1, team2;
 			team1 = teams.get(i);
 			team2 = teams.get(i+1);
-			Match match = mc.createMatch(team1.getTeamID(), team2.getTeamID(), null);
+			mc.createMatch(team1.getTeamID(), team2.getTeamID(), todaysdate);
 			addTournamentMatches();	
 		}
 		
 		for(int i = 0; i < teams.size()/2 - 1; i++) {
-			Match nullMatch = mc.createMatch(null,null,null);
+			mc.createMatch(0, 0, null);
 			addTournamentMatches();
 		}
 	}
