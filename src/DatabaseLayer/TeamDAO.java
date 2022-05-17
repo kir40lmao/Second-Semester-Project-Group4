@@ -32,19 +32,22 @@ public class TeamDAO implements TeamDAOIF {
 		}
 	}
 
-	public List<Team> HigherOrderFunctionForGetMethods(Supplier<String> stringSQL,int teamID,String tName) {
+	public List<Team> HigherOrderFunctionForGetMethods(Supplier<String> stringSQL, Supplier<String> tName) {
 		List<Team> teamList = new ArrayList<>();
-		String teamSQL = "SELECT Players FROM Players WHERE PlayerID = (SELECT PlayerID FROM PlayerTeam WHERE TeamID = ?)";
 		try {
 			PreparedStatement statement = con.prepareStatement(stringSQL.get());
 			ResultSet result = statement.executeQuery();
 			while (result.next()) {
-				statement.setString(1, tName);
+				if (tName.get().equals("null")) {
+					
+				} else {
+					statement.setString(1, tName.get());
+				}
 				int id = result.getInt("TeamID");
 				String teamName = result.getString("Team Name");
 				int wins = result.getInt("Wins");
 				int loses = result.getInt("Loses");
-				ArrayList<Player> players = PopulateArray(teamID);
+				ArrayList<Player> players = PopulateArray(id);
 
 				team = new Team(teamName, wins, loses, id, players);
 				teamList.add(team);
@@ -80,33 +83,31 @@ public class TeamDAO implements TeamDAOIF {
 	@Override
 	public List<Team> getEligible() {
 		String sql = "SELECT * FROM Teams WHERE TeamID = (SELECT Distinct(TeamID) From PlayerTeam WHERE(SELECT COUNT(TeamID) FROM PlayerTeam) >4)";
-		List<Team> eligibleTeams = HigherOrderFunctionForGetMethods(() -> sql);
-		System.out.println(team.getTeamName());
+		List<Team> eligibleTeams = HigherOrderFunctionForGetMethods(() -> sql, ()-> "null");
 		return eligibleTeams;
 	}
 
 	public List<Team> getAllTeams() {
 		String sql = "SELECT * FROM Teams";
-		List<Team> allTeams = HigherOrderFunctionForGetMethods(() -> sql);
-		System.out.println(allTeams);
+		List<Team> allTeams = HigherOrderFunctionForGetMethods(() -> sql, ()-> "null");
 		return allTeams;
 	}
 
 	@Override
 	public Team findTeamByID(int teamID) {
-		String sql = "SELECT * FROM Teams WHERE TeamID = "+ teamID;
-		HigherOrderFunctionForGetMethods(() -> sql);
+		String sql = "SELECT * FROM Teams WHERE TeamID = " + teamID;
+		HigherOrderFunctionForGetMethods(() -> sql, () -> "null");
 		return team;
 	}
 
 	public Team findTeamByName(String teamName) {
 		String sql = "SELECT * FROM Teams WHERE Team Name = ? ";
-		HigherOrderFunctionForGetMethods(() -> sql);
+		HigherOrderFunctionForGetMethods(() -> sql, () -> teamName);
 		return team;
 	}
 
 	@Override
-	public void updateTeamStats(int teamID, int wins, int loses, int matchID) {
+	public void updateTeamStats(int winningTeamID, int losingTeamID, int matchID) {
 		String updateWinner = "UPDATE Teams Set Wins = Wins+1 WHERE TeamID = ?";
 		String updateLoser = "UPDATE Teams Set Loses = Loses+1 Where TeamID = ?";
 		// Better way to update wins and loses?
@@ -114,8 +115,8 @@ public class TeamDAO implements TeamDAOIF {
 			PreparedStatement winner;
 			PreparedStatement loser;
 			List<Integer> winnersAndLosers = getWinningTeam(matchID);
-			int losingTeamID = winnersAndLosers.get(1);
-			int winningTeamID = winnersAndLosers.get(0);
+			losingTeamID = winnersAndLosers.get(1);
+			winningTeamID = winnersAndLosers.get(0);
 			winner = con.prepareStatement(updateWinner);
 			winner.setInt(1, winningTeamID);
 			winner.executeUpdate();
@@ -138,8 +139,8 @@ public class TeamDAO implements TeamDAOIF {
 			PreparedStatement getScore = con.prepareStatement(score);
 			ResultSet result = statement.executeQuery();
 			ResultSet resultScore = getScore.executeQuery();
-			statement.setInt(1 , matchID );
-			getScore.setInt(1 , matchID );
+			statement.setInt(1, matchID);
+			getScore.setInt(1, matchID);
 			int teamOneID = result.getInt("TeamOneID");
 			int teamTwoID = result.getInt("TeamTwoID");
 			int teamOneScore = resultScore.getInt("Team One Score");
@@ -152,7 +153,7 @@ public class TeamDAO implements TeamDAOIF {
 				winningTeamID = teamOneID;
 				losingTeamID = teamTwoID;
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -173,5 +174,6 @@ public class TeamDAO implements TeamDAOIF {
 			e.printStackTrace();
 		}
 	}
-
 }
+
+
