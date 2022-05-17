@@ -16,6 +16,7 @@ import ControllerLayer.PlayerController;
 import ControllerLayer.TeamController;
 import ControllerLayer.TournamentController;
 import ModelLayer.Player;
+import ModelLayer.Team;
 
 import javax.swing.JSeparator;
 import javax.swing.JScrollPane;
@@ -53,6 +54,8 @@ public class Menu {
 	TeamController teamc = new TeamController();
 	TournamentController tournamentc = new TournamentController();
 	private JTextField txt_player_team_ID;
+	private JTextField txt_search_team;
+	private JTextField textField_4;
 
 	/**
 	 * Launch the application.
@@ -447,34 +450,8 @@ public class Menu {
 		teamCreationMenu.add(teamNameField);
 		teamNameField.setColumns(10);
 		
-		JLabel lblAvailablePlayers = new JLabel("Available Players");
-		lblAvailablePlayers.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAvailablePlayers.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblAvailablePlayers.setBounds(428, 220, 135, 35);
-		teamCreationMenu.add(lblAvailablePlayers);
-		
-		JLabel lblAddedPlayers = new JLabel("Added Players");
-		lblAddedPlayers.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAddedPlayers.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblAddedPlayers.setBounds(801, 220, 135, 35);
-		teamCreationMenu.add(lblAddedPlayers);
-		
-		JScrollPane scrollPane_7 = new JScrollPane();
-		scrollPane_7.setBounds(364, 278, 267, 320);
-		teamCreationMenu.add(scrollPane_7);
-		
-		JList list_4 = new JList();
-		scrollPane_7.setViewportView(list_4);
-		
-		JScrollPane scrollPane_7_1 = new JScrollPane();
-		scrollPane_7_1.setBounds(737, 278, 267, 320);
-		teamCreationMenu.add(scrollPane_7_1);
-		
-		JList list_5 = new JList();
-		scrollPane_7_1.setViewportView(list_5);
-		
 		JButton btnNewButton_2_1_1 = new JButton("Confirm Team Creation");
-		btnNewButton_2_1_1.setBounds(1078, 636, 151, 41);
+		btnNewButton_2_1_1.setBounds(367, 203, 151, 41);
 		teamCreationMenu.add(btnNewButton_2_1_1);
 				
 		JPanel teamManagementMenu = new JPanel();
@@ -579,17 +556,74 @@ public class Menu {
 		btnNewButton_2_2.setBounds(40, 647, 135, 41);
 		teamManagementMenu.add(btnNewButton_2_2);
 		
-		JTextField txtTeamManagementMenu = new JTextField();
-		txtTeamManagementMenu.setText("Team Management menu");
-		txtTeamManagementMenu.setBounds(269, 91, 258, 41);
-		teamManagementMenu.add(txtTeamManagementMenu);
-		txtTeamManagementMenu.setColumns(10);
-		
 		JLabel lblNewLabel_1_4 = new JLabel("Team Management Menu");
 		lblNewLabel_1_4.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_4.setFont(new Font("Tahoma", Font.BOLD, 17));
 		lblNewLabel_1_4.setBounds(463, 44, 359, 35);
 		teamManagementMenu.add(lblNewLabel_1_4);
+		
+		JLabel search_team_label_1 = new JLabel("Search team");
+		search_team_label_1.setFont(new Font("Tahoma", Font.BOLD, 12));
+		search_team_label_1.setBounds(103, 157, 210, 35);
+		teamManagementMenu.add(search_team_label_1);
+		
+		JLabel info_label_player_1_1 = new JLabel("Team name");
+		info_label_player_1_1.setBounds(103, 198, 83, 30);
+		teamManagementMenu.add(info_label_player_1_1);
+		
+		txt_search_team = new JTextField();
+		txt_search_team.setColumns(10);
+		txt_search_team.setBounds(178, 198, 135, 30);
+		teamManagementMenu.add(txt_search_team);
+		
+		textField_4 = new JTextField();
+		textField_4.setColumns(10);
+		textField_4.setBounds(516, 198, 135, 30);
+		teamManagementMenu.add(textField_4);
+		
+		JLabel label_for_team_id = new JLabel("<<team id>>");
+		label_for_team_id.setBounds(516, 157, 135, 30);
+		teamManagementMenu.add(label_for_team_id);
+		
+		JButton search_team_button_1 = new JButton("Find");
+		search_team_button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String team_name = txt_search_team.getText();
+				Team team = teamc.findTeamByName(team_name);
+				label_for_team_id.setText("" + team.getTeamID());
+				textField_4.setText(team.getTeamName());
+			}
+		});
+		search_team_button_1.setFocusPainted(false);
+		search_team_button_1.setContentAreaFilled(false);
+		search_team_button_1.setBounds(103, 259, 210, 23);
+		teamManagementMenu.add(search_team_button_1);
+		
+		JLabel info_label_search_team = new JLabel("");
+		info_label_search_team.setHorizontalAlignment(SwingConstants.CENTER);
+		info_label_search_team.setForeground(Color.RED);
+		info_label_search_team.setFont(new Font("Tahoma", Font.BOLD, 12));
+		info_label_search_team.setBounds(103, 284, 210, 30);
+		teamManagementMenu.add(info_label_search_team);
+		
+		JButton save_changes_button_player_1 = new JButton("Save changes");
+		save_changes_button_player_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//teamc.updateTeamName();
+			}
+		});
+		save_changes_button_player_1.setFocusPainted(false);
+		save_changes_button_player_1.setContentAreaFilled(false);
+		save_changes_button_player_1.setBounds(441, 259, 210, 23);
+		teamManagementMenu.add(save_changes_button_player_1);
+		
+		JLabel info_label_player_3 = new JLabel("Team name");
+		info_label_player_3.setBounds(441, 198, 83, 30);
+		teamManagementMenu.add(info_label_player_3);
+		
+		JLabel info_label_team_id_1 = new JLabel("Team ID");
+		info_label_team_id_1.setBounds(441, 157, 83, 30);
+		teamManagementMenu.add(info_label_team_id_1);
 		
 		JPanel playerCreationMenu = new JPanel();
 		playerCreationMenu.setLayout(null);
