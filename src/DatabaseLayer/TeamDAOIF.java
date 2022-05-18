@@ -1,8 +1,10 @@
 package DatabaseLayer;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
+import ModelLayer.Player;
 import ModelLayer.Team;
 
 public interface TeamDAOIF {
@@ -20,6 +22,8 @@ public interface TeamDAOIF {
 	List<Team> getEligible();
 	
 	void updateTeamStats(int winningTeamID, int losingTeamID,int matchID);
+	
+	ArrayList<Player> PopulateArray(int teamID);
 
 	Team findTeamByName(String teamName);
 }
