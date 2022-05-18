@@ -1,6 +1,7 @@
 package DatabaseLayer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ModelLayer.Team;
 import ModelLayer.Tournament;
@@ -10,10 +11,11 @@ public interface TournamentDAOIF {
 	public void createMatchUps(ArrayList<Team> teams, int tournamentID);
 	public void addTournamentMatches();
 	public Tournament findTournamentByID(int tournamentID);
-	public void getAllTournaments();
-	public void getUpcoming(String status);
-	public void getOngoing(String status);
-	public void getFinished(String status);
+	public List<Tournament> getAllTournaments();
+	//public List<Tournament> getUpcoming(String status);
+	//public List<Tournament> getOngoing(String status);
+	//public List<Tournament> getFinished(String status);
 	public void updateTournament(String tournamentName, String date, String Venue, String status, String previousTournamentName);
 	public void deleteTournament(int tournamentID);
+	public List<Tournament> getTournamentByStatus(String status);
 }

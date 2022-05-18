@@ -17,6 +17,7 @@ import ControllerLayer.TeamController;
 import ControllerLayer.TournamentController;
 import ModelLayer.Player;
 import ModelLayer.Team;
+import ModelLayer.Tournament;
 
 import javax.swing.JSeparator;
 import javax.swing.JScrollPane;
@@ -25,10 +26,12 @@ import java.awt.SystemColor;
 import java.awt.Font;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class Menu {
@@ -1454,6 +1457,15 @@ public class Menu {
 		JScrollPane scrollPane_3 = new JScrollPane();
 		scrollPane_3.setBounds(627, 139, 230, 216);
 		tournamentHistoryMenu.add(scrollPane_3);
+		
+		DefaultListModel DLM = new DefaultListModel();
+		JList onGoingTournaments = new JList(DLM);
+		scrollPane_3.setViewportView(onGoingTournaments);
+		TournamentController tController = new TournamentController();
+		List<Tournament> ongoingTournaments = tController.getTournamentByStatus("Ongoing");
+		for(int i = 0;i < ongoingTournaments.size(); i++) {
+			DLM.add(i, ongoingTournaments.get(i).getTournamentName());
+		}
 		
 		txtTournamentHistoryMenu = new JTextField();
 		txtTournamentHistoryMenu.setText("Tournament history menu");

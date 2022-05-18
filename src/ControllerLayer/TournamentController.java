@@ -1,6 +1,7 @@
 package ControllerLayer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import DatabaseLayer.TournamentDAO;
 import DatabaseLayer.TournamentDAOIF;
@@ -36,16 +37,9 @@ public class TournamentController {
 		tdao.getAllTournaments();
 	}
 	
-	public void getUpcoming(String status) {
-		tdao.getUpcoming(status);
-	}
-	
-	public void getOngoing(String status) {
-		tdao.getOngoing(status);
-	}
-	
-	public void getFinished(String status) {
-		tdao.getFinished(status);
+	public List<Tournament> getTournamentByStatus(String status) {
+		List<Tournament> Tournaments = tdao.getTournamentByStatus(status);
+		return Tournaments;
 	}
 	
 	public void updateTournament(String tournamentName, String date, String venue, String status, String previousTournamentName) {
