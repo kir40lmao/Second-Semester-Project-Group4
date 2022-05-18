@@ -175,6 +175,12 @@ public class TeamDAO implements TeamDAOIF {
 			e.printStackTrace();
 		}
 	}
+	
+	public List<Team> getTeamsInTournament(int tournamentID) {
+			String sql = "Select * From Teams Where TeamID =(Select TeamID From TournamentTeam Where TournamentID = ?)";
+			List<Team> teamsInTournament = HigherOrderFunctionForGetMethods(() -> sql, ()-> "null");
+			return teamsInTournament;
+	}
 }
 
 

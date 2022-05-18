@@ -139,25 +139,37 @@ public class TournamentDAO implements TournamentDAOIF{
         return null;
     }
 	@Override
-	public void getAllTournaments() {
+	public List<Tournament> getAllTournaments() {
 		String sql = "SELECT * FROM Tournament";
-	    HigherOrderFunctionForGetMethods(() -> sql);
+		List<Tournament> allTournaments =HigherOrderFunctionForGetMethods(() -> sql);
+		return allTournaments;
+	}
+	
+	public List<Tournament> getTournamentByStatus(String status){
+		String sql = "SELECT * FROM Tournament WHERE Status = '"+status+"'";
+		List<Tournament> tournaments = HigherOrderFunctionForGetMethods(() -> sql);
+		return tournaments;
+	}
+	//Put these three methods into the one above
+	 /*@Override
+	public List<Tournament> getUpcoming(String status){
+		String sql = "SELECT * FROM Tournament WHERE Status = '"+status+"'";
+		List<Tournament> upComingTournaments = HigherOrderFunctionForGetMethods(() -> sql);
+		return upComingTournaments;
 	}
 	@Override
-	public void getUpcoming(String status){
+	public List<Tournament> getOngoing(String status) {
 		String sql = "SELECT * FROM Tournament WHERE Status = '"+status+"'";
-		HigherOrderFunctionForGetMethods(() -> sql);
+		List<Tournament> onGoingTournaments = HigherOrderFunctionForGetMethods(() -> sql);
+		return onGoingTournaments;
 	}
 	@Override
-	public void getOngoing(String status) {
+	public List<Tournament> getFinished(String status) {
 		String sql = "SELECT * FROM Tournament WHERE Status = '"+status+"'";
-		HigherOrderFunctionForGetMethods(() -> sql);
-	}
-	@Override
-	public void getFinished(String status) {
-		String sql = "SELECT * FROM Tournament WHERE Status = '"+status+"'";
-		HigherOrderFunctionForGetMethods(() -> sql);
-	}
+		List<Tournament> finishedTournaments = HigherOrderFunctionForGetMethods(() -> sql);
+		return finishedTournaments;
+	}*/
+	
 	@Override
 	public Tournament findTournamentByID(int tournamentID){
 		String sql = "SELECT * FROM Tournament WHERE TournamentID = ?";
@@ -210,4 +222,5 @@ public class TournamentDAO implements TournamentDAOIF{
 		    ex.printStackTrace();
 		}		
 	}
+	
 }
