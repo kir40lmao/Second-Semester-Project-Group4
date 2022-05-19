@@ -104,32 +104,34 @@ public class PlayerDAO implements PlayerDAOIF{
 
 	@Override
 	public ArrayList<Player> getAllPlayers() {
-		ArrayList<Player> players=null;
-		try {	
+		Player player;
+		ArrayList<Player> players = new ArrayList<>();
+		try {
 			String sql = "SELECT * FROM Players"; 
-			
 			Statement statement = conn.createStatement();
 			ResultSet result = statement.executeQuery(sql);
 			while (result.next()){
 			    int playerID = result.getInt("PlayerID");
-			    String gamerTag = result.getString(2);
-			    int totalKills = result.getInt(3);
-			    int totalDeaths = result.getInt(4);
-			    String teamsql = "SELECT TeamID FROM PlayerTeam WHERE PlayerID ='"+playerID+"'";
+			    String gamerTag = result.getString("Gammer Tag");
+			    int totalKills = result.getInt("Total Kills");
+			    int totalDeaths = result.getInt("Total Deaths");
+			    /*String teamsql = "SELECT TeamID FROM PlayerTeam WHERE PlayerID ='"+playerID+"'";
 			    ResultSet teamResult = statement.executeQuery(teamsql);
 			    int teamID=0;
 			    while (teamResult.next()) {
 			    	teamID=teamResult.getInt("TeamID");
-			    }
-			    Player player = new Player(playerID, gamerTag, teamID, totalKills, totalDeaths);
+			    }*/
+			    player = new Player(playerID, gamerTag, totalKills, totalDeaths);
 			    players.add(player);
 			}
+			return players;
 			
 		} catch (SQLException ex) {
 		    ex.printStackTrace();
 		}
-		return players;
+		return null;
 	}
+	
 
 	@Override
 	public Player updatePlayer(int playerID, String gamerTag, int teamID) {

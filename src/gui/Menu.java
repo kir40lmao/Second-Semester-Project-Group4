@@ -38,7 +38,6 @@ public class Menu {
 	public JFrame frame;
 	private JTextField txt_gamer_tag;
 	private JTextField txtSearchTeamName;
-	private JTextField textField_3;
 	private JTextField txtSearchPlayerMenu;
 	private JTextField textField_5;
 	private JTextField txtTournamentHistoryMenu;
@@ -1462,39 +1461,89 @@ public class Menu {
 		menuBar_1_2.setBounds(0, 0, 1281, 35);
 		playerSearchMenu.add(menuBar_1_2);
 		
-		textField_3 = new JTextField();
-		textField_3.setText("On-Going Tournaments");
-		textField_3.setHorizontalAlignment(SwingConstants.CENTER);
-		textField_3.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textField_3.setColumns(10);
-		textField_3.setBorder(null);
-		textField_3.setBackground(SystemColor.menu);
-		textField_3.setBounds(627, 93, 230, 35);
-		playerSearchMenu.add(textField_3);
-		
-		JScrollPane scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(627, 139, 230, 216);
-		playerSearchMenu.add(scrollPane_2);
-		
 		txtSearchPlayerMenu = new JTextField();
-		txtSearchPlayerMenu.setText("Search player menu");
+		txtSearchPlayerMenu.setText("Player Gamer Tag");
 		txtSearchPlayerMenu.setHorizontalAlignment(SwingConstants.CENTER);
 		txtSearchPlayerMenu.setFont(new Font("Tahoma", Font.BOLD, 14));
 		txtSearchPlayerMenu.setColumns(10);
 		txtSearchPlayerMenu.setBorder(null);
 		txtSearchPlayerMenu.setBackground(SystemColor.menu);
-		txtSearchPlayerMenu.setBounds(185, 93, 230, 35);
+		txtSearchPlayerMenu.setBounds(112, 198, 180, 35);
 		playerSearchMenu.add(txtSearchPlayerMenu);
 		
-		JPanel panel_1_2 = new JPanel();
-		panel_1_2.setBackground(Color.WHITE);
-		panel_1_2.setBounds(185, 139, 230, 216);
-		playerSearchMenu.add(panel_1_2);
+		
+		JTextField textPlayerNameInput = new JTextField();
+		textPlayerNameInput.setBounds(295, 208, 196, 20);
+		playerSearchMenu.add(textPlayerNameInput);
+		textPlayerNameInput.setColumns(10);
+		
+		JLabel lblFeedbackMessage2 = new JLabel("");
+		lblFeedbackMessage2.setForeground(Color.RED);
+		lblFeedbackMessage2.setBounds(311, 254, 141, 14);
+		playerSearchMenu.add(lblFeedbackMessage2);
+		lblFeedbackMessage2.setVisible(false);
 		
 		JButton btnNewButton_3 = new JButton("Exit");
 		btnNewButton_3.setFont(new Font("Tahoma", Font.BOLD, 17));
 		btnNewButton_3.setBounds(39, 632, 160, 56);
 		playerSearchMenu.add(btnNewButton_3);
+		
+		JLabel lblKillsDeaths = new JLabel("");
+		lblKillsDeaths.setBounds(351, 342, 284, 50);
+		playerSearchMenu.add(lblKillsDeaths);
+		lblKillsDeaths.setVisible(false);
+		
+		JLabel lblStat = new JLabel("Player Stats:");
+		lblStat.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblStat.setBounds(256, 296, 107, 35);
+		playerSearchMenu.add(lblStat);
+		lblStat.setVisible(false);
+		
+		JLabel lblPlayerTeam = new JLabel();
+		lblPlayerTeam.setBounds(774, 198, 208, 50);
+		playerSearchMenu.add(lblPlayerTeam);
+		lblPlayerTeam.setVisible(false);
+		
+		JButton btnPlayerSearch = new JButton("Search");
+		btnPlayerSearch.addActionListener(new ActionListener() {
+		PlayerController pc = new PlayerController();
+		TeamController tc = new TeamController();
+
+		public void actionPerformed(ActionEvent e) {
+			boolean success = false;
+			Player p = pc.findPlayerByName(textPlayerNameInput.getText());
+			int teamID = 0;
+			
+			for(Player player : pc.getAllPlayers()) {
+				
+				if(player.getGamerTag().equals(p.getGamerTag())) {
+					success = true;
+					teamID = player.getTeamID();
+				}
+			}
+			if(success) {	
+				
+				lblFeedbackMessage.setVisible(false);
+				lblStat.setVisible(true);
+				lblKillsDeaths.setVisible(true);
+				lblKillsDeaths.setText("Kills: "+p.getTotalKills()+"  Deaths: "+ p.getTotalDeaths());
+				lblPlayerTeam.setVisible(true);
+				lblPlayerTeam.setText(tc.findTeamByID(teamID).getTeamName());
+				
+			}else{
+				lblFeedbackMessage2.setText("Invalid Player Name");
+				lblFeedbackMessage.setVisible(true);
+				lblKillsDeaths.setVisible(false);
+				lblStat.setVisible(false);
+				lblPlayerTeam.setVisible(false);
+				
+			}
+				
+		}
+		});
+		
+		btnPlayerSearch.setBounds(520, 207, 89, 23);
+		playerSearchMenu.add(btnPlayerSearch);
 		
 		JPanel tournamentHistoryMenu = new JPanel();
 		tournamentHistoryMenu.setLayout(null);

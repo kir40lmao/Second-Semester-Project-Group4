@@ -1,5 +1,8 @@
 package ControllerLayer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import DatabaseLayer.PlayerDAO;
 import ModelLayer.Player;
 
@@ -15,11 +18,11 @@ public class PlayerController {
 		Player player = playerDAO.findPlayerByName(gamerTag);
 		return player;
 	}
-	public void findAvailablePlayers() { //missing
-		playerDAO.findAvailablePlayers();
+	public List<Player> findAvailablePlayers() { //missing
+		return playerDAO.findAvailablePlayers();
 	}
-	public void getAllPlayers() { //missing
-		playerDAO.getAllPlayers();
+	public ArrayList<Player> getAllPlayers() { //missing
+		return playerDAO.getAllPlayers();
 	}
 	public void updatePlayerDetails(int playerID, String gamerTag, int teamID) {
 		playerDAO.updatePlayer(playerID, gamerTag, teamID);
