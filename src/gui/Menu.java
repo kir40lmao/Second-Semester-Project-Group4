@@ -10,11 +10,13 @@ import java.awt.Color;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.SwingConstants;
+import javax.swing.event.ListSelectionListener;
 
 import ControllerLayer.MatchController;
 import ControllerLayer.PlayerController;
 import ControllerLayer.TeamController;
 import ControllerLayer.TournamentController;
+import ControllerLayer.VenueController;
 import ModelLayer.Player;
 import ModelLayer.Team;
 import ModelLayer.Tournament;
@@ -34,6 +36,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextPane;
 
 public class Menu {
 
@@ -1156,7 +1159,7 @@ public class Menu {
 		menuBar11111.add(mntmNewMenuItem_611111);
 		
 		JButton btnNewButton_2_511 = new JButton("Quit");
-		btnNewButton_2_511.setBounds(40, 647, 135, 41);
+		btnNewButton_2_511.setBounds(40, 679, 135, 41);
 		tournamentCreationMenu.add(btnNewButton_2_511);
 		
 		JLabel lblNewLabel = new JLabel("Name");
@@ -1176,12 +1179,22 @@ public class Menu {
 		lblVenue.setBounds(40, 316, 135, 35);
 		tournamentCreationMenu.add(lblVenue);
 		
-		JScrollPane scrollPane_4 = new JScrollPane();
-		scrollPane_4.setBounds(40, 362, 135, 119);
-		tournamentCreationMenu.add(scrollPane_4);
+		JScrollPane venueScroll = new JScrollPane();
+		venueScroll.setBounds(40, 362, 135, 119);
+		tournamentCreationMenu.add(venueScroll);
+		venueScroll.setVisible(false);
+		lblVenue.setVisible(false);
 		
-		JList list_1 = new JList();
-		scrollPane_4.setViewportView(list_1);
+		DefaultListModel DLM_Venue = new DefaultListModel();
+		JList venueList = new JList(DLM_Venue);
+		venueScroll.setViewportView(venueList);
+		VenueController venueController = new VenueController();
+		String[] venues = venueController.getAvailableVenues();
+		for(int i = 0;i < venues.length; i++) {
+			DLM_Venue.add(i, venues[i]);
+		}
+		
+		
 		
 		JLabel lblDate = new JLabel("Date");
 		lblDate.setHorizontalAlignment(SwingConstants.CENTER);
@@ -1199,45 +1212,106 @@ public class Menu {
 		lblAvailableTeams.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblAvailableTeams.setBounds(411, 117, 135, 35);
 		tournamentCreationMenu.add(lblAvailableTeams);
+		lblAvailableTeams.setVisible(false);
 		
 		JLabel lblAddedTeams = new JLabel("Added Teams");
 		lblAddedTeams.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAddedTeams.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblAddedTeams.setBounds(809, 117, 135, 35);
 		tournamentCreationMenu.add(lblAddedTeams);
+		lblAddedTeams.setVisible(false);
 		
-		JScrollPane scrollPane_5 = new JScrollPane();
-		scrollPane_5.setBounds(343, 152, 268, 327);
-		tournamentCreationMenu.add(scrollPane_5);
+		JScrollPane availableTeamsSctroll = new JScrollPane();
+		availableTeamsSctroll.setBounds(343, 152, 268, 327);
+		tournamentCreationMenu.add(availableTeamsSctroll);
+		availableTeamsSctroll.setVisible(false);
 		
 		DefaultListModel DLM_AT = new DefaultListModel();
 		JList availiableTeams = new JList(DLM_AT);
-		scrollPane_5.setViewportView(availiableTeams);
+		availableTeamsSctroll.setViewportView(availiableTeams);
 		TeamController teamController = new TeamController();
 		List<Team> availiableTeamsList = teamController.getEligible();
-		
+	
 		for(int i = 0;i < availiableTeamsList.size(); i++) {
 			DLM_AT.add(i, availiableTeamsList.get(i).getTeamName());
 		}
 		
-		JScrollPane scrollPane_6 = new JScrollPane();
-		scrollPane_6.setBounds(756, 150, 268, 331);
-		tournamentCreationMenu.add(scrollPane_6);
-		
+		JScrollPane addedTeamsScroll = new JScrollPane();
+		addedTeamsScroll.setBounds(756, 150, 268, 331);
+		tournamentCreationMenu.add(addedTeamsScroll);
+		addedTeamsScroll.setVisible(false);
 		JList list_3 = new JList();
-		scrollPane_6.setViewportView(list_3);
+		addedTeamsScroll.setViewportView(list_3);
 		
-		JButton btnNewButton_5 = new JButton("Confirm Creation");
-		btnNewButton_5.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnNewButton_5.setBounds(1049, 524, 222, 54);
-		tournamentCreationMenu.add(btnNewButton_5);
+		JLabel lblStatus = new JLabel("Status");
+		lblStatus.setVisible(false);
+		lblStatus.setBounds(85, 499, 46, 14);
+		tournamentCreationMenu.add(lblStatus);
+		
+		JScrollPane statusScroll = new JScrollPane();
+		statusScroll.setBounds(40, 524, 135, 119);
+		tournamentCreationMenu.add(statusScroll);
+		statusScroll.setVisible(false);
+		
+		DefaultListModel DLM_Status = new DefaultListModel();
+		JList statusList = new JList(DLM_Status);
+		statusScroll.setViewportView(statusList);
+		String[] status = new String[] {"Ongoing" , "Finished" , "Scheduled"};
+		for(int i = 0;i < status.length; i++) {
+			DLM_Status.add(i, status[i]);
+		}
+		
+		JLabel confirmationTextTournamentCreation = new JLabel("");
+		confirmationTextTournamentCreation.setForeground(Color.GREEN);
+		confirmationTextTournamentCreation.setBounds(1049, 589, 222, 14);
+		tournamentCreationMenu.add(confirmationTextTournamentCreation);
+		
+		JButton confirmTournamentCreation = new JButton("Confirm Creation");
+		confirmTournamentCreation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String tournamentName = tournamentNameField.getText();
+				String Date = tournamentDateField.getText();
+				TournamentController t = new TournamentController();
+				t.createTournament(tournamentName, Date);
+				confirmationTextTournamentCreation.setText("Tournament Created Successfully!");
+				confirmTournamentCreation.setVisible(false);
+				addedTeamsScroll.setVisible(true);
+				lblAddedTeams.setVisible(true);
+				availableTeamsSctroll.setVisible(true);
+				lblAvailableTeams.setVisible(true);
+				venueScroll.setVisible(true);
+				lblVenue.setVisible(true);
+				statusScroll.setVisible(true);
+				lblStatus.setVisible(true);
+			}
+		});
+		confirmTournamentCreation.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		confirmTournamentCreation.setBounds(1049, 524, 222, 54);
+		tournamentCreationMenu.add(confirmTournamentCreation);
+		
+		JButton confirmTournamentVenue = new JButton("Confirm Creation");
+		confirmTournamentVenue.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String venue = (String) venueList.getSelectedValue();
+				String tournamentName = tournamentNameField.getText();
+				String Date = tournamentDateField.getText();
+				String status = (String) statusList.getSelectedValue();
+				TournamentController t = new TournamentController();
+				t.updateTournament(tournamentName,Date,venue, status , tournamentName);
+				confirmationTextTournamentCreation.setText("Tournament Venue Added Successfully!");
+			}
+		});
+		
+		confirmTournamentVenue.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		confirmTournamentVenue.setBounds(1049, 524, 222, 54);
+		tournamentCreationMenu.add(confirmTournamentVenue);
 		
 		JLabel lblNewLabel_1 = new JLabel("Tournament Creation Menu");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 17));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setBounds(463, 44, 359, 35);
 		tournamentCreationMenu.add(lblNewLabel_1);
-		
+				
 		JPanel tournamentManagementMenu = new JPanel();
 		tournamentManagementMenu.setLayout(null);
 		frame.getContentPane().add(tournamentManagementMenu, "tournamentManagementMenu");
@@ -1494,7 +1568,6 @@ public class Menu {
 		btnNewButton_4.setFont(new Font("Tahoma", Font.BOLD, 17));
 		btnNewButton_4.setBounds(39, 632, 160, 56);
 		tournamentHistoryMenu.add(btnNewButton_4);
-		
 		
 	}
 }
