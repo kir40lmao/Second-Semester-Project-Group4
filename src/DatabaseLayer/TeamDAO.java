@@ -37,13 +37,13 @@ public class TeamDAO implements TeamDAOIF {
 		List<Team> teamList = new ArrayList<>();
 		try {
 			PreparedStatement statement = con.prepareStatement(stringSQL.get());
+			if (tName.get() == null) {
+
+			} else {
+				statement.setString(1, tName.get());
+			}
 			ResultSet result = statement.executeQuery();
 			while (result.next()) {
-				if (tName.get().equals("null")) {
-					
-				} else {
-					//statement.setString(1, tName.get());
-				}
 				int id = result.getInt("TeamID");
 				String teamName = result.getString("Team Name");
 				int wins = result.getInt("Wins");
@@ -60,20 +60,23 @@ public class TeamDAO implements TeamDAOIF {
 	}
 
 	public ArrayList<Player> PopulateArray(int teamID) {
-		String teamSQL = "SELECT * FROM Players WHERE PlayerID = (SELECT PlayerID FROM PlayerTeam WHERE TeamID = ?)";
+		String teamSQL = "SELECT * FROM Players WHERE PlayerID = ?";
 		ArrayList<Player> players = new ArrayList<>();
-
 		try {
 			PreparedStatement statement = con.prepareStatement(teamSQL);
-			statement.setInt(1, teamID);
-			ResultSet result = statement.executeQuery();
-			while (result.next()) {
-				int playerID = result.getInt("PlayerID");
-				String gamerTag = result.getString("Gammer Tag");
-				int totalKills = result.getInt("Total Kills");
-				int totalDeaths = result.getInt("Total Deaths");
-				Player player = new Player(playerID, gamerTag, totalKills, totalDeaths, teamID);
-				players.add(player);
+			List<Integer> playerIDs = getPlayerIDFromTeams(teamID);
+			for (int i = 0; i < playerIDs.size(); i++) {
+				int playersID = playerIDs.get(i);
+				statement.setInt(1, playersID);
+				ResultSet result = statement.executeQuery();
+				while (result.next()) {
+					int playerID = result.getInt("PlayerID");
+					String gamerTag = result.getString("Gammer Tag");
+					int totalKills = result.getInt("Total Kills");
+					int totalDeaths = result.getInt("Total Deaths");
+					Player player = new Player(playerID, gamerTag, totalKills, totalDeaths, teamID);
+					players.add(player);
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -81,28 +84,64 @@ public class TeamDAO implements TeamDAOIF {
 		return players;
 	}
 
+	public List<Integer> getPlayerIDFromTeams(int teamID) {
+		String sql = "SELECT PlayerID FROM PlayerTeam WHERE TeamID = ?";
+		List<Integer> playerIDs = new ArrayList<>();
+		try {
+			PreparedStatement statement = con.prepareStatement(sql);
+			statement.setInt(1, teamID);
+			ResultSet result = statement.executeQuery();
+			while (result.next()) {
+				int playerID = result.getInt("PlayerID");
+				playerIDs.add(playerID);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return playerIDs;
+	}
+
 	@Override
 	public List<Team> getEligible() {
-		String sql = "SELECT * FROM Teams WHERE TeamID = (SELECT Distinct(TeamID) From PlayerTeam WHERE(SELECT COUNT(TeamID) FROM PlayerTeam) >4)";
-		List<Team> eligibleTeams = HigherOrderFunctionForGetMethods(() -> sql, ()-> "null");
+		/*
+		 * String sql =
+		 * "Select TeamID From Teams Where TeamID = (Select TeamID From PlayerTeam GROUP BY TeamID HAVING COUNT(TeamID) > 4)"
+		 * ; List<Team> eligibleTeams = new ArrayList<>(); try { PreparedStatement
+		 * statement = con.prepareStatement(sql); ResultSet result =
+		 * statement.executeQuery(); while(result.next()) { int teamID =
+		 * result.getInt("TeamID"); Team team = findTeamByID(teamID);
+		 * eligibleTeams.add(team); } } catch (SQLException e) {
+		 * 
+		 * } return eligibleTeams;
+		 */
+
+		List<Team> allTeams = getAllTeams();
+		List<Team> eligibleTeams = new ArrayList<>();
+		for (int i = 0; i < allTeams.size(); i++) {
+			if (allTeams.get(i).getPlayers().size() > 4) {
+				Team team = allTeams.get(i);
+				eligibleTeams.add(team);
+			}
+		}
 		return eligibleTeams;
 	}
 
 	public List<Team> getAllTeams() {
 		String sql = "SELECT * FROM Teams";
-		List<Team> allTeams = HigherOrderFunctionForGetMethods(() -> sql, ()-> "null");
+		List<Team> allTeams = HigherOrderFunctionForGetMethods(() -> sql, () -> null);
 		return allTeams;
 	}
 
 	@Override
 	public Team findTeamByID(int teamID) {
-		String sql = "SELECT * FROM Teams WHERE TeamID = " + teamID;
-		HigherOrderFunctionForGetMethods(() -> sql, () -> "null");
+		String sql = "SELECT * FROM Teams WHERE TeamID = '" + teamID + "'";
+		HigherOrderFunctionForGetMethods(() -> sql, () -> null);
 		return team;
 	}
 
 	public Team findTeamByName(String teamName) {
-		String sql = "SELECT * FROM Teams WHERE [Team Name] = " + "'" + teamName +"'";
+		String sql = "SELECT * FROM Teams WHERE [Team Name] = ?";
 		HigherOrderFunctionForGetMethods(() -> sql, () -> teamName);
 		return team;
 	}
@@ -175,12 +214,10 @@ public class TeamDAO implements TeamDAOIF {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public List<Team> getTeamsInTournament(int tournamentID) {
-			String sql = "Select * From Teams Where TeamID =(Select TeamID From TournamentTeam Where TournamentID = ?)";
-			List<Team> teamsInTournament = HigherOrderFunctionForGetMethods(() -> sql, ()-> "null");
-			return teamsInTournament;
+		String sql = "Select * From Teams Where TeamID =(Select TeamID From TournamentTeam Where TournamentID = ?)";
+		List<Team> teamsInTournament = HigherOrderFunctionForGetMethods(() -> sql, () -> "null");
+		return teamsInTournament;
 	}
 }
-
-

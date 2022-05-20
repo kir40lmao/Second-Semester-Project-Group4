@@ -31,6 +31,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
 
@@ -1209,8 +1210,15 @@ public class Menu {
 		scrollPane_5.setBounds(343, 152, 268, 327);
 		tournamentCreationMenu.add(scrollPane_5);
 		
-		JList list_2 = new JList();
-		scrollPane_5.setViewportView(list_2);
+		DefaultListModel DLM_AT = new DefaultListModel();
+		JList availiableTeams = new JList(DLM_AT);
+		scrollPane_5.setViewportView(availiableTeams);
+		TeamController teamController = new TeamController();
+		List<Team> availiableTeamsList = teamController.getEligible();
+		
+		for(int i = 0;i < availiableTeamsList.size(); i++) {
+			DLM_AT.add(i, availiableTeamsList.get(i).getTeamName());
+		}
 		
 		JScrollPane scrollPane_6 = new JScrollPane();
 		scrollPane_6.setBounds(756, 150, 268, 331);
@@ -1474,12 +1482,12 @@ public class Menu {
 		txtTournamentHistoryMenu.setColumns(10);
 		txtTournamentHistoryMenu.setBorder(null);
 		txtTournamentHistoryMenu.setBackground(SystemColor.menu);
-		txtTournamentHistoryMenu.setBounds(185, 93, 230, 35);
+		txtTournamentHistoryMenu.setBounds(460, 46, 230, 35);
 		tournamentHistoryMenu.add(txtTournamentHistoryMenu);
 		
 		JPanel panel_1_3 = new JPanel();
 		panel_1_3.setBackground(Color.WHITE);
-		panel_1_3.setBounds(185, 139, 230, 216);
+		panel_1_3.setBounds(313, 139, 230, 216);
 		tournamentHistoryMenu.add(panel_1_3);
 		
 		JButton btnNewButton_4 = new JButton("Exit");

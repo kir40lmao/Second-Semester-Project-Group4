@@ -1,5 +1,7 @@
 package ControllerLayer;
 
+import java.util.List;
+
 import DatabaseLayer.TeamDAO;
 import DatabaseLayer.TeamDAOIF;
 import ModelLayer.Team;
@@ -20,8 +22,9 @@ public class TeamController {
 		return team;
 	}
 
-	public void getEligible() {
-		teamDAO.getEligible();
+	public List<Team> getEligible() {
+		List<Team> eligibleTeams = teamDAO.getEligible();
+		return eligibleTeams;
 	}
 
 	public void updateTeamName(int id, String teamName) {
