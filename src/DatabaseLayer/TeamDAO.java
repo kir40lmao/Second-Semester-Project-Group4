@@ -104,18 +104,6 @@ public class TeamDAO implements TeamDAOIF {
 
 	@Override
 	public List<Team> getEligible() {
-		/*
-		 * String sql =
-		 * "Select TeamID From Teams Where TeamID = (Select TeamID From PlayerTeam GROUP BY TeamID HAVING COUNT(TeamID) > 4)"
-		 * ; List<Team> eligibleTeams = new ArrayList<>(); try { PreparedStatement
-		 * statement = con.prepareStatement(sql); ResultSet result =
-		 * statement.executeQuery(); while(result.next()) { int teamID =
-		 * result.getInt("TeamID"); Team team = findTeamByID(teamID);
-		 * eligibleTeams.add(team); } } catch (SQLException e) {
-		 * 
-		 * } return eligibleTeams;
-		 */
-
 		List<Team> allTeams = getAllTeams();
 		List<Team> eligibleTeams = new ArrayList<>();
 		for (int i = 0; i < allTeams.size(); i++) {
@@ -215,9 +203,46 @@ public class TeamDAO implements TeamDAOIF {
 		}
 	}
 
-	public List<Team> getTeamsInTournament(int tournamentID) {
-		String sql = "Select * From Teams Where TeamID =(Select TeamID From TournamentTeam Where TournamentID = ?)";
-		List<Team> teamsInTournament = HigherOrderFunctionForGetMethods(() -> sql, () -> "null");
+	public List<Team> getTeamsInTournament(String tournamentName) {
+		List<Team> teamsInTournament = new ArrayList<>();
+		List<Integer> teamIDs = getTeamIDsFromTournament(tournamentName);
+		for(int i = 0;i < teamIDs.size();i++) {
+			Team team = findTeamByID(teamIDs.get(i));
+			teamsInTournament.add(team);
+		}
 		return teamsInTournament;
+	}
+	
+	public List<Integer> getTeamIDsFromTournament(String tournamentName){
+		String sql = "Select TeamID From TournamentTeam Where TournamentID = ?";
+		List<Integer> teamIDs = new ArrayList<>();
+		try {
+			PreparedStatement statement = con.prepareStatement(sql);
+			TournamentDAO tdao = new TournamentDAO();
+			int tournamentID = tdao.getTournamentID(tournamentName);
+			statement.setInt(1, tournamentID);
+			ResultSet result = statement.executeQuery();
+			while(result.next()) {
+				int teamID = result.getInt("TeamID");
+				teamIDs.add(teamID);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return teamIDs;
+	}
+	
+	public void addTeamsToTournament(int tournamentID, int teamID) {
+		String sql = "Insert into TournamentTeam (TournamentID , TeamID ) Values(? , ?)";
+		PreparedStatement statement;
+		try {
+			statement = con.prepareStatement(sql);
+			statement.setInt(1, tournamentID);
+			statement.setInt(2, teamID);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	
 	}
 }

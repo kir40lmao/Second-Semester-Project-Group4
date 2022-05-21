@@ -43,4 +43,13 @@ public class TeamController {
 		Team team = teamDAO.findTeamByName(teamName);
 		return team;
 	}
+	
+	public List<Team> getTeamsInTournament(String tournamentName){
+		List<Team> teamsInTournament = teamDAO.getTeamsInTournament(tournamentName);
+		return teamsInTournament;
+	}
+	
+	public void addTeamsToTournament(int tournamentID, int teamID) {
+		teamDAO.addTeamsToTournament(tournamentID, teamID);
+	}
 }

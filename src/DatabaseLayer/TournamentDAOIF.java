@@ -10,7 +10,7 @@ public interface TournamentDAOIF {
 	public void createTournament(Tournament tournament);
 	public void createMatchUps(ArrayList<Team> teams, int tournamentID);
 	public void addTournamentMatches();
-	public Tournament findTournamentByID(int tournamentID);
+	public Tournament findTournamentByName(String tournamentName);
 	public List<Tournament> getAllTournaments();
 	//public List<Tournament> getUpcoming(String status);
 	//public List<Tournament> getOngoing(String status);
@@ -18,4 +18,5 @@ public interface TournamentDAOIF {
 	public void updateTournament(String tournamentName, String date, String Venue, String status, String previousTournamentName);
 	public void deleteTournament(int tournamentID);
 	public List<Tournament> getTournamentByStatus(String status);
+	public int getTournamentID(String tournamentName);
 }

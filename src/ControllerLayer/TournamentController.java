@@ -25,8 +25,8 @@ public class TournamentController {
 		tdao.createMatchUps(teams, tournamentID);
 	}
 	
-	public Tournament findTournamentByID(int tournamentID) {
-		return tdao.findTournamentByID(tournamentID);
+	public Tournament findTournamentByName(String tournamentName) {
+		return tdao.findTournamentByName(tournamentName);
 	}
 	
 	public void addTournamentMatches() {
@@ -48,5 +48,10 @@ public class TournamentController {
 	
 	public void deleteTournament(int tournamentID) {
 		tdao.deleteTournament(tournamentID);
+	}
+	
+	public int getTournamentID(String tournamentName) {
+		int id = tdao.getTournamentID(tournamentName);
+		return id;
 	}
 }

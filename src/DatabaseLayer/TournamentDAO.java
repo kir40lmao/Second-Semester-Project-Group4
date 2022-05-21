@@ -169,13 +169,13 @@ public class TournamentDAO implements TournamentDAOIF{
 		List<Tournament> finishedTournaments = HigherOrderFunctionForGetMethods(() -> sql);
 		return finishedTournaments;
 	}*/
-	
+		
 	@Override
-	public Tournament findTournamentByID(int tournamentID){
-		String sql = "SELECT * FROM Tournament WHERE TournamentID = ?";
+	public Tournament findTournamentByName(String tournamentName){
+		String sql = "SELECT * FROM Tournament WHERE [Tournament Name] = ?";
 		try {
             PreparedStatement statement = con.prepareStatement(sql);
-            statement.setInt(1, tournamentID);
+            statement.setString(1, tournamentName);
             ResultSet rs = statement.executeQuery();
             while (rs.next()){
             	Tournament t = new Tournament();
@@ -191,6 +191,23 @@ public class TournamentDAO implements TournamentDAOIF{
             e.printStackTrace();
         }
         return null;
+	}
+	
+	public int getTournamentID(String tournamentName) {
+		String sql = "Select * From Tournament Where [Tournament Name] = ?";
+		PreparedStatement statement;
+		int id = 0;
+		try {
+			statement = con.prepareStatement(sql);
+			statement.setString(1, tournamentName);
+			ResultSet result = statement.executeQuery();
+			while(result.next()) {
+			id = result.getInt("TournamentID");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return id;
 	}
 	
 	@Override
