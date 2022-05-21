@@ -31,6 +31,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 import java.awt.event.ActionEvent;
 
 public class Menu {
@@ -1368,7 +1369,7 @@ public class Menu {
 		
 		JButton btnNewButton_1 = new JButton("Exit");
 		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 17));
-		btnNewButton_1.setBounds(40, 632, 160, 56);
+		btnNewButton_1.setBounds(159, 644, 160, 56);
 		teamSearchMenu.add(btnNewButton_1);
 		
 		textTeamNameInput = new JTextField();
@@ -1400,6 +1401,11 @@ public class Menu {
 		JList listOfPlayers = new JList();
 		scrollPanePlayers.setViewportView(listOfPlayers);
 		
+		JButton btnSearchPlayerStats = new JButton("Search player stats");
+		btnSearchPlayerStats.setVisible(false);
+		btnSearchPlayerStats.setBounds(756, 559, 240, 21);
+		teamSearchMenu.add(btnSearchPlayerStats);
+		
 		scrollPanePlayers.setVisible(false);
 		listOfPlayers.setVisible(false);
 		
@@ -1409,21 +1415,22 @@ public class Menu {
 
 			public void actionPerformed(ActionEvent e) {
 				boolean success = false;
-				String[] players = {""};
+				String[] players = new String [500];
 				
 				for(Team t : tc.getAllTeams()) {
 					int index = 0;
-					for(Player p : tc.PopulateArray(t.getTeamID())) {
-						players[index] = p.getGamerTag();
-						index++;	
-					}
 					if(textTeamNameInput.getText().equals(t.getTeamName())) {
+						for(Player p : tc.PopulateArray(t.getTeamID())) {
+							players[index] = p.getGamerTag();
+							index++;	
+						}
 						lblFeedbackMessage.setVisible(false);
 						success = true;
 						scrollPanePlayers.setVisible(true);
 						listOfPlayers.setVisible(true);
 						lblTeamStats.setVisible(true);
 						lblWinsLosses.setVisible(true);
+						btnSearchPlayerStats.setVisible(true);
 						lblWinsLosses.setText("Wins: "+t.getWins()+"  Losses: "+ t.getLoses());
 					}
 				}
@@ -1444,6 +1451,7 @@ public class Menu {
 					lblFeedbackMessage.setVisible(true);
 					lblWinsLosses.setVisible(false);
 					lblTeamStats.setVisible(false);
+					btnSearchPlayerStats.setVisible(false);
 				}
 				
 			}
@@ -1470,7 +1478,6 @@ public class Menu {
 		txtSearchPlayerMenu.setBackground(SystemColor.menu);
 		txtSearchPlayerMenu.setBounds(112, 198, 180, 35);
 		playerSearchMenu.add(txtSearchPlayerMenu);
-		
 		
 		JTextField textPlayerNameInput = new JTextField();
 		textPlayerNameInput.setBounds(295, 208, 196, 20);
@@ -1504,6 +1511,11 @@ public class Menu {
 		playerSearchMenu.add(lblPlayerTeam);
 		lblPlayerTeam.setVisible(false);
 		
+		JButton btnShowTeamStats = new JButton("Show team stats");
+		btnShowTeamStats.setBounds(809, 276, 127, 21);
+		playerSearchMenu.add(btnShowTeamStats);
+		btnShowTeamStats.setVisible(false);
+		
 		JButton btnPlayerSearch = new JButton("Search");
 		btnPlayerSearch.addActionListener(new ActionListener() {
 		PlayerController pc = new PlayerController();
@@ -1529,6 +1541,7 @@ public class Menu {
 				lblKillsDeaths.setText("Kills: "+p.getTotalKills()+"  Deaths: "+ p.getTotalDeaths());
 				lblPlayerTeam.setVisible(true);
 				lblPlayerTeam.setText(tc.findTeamByID(teamID).getTeamName());
+				btnShowTeamStats.setVisible(true);
 				
 			}else{
 				lblFeedbackMessage2.setText("Invalid Player Name");
@@ -1536,6 +1549,7 @@ public class Menu {
 				lblKillsDeaths.setVisible(false);
 				lblStat.setVisible(false);
 				lblPlayerTeam.setVisible(false);
+				btnShowTeamStats.setVisible(false);
 				
 			}
 				
@@ -1544,6 +1558,8 @@ public class Menu {
 		
 		btnPlayerSearch.setBounds(520, 207, 89, 23);
 		playerSearchMenu.add(btnPlayerSearch);
+		
+		
 		
 		JPanel tournamentHistoryMenu = new JPanel();
 		tournamentHistoryMenu.setLayout(null);
@@ -1588,6 +1604,21 @@ public class Menu {
 		btnNewButton_4.setBounds(39, 632, 160, 56);
 		tournamentHistoryMenu.add(btnNewButton_4);
 		
+		btnSearchPlayerStats.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String selected = (String)listOfPlayers.getSelectedValue();
+				cl_base.show(frame.getContentPane(), "playerSearchMenu");
+				textPlayerNameInput.setText(selected);
+				btnPlayerSearch.doClick();
+			}
+		});
 		
+		btnShowTeamStats.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cl_base.show(frame.getContentPane(), "teamSearchMenu");
+				textTeamNameInput.setText(lblPlayerTeam.getText());
+				btnTeamSearch.doClick();
+			}
+		});
 	}
 }

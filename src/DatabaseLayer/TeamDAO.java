@@ -60,25 +60,46 @@ public class TeamDAO implements TeamDAOIF {
 	}
 
 	public ArrayList<Player> PopulateArray(int teamID) {
-		String teamSQL = "SELECT * FROM Players WHERE PlayerID = (SELECT PlayerID FROM PlayerTeam WHERE TeamID = ?)";
+		String teamSQL = "SELECT * FROM Players WHERE PlayerID = ?";
 		ArrayList<Player> players = new ArrayList<>();
 
 		try {
 			PreparedStatement statement = con.prepareStatement(teamSQL);
-			statement.setInt(1, teamID);
-			ResultSet result = statement.executeQuery();
-			while (result.next()) {
-				int playerID = result.getInt("PlayerID");
-				String gamerTag = result.getString("Gammer Tag");
-				int totalKills = result.getInt("Total Kills");
-				int totalDeaths = result.getInt("Total Deaths");
-				Player player = new Player(playerID, gamerTag, totalKills, totalDeaths, teamID);
-				players.add(player);
+			List<Integer> playerIDs = getPlayerIDFromTeams(teamID);
+			for (int i = 0; i < playerIDs.size(); i++) {
+				int playersID = playerIDs.get(i);
+				statement.setInt(1, playersID);
+				ResultSet result = statement.executeQuery();
+				while (result.next()) {
+					int playerID = result.getInt("PlayerID");
+					String gamerTag = result.getString("Gammer Tag");
+					int totalKills = result.getInt("Total Kills");
+					int totalDeaths = result.getInt("Total Deaths");
+					Player player = new Player(playerID, gamerTag, teamID, totalKills, totalDeaths);
+					players.add(player);
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return players;
+	}
+	
+	public List<Integer> getPlayerIDFromTeams(int teamID) {
+		String sql = "SELECT PlayerID FROM PlayerTeam WHERE TeamID = ?";
+		List<Integer> playerIDs = new ArrayList<>();
+		try {
+			PreparedStatement statement = con.prepareStatement(sql);
+			statement.setInt(1, teamID);
+			ResultSet result = statement.executeQuery();
+			while (result.next()) {
+				int playerID = result.getInt("PlayerID");
+				playerIDs.add(playerID);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return playerIDs;
 	}
 
 	@Override
