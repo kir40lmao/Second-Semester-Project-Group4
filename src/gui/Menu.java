@@ -1242,8 +1242,9 @@ public class Menu {
 		addedTeamsScroll.setBounds(756, 150, 268, 331);
 		tournamentCreationMenu.add(addedTeamsScroll);
 		addedTeamsScroll.setVisible(false);
-		JList list_3 = new JList();
-		addedTeamsScroll.setViewportView(list_3);
+		DefaultListModel DLM_AddedTeams = new DefaultListModel();
+		JList addedTeamsList = new JList(DLM_AddedTeams);
+		addedTeamsScroll.setViewportView(addedTeamsList);
 		
 		JLabel lblStatus = new JLabel("Status");
 		lblStatus.setVisible(false);
@@ -1325,6 +1326,9 @@ public class Menu {
 				Team team = teamController.findTeamByName(teamName);
 				int id = team.getTeamID();
 				teamController.addTeamsToTournament(tournamentID, id);
+				int i = 0;
+				DLM_AddedTeams.add(i,teamName);
+				i++;
 			}
 		});
 		btnAddTeamsToTournament.setBounds(343, 490, 268, 35);
@@ -1638,22 +1642,6 @@ public class Menu {
 		DefaultListModel DLM_teamsInTournament = new DefaultListModel();
 		JList teamsInTournamentList = new JList(DLM_teamsInTournament);
 		teamsInTournamentScroll.setViewportView(teamsInTournamentList);
-		List<Team> teamsList = new ArrayList<>();
-		if(!(finishedTournaments.getSelectedValue() == null)&&(scheduledTournaments.getSelectedValue() == null)&&(onGoingTournaments.getSelectedValue() == null)) {
-			Tournament tournament = (Tournament) finishedTournaments.getSelectedValue();
-			teamsList = teamController.getTeamsInTournament(tournament.getTournamentName());
-		}else if(!(scheduledTournaments.getSelectedValue() == null)&&(finishedTournaments.getSelectedValue() == null)&&(onGoingTournaments.getSelectedValue() == null)) {
-			Tournament tournament = (Tournament) scheduledTournaments.getSelectedValue();
-			teamsList = teamController.getTeamsInTournament(tournament.getTournamentName());
-		}else if(!(onGoingTournaments.getSelectedValue() == null)&&(scheduledTournaments.getSelectedValue() == null)&&(scheduledTournaments.getSelectedValue() == null)) {
-			Tournament tournament = (Tournament) onGoingTournaments.getSelectedValue();
-			teamsList = teamController.getTeamsInTournament(tournament.getTournamentName());
-		}else{
-			//add a JLabel as an error message if they have selected more than one tournament or no tournament
-		}
-		for(int i = 0;i < teamsList.size(); i++) {
-			DLM_teamsInTournament.add(i, teamsList.get(i).getTeamName());
-		}
 		
 		JButton btnGoToTournamentDetails = new JButton("Go to Selected Tournament Details");
 		btnGoToTournamentDetails.setFont(new Font("Tahoma", Font.BOLD, 17));
@@ -1661,7 +1649,37 @@ public class Menu {
 		btnGoToTournamentDetails.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				popup.setVisible(true);
-				popup.getContentPane().add(tournamentDetails);
+				popup.add(tournamentDetails);
+				List<Team> teamsList = new ArrayList<>();
+				teamsList.clear();
+				DLM_teamsInTournament.clear();
+				if(!(finishedTournaments.getSelectedValue() == null)&&(scheduledTournaments.getSelectedValue() == null)&&(onGoingTournaments.getSelectedValue() == null)) {
+					String tournamentName = (String) finishedTournaments.getSelectedValue();
+					teamsList = teamController.getTeamsInTournament(tournamentName);
+					onGoingTournaments.clearSelection();
+					scheduledTournaments.clearSelection();
+					finishedTournaments.clearSelection();
+				}else if(!(scheduledTournaments.getSelectedValue() == null)&&(finishedTournaments.getSelectedValue() == null)&&(onGoingTournaments.getSelectedValue() == null)) {
+					String tournamentName = (String) scheduledTournaments.getSelectedValue();
+					teamsList = teamController.getTeamsInTournament(tournamentName);
+					onGoingTournaments.clearSelection();
+					scheduledTournaments.clearSelection();
+					finishedTournaments.clearSelection();
+				}else if(!(onGoingTournaments.getSelectedValue() == null)&&(scheduledTournaments.getSelectedValue() == null)&&(finishedTournaments.getSelectedValue() == null)) {
+					String tournamentName = (String) onGoingTournaments.getSelectedValue();
+					teamsList = teamController.getTeamsInTournament(tournamentName);
+					onGoingTournaments.clearSelection();
+					scheduledTournaments.clearSelection();
+					finishedTournaments.clearSelection();
+				}else{
+					//add a JLabel as an error message if they have selected more than one tournament or no tournament
+					onGoingTournaments.clearSelection();
+					scheduledTournaments.clearSelection();
+					finishedTournaments.clearSelection();
+				}
+				for(int i = 0;i < teamsList.size(); i++) {
+					DLM_teamsInTournament.add(i, teamsList.get(i).getTeamName());
+				}
 			}
 			
 		});
