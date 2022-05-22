@@ -33,6 +33,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -128,6 +129,16 @@ public class Menu {
 		JMenuItem mntmNewMenuItem_10 = new JMenuItem("Check Forum");
 		mntmNewMenuItem_10.setBackground(Color.LIGHT_GRAY);
 		mntmNewMenuItem_10.setHorizontalAlignment(SwingConstants.CENTER);
+		mntmNewMenuItem_10.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ProcessBuilder builder = new ProcessBuilder("D:\\Desktop\\Second Semester Project\\Business\\site templates\\DarkMode\\run.bat");
+				try {
+					Process process = builder.start();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		menuBar_1.add(mntmNewMenuItem_10);
 		
 		JMenuItem mntmNewMenuItem_9 = new JMenuItem("Search Team");
