@@ -22,6 +22,7 @@ import ModelLayer.Team;
 import ModelLayer.Tournament;
 
 import javax.swing.JSeparator;
+import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import java.awt.SystemColor;
@@ -33,6 +34,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,9 +45,7 @@ public class Menu {
 
 	public JFrame frame;
 	private JTextField txt_gamer_tag;
-	private JTextField textField_1;
-	private JTextField txtSearchTeamMenu;
-	private JTextField textField_3;
+	private JTextField txtSearchTeamName;
 	private JTextField txtSearchPlayerMenu;
 	private JTextField textField_5;
 	private JTextField txtTournamentHistoryMenu;
@@ -64,6 +64,7 @@ public class Menu {
 	private JTextField txt_player_team_ID;
 	private JTextField txt_search_team;
 	private JTextField textField_4;
+	private JTextField textTeamNameInput;
 	private JTextField textField;
 	private JTextField textField_2;
 
@@ -1473,39 +1474,108 @@ public class Menu {
 		menuBar_1_1.setBounds(0, 0, 1281, 35);
 		teamSearchMenu.add(menuBar_1_1);
 		
-		textField_1 = new JTextField();
-		textField_1.setText("On-Going Tournaments");
-		textField_1.setHorizontalAlignment(SwingConstants.CENTER);
-		textField_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textField_1.setColumns(10);
-		textField_1.setBorder(null);
-		textField_1.setBackground(SystemColor.menu);
-		textField_1.setBounds(627, 93, 230, 35);
-		teamSearchMenu.add(textField_1);
-		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(627, 139, 230, 216);
-		teamSearchMenu.add(scrollPane_1);
-		
-		txtSearchTeamMenu = new JTextField();
-		txtSearchTeamMenu.setText("search team menu");
-		txtSearchTeamMenu.setHorizontalAlignment(SwingConstants.CENTER);
-		txtSearchTeamMenu.setFont(new Font("Tahoma", Font.BOLD, 14));
-		txtSearchTeamMenu.setColumns(10);
-		txtSearchTeamMenu.setBorder(null);
-		txtSearchTeamMenu.setBackground(SystemColor.menu);
-		txtSearchTeamMenu.setBounds(185, 93, 230, 35);
-		teamSearchMenu.add(txtSearchTeamMenu);
-		
-		JPanel panel_1_1 = new JPanel();
-		panel_1_1.setBackground(Color.WHITE);
-		panel_1_1.setBounds(185, 139, 230, 216);
-		teamSearchMenu.add(panel_1_1);
+		txtSearchTeamName = new JTextField();
+		txtSearchTeamName.setText("Team name:");
+		txtSearchTeamName.setHorizontalAlignment(SwingConstants.CENTER);
+		txtSearchTeamName.setFont(new Font("Tahoma", Font.BOLD, 14));
+		txtSearchTeamName.setColumns(10);
+		txtSearchTeamName.setBorder(null);
+		txtSearchTeamName.setBackground(SystemColor.menu);
+		txtSearchTeamName.setBounds(158, 199, 130, 35);
+		teamSearchMenu.add(txtSearchTeamName);
 		
 		JButton btnNewButton_1 = new JButton("Exit");
 		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 17));
-		btnNewButton_1.setBounds(40, 632, 160, 56);
+		btnNewButton_1.setBounds(159, 644, 160, 56);
 		teamSearchMenu.add(btnNewButton_1);
+		
+		textTeamNameInput = new JTextField();
+		textTeamNameInput.setBounds(295, 208, 196, 20);
+		teamSearchMenu.add(textTeamNameInput);
+		textTeamNameInput.setColumns(10);
+		
+		JLabel lblFeedbackMessage = new JLabel("New label");
+		lblFeedbackMessage.setForeground(Color.RED);
+		lblFeedbackMessage.setBounds(311, 254, 141, 14);
+		teamSearchMenu.add(lblFeedbackMessage);
+		lblFeedbackMessage.setVisible(false);
+		
+		
+		JLabel lblWinsLosses = new JLabel();
+		lblWinsLosses.setBounds(351, 342, 152, 50);
+		teamSearchMenu.add(lblWinsLosses);
+		lblWinsLosses.setVisible(false);
+		
+		JLabel lblTeamStats = new JLabel("Team Stats:");
+		lblTeamStats.setBounds(351, 317, 152, 14);
+		teamSearchMenu.add(lblTeamStats);
+		lblTeamStats.setVisible(false);
+		
+		JScrollPane scrollPanePlayers = new JScrollPane();
+		scrollPanePlayers.setBounds(756, 227, 240, 322);
+		teamSearchMenu.add(scrollPanePlayers);
+		
+		JList listOfPlayers = new JList();
+		scrollPanePlayers.setViewportView(listOfPlayers);
+		
+		JButton btnSearchPlayerStats = new JButton("Search player stats");
+		btnSearchPlayerStats.setVisible(false);
+		btnSearchPlayerStats.setBounds(756, 559, 240, 21);
+		teamSearchMenu.add(btnSearchPlayerStats);
+		
+		scrollPanePlayers.setVisible(false);
+		listOfPlayers.setVisible(false);
+		
+		JButton btnTeamSearch = new JButton("Search");
+		btnTeamSearch.addActionListener(new ActionListener() {
+		TeamController tc = new TeamController();
+
+			public void actionPerformed(ActionEvent e) {
+				boolean success = false;
+				String[] players = new String [500];
+				
+				for(Team t : tc.getAllTeams()) {
+					int index = 0;
+					if(textTeamNameInput.getText().equals(t.getTeamName())) {
+						for(Player p : tc.PopulateArray(t.getTeamID())) {
+							players[index] = p.getGamerTag();
+							index++;	
+						}
+						lblFeedbackMessage.setVisible(false);
+						success = true;
+						scrollPanePlayers.setVisible(true);
+						listOfPlayers.setVisible(true);
+						lblTeamStats.setVisible(true);
+						lblWinsLosses.setVisible(true);
+						btnSearchPlayerStats.setVisible(true);
+						lblWinsLosses.setText("Wins: "+t.getWins()+"  Losses: "+ t.getLoses());
+					}
+				}
+				listOfPlayers.setModel(new AbstractListModel() {
+					public int getSize() {
+						return players.length;
+					}
+					
+					public Object getElementAt(int index) {
+							return players[index];
+					}
+					
+				});
+				if(!success) {
+					lblFeedbackMessage.setText("Invalid Team Name");
+					scrollPanePlayers.setVisible(false);
+					listOfPlayers.setVisible(false);
+					lblFeedbackMessage.setVisible(true);
+					lblWinsLosses.setVisible(false);
+					lblTeamStats.setVisible(false);
+					btnSearchPlayerStats.setVisible(false);
+				}
+				
+			}
+		});
+		
+		btnTeamSearch.setBounds(520, 207, 89, 23);
+		teamSearchMenu.add(btnTeamSearch);
 		
 		JPanel playerSearchMenu = new JPanel();
 		playerSearchMenu.setLayout(null);
@@ -1516,39 +1586,97 @@ public class Menu {
 		menuBar_1_2.setBounds(0, 0, 1281, 35);
 		playerSearchMenu.add(menuBar_1_2);
 		
-		textField_3 = new JTextField();
-		textField_3.setText("On-Going Tournaments");
-		textField_3.setHorizontalAlignment(SwingConstants.CENTER);
-		textField_3.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textField_3.setColumns(10);
-		textField_3.setBorder(null);
-		textField_3.setBackground(SystemColor.menu);
-		textField_3.setBounds(627, 93, 230, 35);
-		playerSearchMenu.add(textField_3);
-		
-		JScrollPane scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(627, 139, 230, 216);
-		playerSearchMenu.add(scrollPane_2);
-		
 		txtSearchPlayerMenu = new JTextField();
-		txtSearchPlayerMenu.setText("Search player menu");
+		txtSearchPlayerMenu.setText("Player Gamer Tag");
 		txtSearchPlayerMenu.setHorizontalAlignment(SwingConstants.CENTER);
 		txtSearchPlayerMenu.setFont(new Font("Tahoma", Font.BOLD, 14));
 		txtSearchPlayerMenu.setColumns(10);
 		txtSearchPlayerMenu.setBorder(null);
 		txtSearchPlayerMenu.setBackground(SystemColor.menu);
-		txtSearchPlayerMenu.setBounds(185, 93, 230, 35);
+		txtSearchPlayerMenu.setBounds(112, 198, 180, 35);
 		playerSearchMenu.add(txtSearchPlayerMenu);
 		
-		JPanel panel_1_2 = new JPanel();
-		panel_1_2.setBackground(Color.WHITE);
-		panel_1_2.setBounds(185, 139, 230, 216);
-		playerSearchMenu.add(panel_1_2);
+		JTextField textPlayerNameInput = new JTextField();
+		textPlayerNameInput.setBounds(295, 208, 196, 20);
+		playerSearchMenu.add(textPlayerNameInput);
+		textPlayerNameInput.setColumns(10);
+		
+		JLabel lblFeedbackMessage2 = new JLabel("");
+		lblFeedbackMessage2.setForeground(Color.RED);
+		lblFeedbackMessage2.setBounds(311, 254, 141, 14);
+		playerSearchMenu.add(lblFeedbackMessage2);
+		lblFeedbackMessage2.setVisible(false);
 		
 		JButton btnNewButton_3 = new JButton("Exit");
 		btnNewButton_3.setFont(new Font("Tahoma", Font.BOLD, 17));
 		btnNewButton_3.setBounds(39, 632, 160, 56);
 		playerSearchMenu.add(btnNewButton_3);
+		
+		JLabel lblKillsDeaths = new JLabel("");
+		lblKillsDeaths.setBounds(351, 342, 284, 50);
+		playerSearchMenu.add(lblKillsDeaths);
+		lblKillsDeaths.setVisible(false);
+		
+		JLabel lblStat = new JLabel("Player Stats:");
+		lblStat.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblStat.setBounds(256, 296, 107, 35);
+		playerSearchMenu.add(lblStat);
+		lblStat.setVisible(false);
+		
+		JLabel lblPlayerTeam = new JLabel();
+		lblPlayerTeam.setBounds(774, 198, 208, 50);
+		playerSearchMenu.add(lblPlayerTeam);
+		lblPlayerTeam.setVisible(false);
+		
+		JButton btnShowTeamStats = new JButton("Show team stats");
+		btnShowTeamStats.setBounds(809, 276, 127, 21);
+		playerSearchMenu.add(btnShowTeamStats);
+		btnShowTeamStats.setVisible(false);
+		
+		JButton btnPlayerSearch = new JButton("Search");
+		btnPlayerSearch.addActionListener(new ActionListener() {
+		PlayerController pc = new PlayerController();
+		TeamController tc = new TeamController();
+
+		public void actionPerformed(ActionEvent e) {
+			boolean success = false;
+			Player p = pc.findPlayerByName(textPlayerNameInput.getText());
+			int teamID = 0;
+			
+			for(Player player : pc.getAllPlayers()) {
+				
+				if(player.getGamerTag().equals(p.getGamerTag())) {
+					success = true;
+					teamID = player.getTeamID();
+				}
+			}
+			if(success) {	
+				
+				lblFeedbackMessage.setVisible(false);
+				lblStat.setVisible(true);
+				lblKillsDeaths.setVisible(true);
+				lblKillsDeaths.setText("Kills: "+p.getTotalKills()+"  Deaths: "+ p.getTotalDeaths());
+				lblPlayerTeam.setVisible(true);
+				lblPlayerTeam.setText(tc.findTeamByID(teamID).getTeamName());
+				btnShowTeamStats.setVisible(true);
+				
+			}else{
+				lblFeedbackMessage2.setText("Invalid Player Name");
+				lblFeedbackMessage.setVisible(true);
+				lblKillsDeaths.setVisible(false);
+				lblStat.setVisible(false);
+				lblPlayerTeam.setVisible(false);
+				btnShowTeamStats.setVisible(false);
+				
+			}
+				
+		}
+		});
+		
+		btnPlayerSearch.setBounds(520, 207, 89, 23);
+		playerSearchMenu.add(btnPlayerSearch);
+		
+		
 		
 		JPanel tournamentHistoryMenu = new JPanel();
 		tournamentHistoryMenu.setLayout(null);
@@ -1621,6 +1749,14 @@ public class Menu {
 		btnNewButton_4.setBounds(39, 632, 160, 56);
 		tournamentHistoryMenu.add(btnNewButton_4);
 		
+		btnSearchPlayerStats.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String selected = (String)listOfPlayers.getSelectedValue();
+				cl_base.show(frame.getContentPane(), "playerSearchMenu");
+				textPlayerNameInput.setText(selected);
+				btnPlayerSearch.doClick();
+			}
+		});
 		textField = new JTextField();
 		textField.setText("Finished Tournaments");
 		textField.setHorizontalAlignment(SwingConstants.CENTER);
@@ -1696,5 +1832,12 @@ public class Menu {
 		});
 		tournamentHistoryMenu.add(btnGoToTournamentDetails);
 		
+		btnShowTeamStats.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cl_base.show(frame.getContentPane(), "teamSearchMenu");
+				textTeamNameInput.setText(lblPlayerTeam.getText());
+				btnTeamSearch.doClick();
+			}
+		});
 	}
 }

@@ -74,7 +74,7 @@ public class TeamDAO implements TeamDAOIF {
 					String gamerTag = result.getString("Gammer Tag");
 					int totalKills = result.getInt("Total Kills");
 					int totalDeaths = result.getInt("Total Deaths");
-					Player player = new Player(playerID, gamerTag, totalKills, totalDeaths, teamID);
+					Player player = new Player(playerID, gamerTag, teamID, totalKills, totalDeaths);
 					players.add(player);
 				}
 			}
@@ -83,7 +83,7 @@ public class TeamDAO implements TeamDAOIF {
 		}
 		return players;
 	}
-
+  
 	public List<Integer> getPlayerIDFromTeams(int teamID) {
 		String sql = "SELECT PlayerID FROM PlayerTeam WHERE TeamID = ?";
 		List<Integer> playerIDs = new ArrayList<>();
@@ -98,7 +98,6 @@ public class TeamDAO implements TeamDAOIF {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return playerIDs;
 	}
 
@@ -123,8 +122,8 @@ public class TeamDAO implements TeamDAOIF {
 
 	@Override
 	public Team findTeamByID(int teamID) {
-		String sql = "SELECT * FROM Teams WHERE TeamID = '" + teamID + "'";
-		HigherOrderFunctionForGetMethods(() -> sql, () -> null);
+		String sql = "SELECT * FROM Teams WHERE TeamID = " + "'" + teamID +"'";
+		HigherOrderFunctionForGetMethods(() -> sql, () -> "null");
 		return team;
 	}
 

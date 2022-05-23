@@ -53,10 +53,10 @@ public class PlayerDAO implements PlayerDAOIF{
 			int playerID=0, totalKills=0, totalDeaths=0, teamID=0;
 			String gamerTag="";
 			while (result.next()){
-			    playerID = result.getInt(1);
-			    gamerTag = result.getString(2);
-			    totalKills = result.getInt(3);
-			    totalDeaths = result.getInt(4);
+				playerID = result.getInt("PlayerID");
+			    gamerTag = result.getString("Gammer Tag");
+			    totalKills = result.getInt("Total Kills");
+			    totalDeaths = result.getInt("Total Deaths");
 			}
 			
 			String teamsql = "SELECT TeamID FROM PlayerTeam WHERE PlayerID ='"+playerID+"'";
@@ -104,32 +104,43 @@ public class PlayerDAO implements PlayerDAOIF{
 
 	@Override
 	public ArrayList<Player> getAllPlayers() {
-		ArrayList<Player> players=null;
-		try {	
+		Player player;
+		ArrayList<Player> players = new ArrayList<>();
+		ArrayList<Integer> teamIDs = new ArrayList<>();
+		int teamID=0;
+		try {
 			String sql = "SELECT * FROM Players"; 
-			
-			Statement statement = conn.createStatement();
-			ResultSet result = statement.executeQuery(sql);
+			PreparedStatement statement = conn.prepareStatement(sql);
+			ResultSet result = statement.executeQuery();
 			while (result.next()){
 			    int playerID = result.getInt("PlayerID");
-			    String gamerTag = result.getString(2);
-			    int totalKills = result.getInt(3);
-			    int totalDeaths = result.getInt(4);
-			    String teamsql = "SELECT TeamID FROM PlayerTeam WHERE PlayerID ='"+playerID+"'";
-			    ResultSet teamResult = statement.executeQuery(teamsql);
-			    int teamID=0;
-			    while (teamResult.next()) {
-			    	teamID=teamResult.getInt("TeamID");
-			    }
-			    Player player = new Player(playerID, gamerTag, teamID, totalKills, totalDeaths);
+			    String gamerTag = result.getString("Gammer Tag");
+			    int totalKills = result.getInt("Total Kills");
+			    int totalDeaths = result.getInt("Total Deaths");
+			    
+			    player = new Player(playerID, gamerTag, totalKills, totalDeaths);
 			    players.add(player);
 			}
+			String teamSql = "SELECT TeamID FROM PlayerTeam ORDER BY PlayerID ";
+			PreparedStatement teamStatement = conn.prepareStatement(teamSql);
+			ResultSet teamResult = teamStatement.executeQuery();
+			while(teamResult.next()) {
+			    teamID=teamResult.getInt("TeamID");
+			    teamIDs.add(teamID);
+			}
+			int index = 0;
+			for(Player p : players) {
+				p.setTeamID(teamIDs.get(index));
+				index++;
+			}
+			return players;
 			
 		} catch (SQLException ex) {
 		    ex.printStackTrace();
 		}
-		return players;
+		return null;
 	}
+	
 
 	@Override
 	public Player updatePlayer(int playerID, String gamerTag, int teamID) {

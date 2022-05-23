@@ -1,9 +1,11 @@
 package ControllerLayer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import DatabaseLayer.TeamDAO;
 import DatabaseLayer.TeamDAOIF;
+import ModelLayer.Player;
 import ModelLayer.Team;
 
 public class TeamController {
@@ -35,8 +37,12 @@ public class TeamController {
 		teamDAO.updateTeamStats(id, wins, loses);
 	}
 
-	public void getAllTeams() {
-		teamDAO.getAllTeams();
+	public List<Team> getAllTeams() {
+		return teamDAO.getAllTeams();
+	}
+	
+	public ArrayList<Player> PopulateArray(int teamID){
+		return teamDAO.PopulateArray(teamID);
 	}
 
 	public Team findTeamByName(String teamName) {
