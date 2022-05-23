@@ -1338,12 +1338,10 @@ public class Menu {
 				int id = team.getTeamID();
 				List<String> addedTeams = new ArrayList<>();
 				for(int i = 0; i < 16; i ++) {
-					if(addedTeams.contains(teamName)) {
-						//add error message JLabel
-					}else {
-				teamController.addTeamsToTournament(tournamentID, id);
-				DLM_AddedTeams.add(i,teamName);
-				addedTeams.add(teamName);
+					if(!(addedTeams.contains(teamName))) {
+						teamController.addTeamsToTournament(tournamentID, id);
+						DLM_AddedTeams.add(i,teamName);
+						addedTeams.add(teamName);
 					}
 				}
 			}
