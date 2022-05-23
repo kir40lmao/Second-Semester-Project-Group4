@@ -22,4 +22,8 @@ public interface TeamDAOIF {
 	void updateTeamStats(int winningTeamID, int losingTeamID,int matchID);
 
 	Team findTeamByName(String teamName);
+	
+	List<Team> getTeamsInTournament(String tournamentName);
+	
+	void addTeamsToTournament(int tournamentID, int teamID);
 }

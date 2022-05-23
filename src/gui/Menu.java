@@ -10,11 +10,13 @@ import java.awt.Color;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.SwingConstants;
+import javax.swing.event.ListSelectionListener;
 
 import ControllerLayer.MatchController;
 import ControllerLayer.PlayerController;
 import ControllerLayer.TeamController;
 import ControllerLayer.TournamentController;
+import ControllerLayer.VenueController;
 import ModelLayer.Player;
 import ModelLayer.Team;
 import ModelLayer.Tournament;
@@ -31,8 +33,11 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextPane;
 
 public class Menu {
 
@@ -59,6 +64,8 @@ public class Menu {
 	private JTextField txt_player_team_ID;
 	private JTextField txt_search_team;
 	private JTextField textField_4;
+	private JTextField textField;
+	private JTextField textField_2;
 
 	/**
 	 * Launch the application.
@@ -122,6 +129,16 @@ public class Menu {
 		JMenuItem mntmNewMenuItem_10 = new JMenuItem("Check Forum");
 		mntmNewMenuItem_10.setBackground(Color.LIGHT_GRAY);
 		mntmNewMenuItem_10.setHorizontalAlignment(SwingConstants.CENTER);
+		mntmNewMenuItem_10.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ProcessBuilder builder = new ProcessBuilder("D:\\Desktop\\Second Semester Project\\Business\\site templates\\DarkMode\\run.bat");
+				try {
+					Process process = builder.start();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		menuBar_1.add(mntmNewMenuItem_10);
 		
 		JMenuItem mntmNewMenuItem_9 = new JMenuItem("Search Team");
@@ -1155,7 +1172,7 @@ public class Menu {
 		menuBar11111.add(mntmNewMenuItem_611111);
 		
 		JButton btnNewButton_2_511 = new JButton("Quit");
-		btnNewButton_2_511.setBounds(40, 647, 135, 41);
+		btnNewButton_2_511.setBounds(40, 679, 135, 41);
 		tournamentCreationMenu.add(btnNewButton_2_511);
 		
 		JLabel lblNewLabel = new JLabel("Name");
@@ -1175,12 +1192,22 @@ public class Menu {
 		lblVenue.setBounds(40, 316, 135, 35);
 		tournamentCreationMenu.add(lblVenue);
 		
-		JScrollPane scrollPane_4 = new JScrollPane();
-		scrollPane_4.setBounds(40, 362, 135, 119);
-		tournamentCreationMenu.add(scrollPane_4);
+		JScrollPane venueScroll = new JScrollPane();
+		venueScroll.setBounds(40, 362, 135, 119);
+		tournamentCreationMenu.add(venueScroll);
+		venueScroll.setVisible(false);
+		lblVenue.setVisible(false);
 		
-		JList list_1 = new JList();
-		scrollPane_4.setViewportView(list_1);
+		DefaultListModel DLM_Venue = new DefaultListModel();
+		JList venueList = new JList(DLM_Venue);
+		venueScroll.setViewportView(venueList);
+		VenueController venueController = new VenueController();
+		String[] venues = venueController.getAvailableVenues();
+		for(int i = 0;i < venues.length; i++) {
+			DLM_Venue.add(i, venues[i]);
+		}
+		
+		
 		
 		JLabel lblDate = new JLabel("Date");
 		lblDate.setHorizontalAlignment(SwingConstants.CENTER);
@@ -1198,31 +1225,100 @@ public class Menu {
 		lblAvailableTeams.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblAvailableTeams.setBounds(411, 117, 135, 35);
 		tournamentCreationMenu.add(lblAvailableTeams);
+		lblAvailableTeams.setVisible(false);
 		
 		JLabel lblAddedTeams = new JLabel("Added Teams");
 		lblAddedTeams.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAddedTeams.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblAddedTeams.setBounds(809, 117, 135, 35);
 		tournamentCreationMenu.add(lblAddedTeams);
+		lblAddedTeams.setVisible(false);
 		
-		JScrollPane scrollPane_5 = new JScrollPane();
-		scrollPane_5.setBounds(343, 152, 268, 327);
-		tournamentCreationMenu.add(scrollPane_5);
+		JScrollPane availableTeamsSctroll = new JScrollPane();
+		availableTeamsSctroll.setBounds(343, 152, 268, 327);
+		tournamentCreationMenu.add(availableTeamsSctroll);
+		availableTeamsSctroll.setVisible(false);
 		
-		JList list_2 = new JList();
-		scrollPane_5.setViewportView(list_2);
+		DefaultListModel DLM_AT = new DefaultListModel();
+		JList availiableTeams = new JList(DLM_AT);
+		availableTeamsSctroll.setViewportView(availiableTeams);
+		TeamController teamController = new TeamController();
+		List<Team> availiableTeamsList = teamController.getEligible();
+	
+		for(int i = 0;i < availiableTeamsList.size(); i++) {
+			DLM_AT.add(i, availiableTeamsList.get(i).getTeamName());
+		}
 		
-		JScrollPane scrollPane_6 = new JScrollPane();
-		scrollPane_6.setBounds(756, 150, 268, 331);
-		tournamentCreationMenu.add(scrollPane_6);
+		JScrollPane addedTeamsScroll = new JScrollPane();
+		addedTeamsScroll.setBounds(756, 150, 268, 331);
+		tournamentCreationMenu.add(addedTeamsScroll);
+		addedTeamsScroll.setVisible(false);
+		DefaultListModel DLM_AddedTeams = new DefaultListModel();
+		JList addedTeamsList = new JList(DLM_AddedTeams);
+		addedTeamsScroll.setViewportView(addedTeamsList);
 		
-		JList list_3 = new JList();
-		scrollPane_6.setViewportView(list_3);
+		JLabel lblStatus = new JLabel("Status");
+		lblStatus.setVisible(false);
+		lblStatus.setBounds(85, 499, 46, 14);
+		tournamentCreationMenu.add(lblStatus);
 		
-		JButton btnNewButton_5 = new JButton("Confirm Creation");
-		btnNewButton_5.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnNewButton_5.setBounds(1049, 524, 222, 54);
-		tournamentCreationMenu.add(btnNewButton_5);
+		JScrollPane statusScroll = new JScrollPane();
+		statusScroll.setBounds(40, 524, 135, 119);
+		tournamentCreationMenu.add(statusScroll);
+		statusScroll.setVisible(false);
+		
+		DefaultListModel DLM_Status = new DefaultListModel();
+		JList statusList = new JList(DLM_Status);
+		statusScroll.setViewportView(statusList);
+		String[] status = new String[] {"Ongoing" , "Finished" , "Scheduled"};
+		for(int i = 0;i < status.length; i++) {
+			DLM_Status.add(i, status[i]);
+		}
+		
+		JLabel confirmationTextTournamentCreation = new JLabel("");
+		confirmationTextTournamentCreation.setForeground(Color.GREEN);
+		confirmationTextTournamentCreation.setBounds(1049, 589, 222, 14);
+		tournamentCreationMenu.add(confirmationTextTournamentCreation);
+		
+		JButton confirmTournamentCreation = new JButton("Confirm Creation");
+		confirmTournamentCreation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String tournamentName = tournamentNameField.getText();
+				String Date = tournamentDateField.getText();
+				TournamentController t = new TournamentController();
+				t.createTournament(tournamentName, Date);
+				confirmationTextTournamentCreation.setText("Tournament Created Successfully!");
+				confirmTournamentCreation.setVisible(false);
+				addedTeamsScroll.setVisible(true);
+				lblAddedTeams.setVisible(true);
+				availableTeamsSctroll.setVisible(true);
+				lblAvailableTeams.setVisible(true);
+				venueScroll.setVisible(true);
+				lblVenue.setVisible(true);
+				statusScroll.setVisible(true);
+				lblStatus.setVisible(true);
+			}
+		});
+		confirmTournamentCreation.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		confirmTournamentCreation.setBounds(1049, 524, 222, 54);
+		tournamentCreationMenu.add(confirmTournamentCreation);
+		
+		JButton confirmTournamentVenue = new JButton("Confirm Creation");
+		confirmTournamentVenue.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String venue = (String) venueList.getSelectedValue();
+				String tournamentName = tournamentNameField.getText();
+				String Date = tournamentDateField.getText();
+				String status = (String) statusList.getSelectedValue();
+				TournamentController t = new TournamentController();
+				t.updateTournament(tournamentName,Date,venue, status , tournamentName);
+				confirmationTextTournamentCreation.setText("Tournament Venue Added Successfully!");
+			}
+		});
+		
+		confirmTournamentVenue.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		confirmTournamentVenue.setBounds(1049, 524, 222, 54);
+		tournamentCreationMenu.add(confirmTournamentVenue);
 		
 		JLabel lblNewLabel_1 = new JLabel("Tournament Creation Menu");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 17));
@@ -1230,6 +1326,25 @@ public class Menu {
 		lblNewLabel_1.setBounds(463, 44, 359, 35);
 		tournamentCreationMenu.add(lblNewLabel_1);
 		
+		JButton btnAddTeamsToTournament = new JButton("Add Selected Teams to Tournament");
+		btnAddTeamsToTournament.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String tournamentName = tournamentNameField.getText();
+				TournamentController tournamentController = new TournamentController();
+				int tournamentID = tournamentController.getTournamentID(tournamentName);
+				String teamName = (String) availiableTeams.getSelectedValue();
+				TeamController teamController = new TeamController();
+				Team team = teamController.findTeamByName(teamName);
+				int id = team.getTeamID();
+				teamController.addTeamsToTournament(tournamentID, id);
+				int i = 0;
+				DLM_AddedTeams.add(i,teamName);
+				i++;
+			}
+		});
+		btnAddTeamsToTournament.setBounds(343, 490, 268, 35);
+		tournamentCreationMenu.add(btnAddTeamsToTournament);
+				
 		JPanel tournamentManagementMenu = new JPanel();
 		tournamentManagementMenu.setLayout(null);
 		frame.getContentPane().add(tournamentManagementMenu, "tournamentManagementMenu");
@@ -1451,20 +1566,44 @@ public class Menu {
 		textField_5.setColumns(10);
 		textField_5.setBorder(null);
 		textField_5.setBackground(SystemColor.menu);
-		textField_5.setBounds(627, 93, 230, 35);
+		textField_5.setBounds(515, 92, 230, 35);
 		tournamentHistoryMenu.add(textField_5);
 		
-		JScrollPane scrollPane_3 = new JScrollPane();
-		scrollPane_3.setBounds(627, 139, 230, 216);
-		tournamentHistoryMenu.add(scrollPane_3);
+		JScrollPane ongoingTournamentsScroll = new JScrollPane();
+		ongoingTournamentsScroll.setBounds(515, 138, 230, 216);
+		tournamentHistoryMenu.add(ongoingTournamentsScroll);
 		
 		DefaultListModel DLM = new DefaultListModel();
 		JList onGoingTournaments = new JList(DLM);
-		scrollPane_3.setViewportView(onGoingTournaments);
+		ongoingTournamentsScroll.setViewportView(onGoingTournaments);
 		TournamentController tController = new TournamentController();
-		List<Tournament> ongoingTournaments = tController.getTournamentByStatus("Ongoing");
-		for(int i = 0;i < ongoingTournaments.size(); i++) {
-			DLM.add(i, ongoingTournaments.get(i).getTournamentName());
+		List<Tournament> ongoingTournamentsList = tController.getTournamentByStatus("Ongoing");
+		for(int i = 0;i < ongoingTournamentsList.size(); i++) {
+			DLM.add(i, ongoingTournamentsList.get(i).getTournamentName());
+		}
+		
+		JScrollPane finishedTournamentsScroll = new JScrollPane();
+		finishedTournamentsScroll.setBounds(948, 138, 230, 216);
+		tournamentHistoryMenu.add(finishedTournamentsScroll);
+		
+		DefaultListModel DLM_finished = new DefaultListModel();
+		JList finishedTournaments = new JList(DLM_finished);
+		finishedTournamentsScroll.setViewportView(finishedTournaments);
+		List<Tournament> finishedTournamentsList = tController.getTournamentByStatus("Finished");
+		for(int i = 0;i < finishedTournamentsList.size(); i++) {
+			DLM_finished.add(i, finishedTournamentsList.get(i).getTournamentName());
+		}
+		
+		JScrollPane scheduledTournamentsScroll = new JScrollPane();
+		scheduledTournamentsScroll.setBounds(80, 138, 230, 216);
+		tournamentHistoryMenu.add(scheduledTournamentsScroll);
+		
+		DefaultListModel DLM_scheduled = new DefaultListModel();
+		JList scheduledTournaments = new JList(DLM_scheduled);
+		scheduledTournamentsScroll.setViewportView(scheduledTournaments);
+		List<Tournament> scheduledTournamentsList = tController.getTournamentByStatus("Scheduled");
+		for(int i = 0;i < scheduledTournamentsList.size(); i++) {
+			DLM_scheduled.add(i, scheduledTournamentsList.get(i).getTournamentName());
 		}
 		
 		txtTournamentHistoryMenu = new JTextField();
@@ -1474,19 +1613,88 @@ public class Menu {
 		txtTournamentHistoryMenu.setColumns(10);
 		txtTournamentHistoryMenu.setBorder(null);
 		txtTournamentHistoryMenu.setBackground(SystemColor.menu);
-		txtTournamentHistoryMenu.setBounds(185, 93, 230, 35);
+		txtTournamentHistoryMenu.setBounds(460, 46, 230, 35);
 		tournamentHistoryMenu.add(txtTournamentHistoryMenu);
-		
-		JPanel panel_1_3 = new JPanel();
-		panel_1_3.setBackground(Color.WHITE);
-		panel_1_3.setBounds(185, 139, 230, 216);
-		tournamentHistoryMenu.add(panel_1_3);
 		
 		JButton btnNewButton_4 = new JButton("Exit");
 		btnNewButton_4.setFont(new Font("Tahoma", Font.BOLD, 17));
 		btnNewButton_4.setBounds(39, 632, 160, 56);
 		tournamentHistoryMenu.add(btnNewButton_4);
 		
+		textField = new JTextField();
+		textField.setText("Finished Tournaments");
+		textField.setHorizontalAlignment(SwingConstants.CENTER);
+		textField.setFont(new Font("Tahoma", Font.BOLD, 14));
+		textField.setColumns(10);
+		textField.setBorder(null);
+		textField.setBackground(SystemColor.menu);
+		textField.setBounds(948, 92, 230, 35);
+		tournamentHistoryMenu.add(textField);
+		
+		textField_2 = new JTextField();
+		textField_2.setText("Scheduled Tournaments");
+		textField_2.setHorizontalAlignment(SwingConstants.CENTER);
+		textField_2.setFont(new Font("Tahoma", Font.BOLD, 14));
+		textField_2.setColumns(10);
+		textField_2.setBorder(null);
+		textField_2.setBackground(SystemColor.menu);
+		textField_2.setBounds(80, 92, 230, 35);
+		tournamentHistoryMenu.add(textField_2);
+		
+		JFrame popup = new JFrame("Tournament Details");
+		popup.setSize(720, 480);
+		popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		JPanel tournamentDetails = new JPanel();
+		
+		JScrollPane teamsInTournamentScroll = new JScrollPane();
+		teamsInTournamentScroll.setBounds(10, 20, 440, 560);
+		tournamentDetails.add(teamsInTournamentScroll);
+		
+		DefaultListModel DLM_teamsInTournament = new DefaultListModel();
+		JList teamsInTournamentList = new JList(DLM_teamsInTournament);
+		teamsInTournamentScroll.setViewportView(teamsInTournamentList);
+		
+		JButton btnGoToTournamentDetails = new JButton("Go to Selected Tournament Details");
+		btnGoToTournamentDetails.setFont(new Font("Tahoma", Font.BOLD, 17));
+		btnGoToTournamentDetails.setBounds(1026, 458, 152, 45);
+		btnGoToTournamentDetails.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				popup.setVisible(true);
+				popup.add(tournamentDetails);
+				List<Team> teamsList = new ArrayList<>();
+				teamsList.clear();
+				DLM_teamsInTournament.clear();
+				if(!(finishedTournaments.getSelectedValue() == null)&&(scheduledTournaments.getSelectedValue() == null)&&(onGoingTournaments.getSelectedValue() == null)) {
+					String tournamentName = (String) finishedTournaments.getSelectedValue();
+					teamsList = teamController.getTeamsInTournament(tournamentName);
+					onGoingTournaments.clearSelection();
+					scheduledTournaments.clearSelection();
+					finishedTournaments.clearSelection();
+				}else if(!(scheduledTournaments.getSelectedValue() == null)&&(finishedTournaments.getSelectedValue() == null)&&(onGoingTournaments.getSelectedValue() == null)) {
+					String tournamentName = (String) scheduledTournaments.getSelectedValue();
+					teamsList = teamController.getTeamsInTournament(tournamentName);
+					onGoingTournaments.clearSelection();
+					scheduledTournaments.clearSelection();
+					finishedTournaments.clearSelection();
+				}else if(!(onGoingTournaments.getSelectedValue() == null)&&(scheduledTournaments.getSelectedValue() == null)&&(finishedTournaments.getSelectedValue() == null)) {
+					String tournamentName = (String) onGoingTournaments.getSelectedValue();
+					teamsList = teamController.getTeamsInTournament(tournamentName);
+					onGoingTournaments.clearSelection();
+					scheduledTournaments.clearSelection();
+					finishedTournaments.clearSelection();
+				}else{
+					//add a JLabel as an error message if they have selected more than one tournament or no tournament
+					onGoingTournaments.clearSelection();
+					scheduledTournaments.clearSelection();
+					finishedTournaments.clearSelection();
+				}
+				for(int i = 0;i < teamsList.size(); i++) {
+					DLM_teamsInTournament.add(i, teamsList.get(i).getTeamName());
+				}
+			}
+			
+		});
+		tournamentHistoryMenu.add(btnGoToTournamentDetails);
 		
 	}
 }
