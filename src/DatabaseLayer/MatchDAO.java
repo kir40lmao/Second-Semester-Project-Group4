@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Savepoint;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +25,9 @@ public class MatchDAO implements MatchDAOIF{
 		String sql_getPlayers = "SELECT * FROM PlayerTeam where TeamID = ? or TeamID = ?";
 		String sql_getMatchID = "SELECT Max(MatchID) FROM Matches";
 		
-		PreparedStatement statement;
-		
 		try {
+			conn.setAutoCommit(false);
+			PreparedStatement statement;
 			statement = conn.prepareStatement(sql);
 			statement.setInt(1, match.getTeamOneScore());
 			statement.setInt(2, match.getTeamTwoScore());
@@ -51,7 +52,7 @@ public class MatchDAO implements MatchDAOIF{
 			
 			ResultSet resultSetPlayers = statement_players.executeQuery();
 	
-			
+			conn.commit();
 			while (resultSetPlayers.next()) {
 				int playerID = resultSetPlayers.getInt("PlayerID");
 				System.out.println(playerID);
@@ -65,7 +66,18 @@ public class MatchDAO implements MatchDAOIF{
 			
 		}
 		 catch (SQLException e) {
-			
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		finally {
+			try {
+				conn.setAutoCommit(true);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 	}
@@ -205,6 +217,24 @@ public class MatchDAO implements MatchDAOIF{
 		    ex.printStackTrace();
 		}
 		
+	}
+	
+	public void updateMatch(int matchID, String date, int teamOneID, int teamTwoID) {
+		try {
+			String sql = "UPDATE Matches SET Date = ? WHERE MatchID = ?";
+			String sqlTeam = "UPDATE MatchTeam SET TeamOneID = ?, TeamTwoID = ? WHERE MatchID = ?";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, date);
+			statement.setInt(2, matchID);
+			statement.executeUpdate();
+			statement = conn.prepareStatement(sqlTeam);
+			statement.setInt(1, teamOneID);
+			statement.setInt(2, teamTwoID);
+			statement.setInt(3, matchID);
+			statement.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

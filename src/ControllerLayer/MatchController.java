@@ -34,4 +34,8 @@ public class MatchController {
 		List<Match> matches = mdao.getAllMatchesFromTournament(tournamentID);
 		return matches;
 	}
+	
+	public void updateMatch(int matchID, String date, int teamOneID, int teamTwoID) {
+		mdao.updateMatch(matchID, date, teamOneID, teamTwoID);
+	}
 }
