@@ -26,4 +26,6 @@ public interface TeamDAOIF {
 	List<Team> getTeamsInTournament(String tournamentName);
 	
 	void addTeamsToTournament(int tournamentID, int teamID);
+	
+	void removeTeamFromTournament(int tournamentID, int teamID);
 }

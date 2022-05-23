@@ -1336,10 +1336,16 @@ public class Menu {
 				TeamController teamController = new TeamController();
 				Team team = teamController.findTeamByName(teamName);
 				int id = team.getTeamID();
+				List<String> addedTeams = new ArrayList<>();
+				for(int i = 0; i < 16; i ++) {
+					if(addedTeams.contains(teamName)) {
+						//add error message JLabel
+					}else {
 				teamController.addTeamsToTournament(tournamentID, id);
-				int i = 0;
 				DLM_AddedTeams.add(i,teamName);
-				i++;
+				addedTeams.add(teamName);
+					}
+				}
 			}
 		});
 		btnAddTeamsToTournament.setBounds(343, 490, 268, 35);
