@@ -58,4 +58,8 @@ public class TeamController {
 	public void addTeamsToTournament(int tournamentID, int teamID) {
 		teamDAO.addTeamsToTournament(tournamentID, teamID);
 	}
+	
+	public void removeTeamFromTournament(int tournamentID, int teamID) {
+		teamDAO.removeTeamFromTournament(tournamentID, teamID);
+	}
 }

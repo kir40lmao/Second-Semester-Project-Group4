@@ -244,4 +244,17 @@ public class TeamDAO implements TeamDAOIF {
 		}
 	
 	}
+	
+	public void removeTeamFromTournament(int tournamentID, int teamID) {
+		String sql = "DELETE TournamentTeam WHERE TeamID = ? AND TournamentID = ?";
+		PreparedStatement statement;
+		try {
+			statement = con.prepareStatement(sql);
+			statement.setInt(1, teamID);
+			statement.setInt(2, tournamentID);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

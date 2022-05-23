@@ -1337,10 +1337,14 @@ public class Menu {
 				TeamController teamController = new TeamController();
 				Team team = teamController.findTeamByName(teamName);
 				int id = team.getTeamID();
-				teamController.addTeamsToTournament(tournamentID, id);
-				int i = 0;
-				DLM_AddedTeams.add(i,teamName);
-				i++;
+				List<String> addedTeams = new ArrayList<>();
+				for(int i = 0; i < 16; i ++) {
+					if(!(addedTeams.contains(teamName))) {
+						teamController.addTeamsToTournament(tournamentID, id);
+						DLM_AddedTeams.add(i,teamName);
+						addedTeams.add(teamName);
+					}
+				}
 			}
 		});
 		btnAddTeamsToTournament.setBounds(343, 490, 268, 35);
