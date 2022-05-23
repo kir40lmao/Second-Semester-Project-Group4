@@ -150,25 +150,6 @@ public class TournamentDAO implements TournamentDAOIF{
 		List<Tournament> tournaments = HigherOrderFunctionForGetMethods(() -> sql);
 		return tournaments;
 	}
-	//Put these three methods into the one above
-	 /*@Override
-	public List<Tournament> getUpcoming(String status){
-		String sql = "SELECT * FROM Tournament WHERE Status = '"+status+"'";
-		List<Tournament> upComingTournaments = HigherOrderFunctionForGetMethods(() -> sql);
-		return upComingTournaments;
-	}
-	@Override
-	public List<Tournament> getOngoing(String status) {
-		String sql = "SELECT * FROM Tournament WHERE Status = '"+status+"'";
-		List<Tournament> onGoingTournaments = HigherOrderFunctionForGetMethods(() -> sql);
-		return onGoingTournaments;
-	}
-	@Override
-	public List<Tournament> getFinished(String status) {
-		String sql = "SELECT * FROM Tournament WHERE Status = '"+status+"'";
-		List<Tournament> finishedTournaments = HigherOrderFunctionForGetMethods(() -> sql);
-		return finishedTournaments;
-	}*/
 		
 	@Override
 	public Tournament findTournamentByName(String tournamentName){

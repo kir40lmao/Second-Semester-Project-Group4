@@ -9,7 +9,6 @@ public class Player {
 	
 	
 	public Player(int playerID, String gamerTag, int totalKills, int totalDeaths){
-		super();
 		this.playerID = playerID;
 		this.gamerTag = gamerTag;
 		this.totalKills = totalKills;
@@ -18,7 +17,6 @@ public class Player {
 	
 	
 	public Player(int playerID, String gamerTag, int teamID, int totalKills, int totalDeaths) {
-		super();
 		this.playerID = playerID;
 		this.gamerTag = gamerTag;
 		this.teamID = teamID;

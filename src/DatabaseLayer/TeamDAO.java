@@ -123,7 +123,7 @@ public class TeamDAO implements TeamDAOIF {
 	@Override
 	public Team findTeamByID(int teamID) {
 		String sql = "SELECT * FROM Teams WHERE TeamID = " + "'" + teamID +"'";
-		HigherOrderFunctionForGetMethods(() -> sql, () -> "null");
+		HigherOrderFunctionForGetMethods(() -> sql, () -> null);
 		return team;
 	}
 
