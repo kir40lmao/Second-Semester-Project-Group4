@@ -26,4 +26,8 @@ public interface TeamDAOIF {
 	ArrayList<Player> PopulateArray(int teamID);
 
 	Team findTeamByName(String teamName);
+	
+	List<Team> getTeamsInTournament(String tournamentName);
+	
+	void addTeamsToTournament(int tournamentID, int teamID);
 }

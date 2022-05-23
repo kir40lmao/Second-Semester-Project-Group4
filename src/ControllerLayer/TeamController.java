@@ -24,8 +24,9 @@ public class TeamController {
 		return team;
 	}
 
-	public void getEligible() {
-		teamDAO.getEligible();
+	public List<Team> getEligible() {
+		List<Team> eligibleTeams = teamDAO.getEligible();
+		return eligibleTeams;
 	}
 
 	public void updateTeamName(int id, String teamName) {
@@ -47,5 +48,14 @@ public class TeamController {
 	public Team findTeamByName(String teamName) {
 		Team team = teamDAO.findTeamByName(teamName);
 		return team;
+	}
+	
+	public List<Team> getTeamsInTournament(String tournamentName){
+		List<Team> teamsInTournament = teamDAO.getTeamsInTournament(tournamentName);
+		return teamsInTournament;
+	}
+	
+	public void addTeamsToTournament(int tournamentID, int teamID) {
+		teamDAO.addTeamsToTournament(tournamentID, teamID);
 	}
 }

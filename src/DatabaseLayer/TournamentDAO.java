@@ -139,31 +139,43 @@ public class TournamentDAO implements TournamentDAOIF{
         return null;
     }
 	@Override
-	public void getAllTournaments() {
+	public List<Tournament> getAllTournaments() {
 		String sql = "SELECT * FROM Tournament";
-	    HigherOrderFunctionForGetMethods(() -> sql);
+		List<Tournament> allTournaments =HigherOrderFunctionForGetMethods(() -> sql);
+		return allTournaments;
 	}
-	@Override
-	public void getUpcoming(String status){
+	
+	public List<Tournament> getTournamentByStatus(String status){
 		String sql = "SELECT * FROM Tournament WHERE Status = '"+status+"'";
-		HigherOrderFunctionForGetMethods(() -> sql);
+		List<Tournament> tournaments = HigherOrderFunctionForGetMethods(() -> sql);
+		return tournaments;
 	}
-	@Override
-	public void getOngoing(String status) {
+	//Put these three methods into the one above
+	 /*@Override
+	public List<Tournament> getUpcoming(String status){
 		String sql = "SELECT * FROM Tournament WHERE Status = '"+status+"'";
-		HigherOrderFunctionForGetMethods(() -> sql);
+		List<Tournament> upComingTournaments = HigherOrderFunctionForGetMethods(() -> sql);
+		return upComingTournaments;
 	}
 	@Override
-	public void getFinished(String status) {
+	public List<Tournament> getOngoing(String status) {
 		String sql = "SELECT * FROM Tournament WHERE Status = '"+status+"'";
-		HigherOrderFunctionForGetMethods(() -> sql);
+		List<Tournament> onGoingTournaments = HigherOrderFunctionForGetMethods(() -> sql);
+		return onGoingTournaments;
 	}
 	@Override
-	public Tournament findTournamentByID(int tournamentID){
-		String sql = "SELECT * FROM Tournament WHERE TournamentID = ?";
+	public List<Tournament> getFinished(String status) {
+		String sql = "SELECT * FROM Tournament WHERE Status = '"+status+"'";
+		List<Tournament> finishedTournaments = HigherOrderFunctionForGetMethods(() -> sql);
+		return finishedTournaments;
+	}*/
+		
+	@Override
+	public Tournament findTournamentByName(String tournamentName){
+		String sql = "SELECT * FROM Tournament WHERE [Tournament Name] = ?";
 		try {
             PreparedStatement statement = con.prepareStatement(sql);
-            statement.setInt(1, tournamentID);
+            statement.setString(1, tournamentName);
             ResultSet rs = statement.executeQuery();
             while (rs.next()){
             	Tournament t = new Tournament();
@@ -179,6 +191,23 @@ public class TournamentDAO implements TournamentDAOIF{
             e.printStackTrace();
         }
         return null;
+	}
+	
+	public int getTournamentID(String tournamentName) {
+		String sql = "Select * From Tournament Where [Tournament Name] = ?";
+		PreparedStatement statement;
+		int id = 0;
+		try {
+			statement = con.prepareStatement(sql);
+			statement.setString(1, tournamentName);
+			ResultSet result = statement.executeQuery();
+			while(result.next()) {
+			id = result.getInt("TournamentID");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return id;
 	}
 	
 	@Override
@@ -210,4 +239,5 @@ public class TournamentDAO implements TournamentDAOIF{
 		    ex.printStackTrace();
 		}		
 	}
+	
 }
