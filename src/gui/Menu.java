@@ -53,7 +53,8 @@ public class Menu {
 	private JTextField tournamentDateField;
 	private JTextField teamNameField;
 	private JTextField gamerTagField;
-	
+	List<String> addedTeams = new ArrayList<String>();
+	List<Team> teamList = new ArrayList<>();
 	Login login_window;
 	private JTextField textField_search_gamer;
 	
@@ -67,6 +68,7 @@ public class Menu {
 	private JTextField textTeamNameInput;
 	private JTextField textField;
 	private JTextField textField_2;
+	JFrame popup = new JFrame("Tournament Details");
 
 	/**
 	 * Launch the application.
@@ -1278,7 +1280,15 @@ public class Menu {
 		JButton generateBracket = new JButton("Generate Bracket");
 		generateBracket.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				BracketGeneration.startBracketCreation();
+				String tournamentName = tournamentNameField.getText();
+				int tournamentID = tournamentc.getTournamentID(tournamentName);
+				for(int i = 0 ; i < addedTeams.size(); i++) {
+					String teamName = addedTeams.get(i);
+					Team team = teamc.findTeamByName(teamName);
+					teamList.add(team);
+				}
+				tournamentc.createMatchUps((ArrayList<Team>) teamList, tournamentID);
 			}
 		});
 		generateBracket.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -1286,7 +1296,6 @@ public class Menu {
 		tournamentCreationMenu.add(generateBracket);
 		generateBracket.setVisible(false);
 		
-		List<String> addedTeams = new ArrayList<String>();
 		JButton btnAddTeamsToTournament = new JButton("Add Selected Teams to Tournament");
 		btnAddTeamsToTournament.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -1294,7 +1303,6 @@ public class Menu {
 				int tournamentID = tournamentc.getTournamentID(tournamentName);
 				String teamName = (String) availiableTeams.getSelectedValue();
 				Team team = teamc.findTeamByName(teamName);
-				teamName = team.getTeamName();
 				int id = team.getTeamID();
 				int i = 0;
 				if(addedTeams.contains(teamName) == false && addedTeams.size() < 16) {
@@ -1328,8 +1336,8 @@ public class Menu {
 				int indexAT = availiableTeams.getLastVisibleIndex();
 				DLM_AT.add(indexAT + 1, teamName);
 				addedTeams.remove(teamName);
-				if(addedTeams.size() == 4 || addedTeams.size() == 8 || addedTeams.size() == 16) {
-					generateBracket.setVisible(true);
+				if(!(addedTeams.size() == 4 || addedTeams.size() == 8 || addedTeams.size() == 16)) {
+					generateBracket.setVisible(false);
 				}
 			}
 		});
@@ -1816,9 +1824,9 @@ public class Menu {
 		textField_2.setBounds(80, 92, 230, 35);
 		tournamentHistoryMenu.add(textField_2);
 		
-		JFrame popup = new JFrame("Tournament Details");
 		popup.setSize(720, 480);
 		popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		//popup.setLayout(null); FIX THIS LATER
 		JPanel tournamentDetails = new JPanel();
 		
 		JScrollPane teamsInTournamentScroll = new JScrollPane();

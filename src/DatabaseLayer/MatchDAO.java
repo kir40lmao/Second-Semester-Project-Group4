@@ -218,5 +218,23 @@ public class MatchDAO implements MatchDAOIF{
 		}
 		
 	}
+	
+	public void updateMatch(int matchID, String date, int teamOneID, int teamTwoID) {
+		try {
+			String sql = "UPDATE Matches SET Date = ? WHERE MatchID = ?";
+			String sqlTeam = "UPDATE MatchTeam SET TeamOneID = ?, TeamTwoID = ? WHERE MatchID = ?";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, date);
+			statement.setInt(2, matchID);
+			statement.executeUpdate();
+			statement = conn.prepareStatement(sqlTeam);
+			statement.setInt(1, teamOneID);
+			statement.setInt(2, teamTwoID);
+			statement.setInt(3, matchID);
+			statement.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 }

@@ -74,12 +74,13 @@ public class TournamentDAO implements TournamentDAOIF{
 				e.printStackTrace();
 		}
 		
-		 DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+		 DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
 	     Calendar cal = Calendar.getInstance();
 	     Date date = cal.getTime();
 	     String todaysdate = dateFormat.format(date);
-		
-		for(int i = 0; i < teams.size() / 2; i += 2) {
+	     System.out.println(todaysdate);
+	     System.out.print(teams.size());
+		for(int i = 0; i < teams.size(); i +=2) {
 			Team team1, team2;
 			team1 = teams.get(i);
 			team2 = teams.get(i+1);
@@ -87,8 +88,8 @@ public class TournamentDAO implements TournamentDAOIF{
 			addTournamentMatches();	
 		}
 		
-		for(int i = 0; i < teams.size()/2 - 1; i++) {
-			mc.createMatch(0, 0, null);
+		for(int i = 0; i < (teams.size()/2) - 1; i++) {
+			mc.createMatch(0, 0, "1970-01-01");
 			addTournamentMatches();
 		}
 	}
