@@ -2,8 +2,12 @@ package gui;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import ModelLayer.Match;
+
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.util.List;
 
 public class BracketGeneration {
 
@@ -97,12 +101,17 @@ public class BracketGeneration {
 		teamTwo.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		teamTwo.setBounds(97, 242, 161, 35);
 		matchups.add(teamTwo);
+		teamTwo.setVisible(false);
 		
 		JLabel teamOne = new JLabel("New label");
 		teamOne.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		teamOne.setBounds(97, 185, 161, 35);
 		matchups.add(teamOne);
 		
+	}
+	
+	public List<Match> getMatchesInTournament(){
 		
+		return null;
 	}
 }
