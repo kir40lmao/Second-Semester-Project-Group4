@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import gui.Menu;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -85,7 +86,7 @@ public class Login extends JFrame {
 				password = passwordField.getText();
 				if(password.equals("admin") && name.equals("admin")) {
 					setVisible(false);				
-					
+					Menu.logInCard();
 				}
 			}
 		});
