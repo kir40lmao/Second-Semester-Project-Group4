@@ -28,6 +28,7 @@ import javax.swing.JTextField;
 import java.awt.SystemColor;
 import java.awt.Font;
 import javax.swing.JList;
+import javax.swing.AbstractButton;
 import javax.swing.AbstractListModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
@@ -43,7 +44,8 @@ import javax.swing.JTextPane;
 
 public class Menu {
 
-	public JFrame frame;
+	private static CardLayout cl_base;
+	public static JFrame frame;
 	private JTextField txt_gamer_tag;
 	private JTextField txtSearchTeamName;
 	private JTextField txtSearchPlayerMenu;
@@ -54,6 +56,7 @@ public class Menu {
 	private JTextField teamNameField;
 	private JTextField gamerTagField;
 	List<String> addedTeams = new ArrayList<String>();
+	DefaultListModel managementMenuAddedTeams = new DefaultListModel();
 	List<Team> teamList = new ArrayList<>();
 	Login login_window;
 	private JTextField textField_search_gamer;
@@ -69,6 +72,11 @@ public class Menu {
 	private JTextField textField;
 	private JTextField textField_2;
 	JFrame popup = new JFrame("Tournament Details");
+	private JTextField tournamentSearchBar;
+	private JTextField nameBar;
+	private JTextField dateBar;
+	private JTextField venueField;
+	private JTextField statusField;
 
 	/**
 	 * Launch the application.
@@ -100,6 +108,10 @@ public class Menu {
 		login_window.show_new();
 
 		}
+	
+	public static void logInCard() {
+		cl_base.show(frame.getContentPane(), "managerMenu");
+	}
 		
 
 	/**
@@ -110,7 +122,7 @@ public class Menu {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1920, 1080);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		CardLayout cl_base = new CardLayout(0, 0);
+		cl_base = new CardLayout(0, 0);
 		frame.getContentPane().setLayout(cl_base);
 		
 		JPanel userMenu = new JPanel();
@@ -1473,6 +1485,9 @@ public class Menu {
 		mntmNewMenuItem_5111111.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cl_base.show(frame.getContentPane(), "tournamentManagementMenu");
+				nameBar.setText("");
+				dateBar.setText("");
+				tournamentSearchBar.setText("");
 			}
 		});
 		mnNewMenu_2111111.add(mntmNewMenuItem_5111111);
@@ -1516,6 +1531,285 @@ public class Menu {
 		lblNewLabel_1_1.setBounds(463, 44, 359, 35);
 		tournamentManagementMenu.add(lblNewLabel_1_1);
 		
+		JScrollPane scrollPane_9 = new JScrollPane();
+		scrollPane_9.setBounds(687, 157, 316, 386);
+		tournamentManagementMenu.add(scrollPane_9);
+		
+		
+		JList addedTeamList = new JList(managementMenuAddedTeams);
+		scrollPane_9.setViewportView(addedTeamList);
+		
+		JScrollPane scrollPane_9_1 = new JScrollPane();
+		scrollPane_9_1.setBounds(264, 157, 316, 386);
+		tournamentManagementMenu.add(scrollPane_9_1);
+		
+		DefaultListModel avTeams = new DefaultListModel();
+		JList availableTeamList = new JList(avTeams);
+		scrollPane_9_1.setViewportView(availableTeamList);
+		for(int i = 0;i < availiableTeamsList.size(); i++) {
+			avTeams.add(i, availiableTeamsList.get(i).getTeamName());
+		}
+			
+		JLabel lblNewLabel_41 = new JLabel("Available teams");
+		lblNewLabel_41.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_41.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblNewLabel_41.setBounds(327, 112, 188, 34);
+		tournamentManagementMenu.add(lblNewLabel_41);
+		
+		JLabel lblNewLabel_4_1 = new JLabel("Added teams");
+		lblNewLabel_4_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_4_1.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblNewLabel_4_1.setBounds(748, 112, 188, 34);
+		tournamentManagementMenu.add(lblNewLabel_4_1);
+		
+		JLabel lblNewLabel_4_2 = new JLabel("Name");
+		lblNewLabel_4_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_4_2.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblNewLabel_4_2.setBounds(20, 146, 188, 34);
+		tournamentManagementMenu.add(lblNewLabel_4_2);
+		
+		JLabel lblNewLabel_4_2_1 = new JLabel("Date");
+		lblNewLabel_4_2_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_4_2_1.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblNewLabel_4_2_1.setBounds(20, 212, 188, 34);
+		tournamentManagementMenu.add(lblNewLabel_4_2_1);
+		
+		JLabel lblNewLabel_4_2_1_1 = new JLabel("Venue");
+		lblNewLabel_4_2_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_4_2_1_1.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblNewLabel_4_2_1_1.setBounds(20, 279, 188, 34);
+		tournamentManagementMenu.add(lblNewLabel_4_2_1_1);
+		
+		JScrollPane scrollPane_8 = new JScrollPane();
+		scrollPane_8.setBounds(10, 313, 206, 121);
+		tournamentManagementMenu.add(scrollPane_8);
+		
+		DefaultListModel venueListM = new DefaultListModel();
+		JList venueList1 = new JList(venueListM);
+		scrollPane_8.setViewportView(venueList1);
+		for(int i = 0;i < venues.length; i++) {
+			venueListM.add(i, venues[i]);
+		}
+		scrollPane_8.setVisible(false);
+		venueList1.setVisible(false);
+				
+		
+		JLabel lblNewLabel_4_2_2 = new JLabel("Tournament search bar");
+		lblNewLabel_4_2_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_4_2_2.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblNewLabel_4_2_2.setBounds(1048, 159, 188, 34);
+		tournamentManagementMenu.add(lblNewLabel_4_2_2);
+		
+		JButton btnModifyTournamentDetails = new JButton("Modify tournament details");
+		
+		JLabel storeName = new JLabel("");
+		storeName.setBounds(1088, 410, 105, 26);
+		tournamentManagementMenu.add(storeName);
+		storeName.setVisible(false);
+		
+		JLabel updateLabel = new JLabel("");
+		updateLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		updateLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		updateLabel.setForeground(Color.GREEN);
+		updateLabel.setBounds(1048, 497, 202, 46);
+		tournamentManagementMenu.add(updateLabel);
+		
+		
+		
+		JButton searchButton = new JButton("Search");
+		searchButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Thread t1 = new Thread(new Runnable() {
+				    @Override
+				    public void run() {
+				      
+				    	try {
+							Thread.sleep(2500);
+							
+							String tournamentSearch = tournamentSearchBar.getText();
+							storeName.setText(tournamentSearchBar.getText());
+							
+							Tournament tournament = tournamentc.findTournamentByName(tournamentSearch);
+							
+							nameBar.setText(tournament.getTournamentName());
+							dateBar.setText(tournament.getDate());
+							venueField.setText(tournament.getVenue());
+							statusField.setText(tournament.getStatus());
+							venueList1.setVisible(false);
+							scrollPane_8.setVisible(false);
+							btnModifyTournamentDetails.setVisible(true);
+							updateLabel.setText("");
+							
+							List <Team> teamsInTournament = teamc.getTeamsInTournament(tournamentSearch);
+							for(int i = 0;i < teamsInTournament.size(); i++) {
+								managementMenuAddedTeams.add(i, teamsInTournament.get(i).getTeamName());
+							}
+							
+							for(int i = 0;i < teamsInTournament.size(); i++) {
+								avTeams.removeElement(teamsInTournament.get(i).getTeamName());
+							}
+							tournamentSearchBar.setText("");
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+				    }
+				});  
+				t1.start();
+			}
+		});
+		searchButton.setBounds(1159, 221, 89, 23);
+		tournamentManagementMenu.add(searchButton);
+		
+		JButton addTeamButton = new JButton("Add team");
+		addTeamButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String tournamentName = nameBar.getText();
+				int tournamentID = tournamentc.getTournamentID(tournamentName);
+				String teamName = (String) availableTeamList.getSelectedValue();
+				Team team = teamc.findTeamByName(teamName);
+				int id = team.getTeamID();
+				int i = 0;
+				if(managementMenuAddedTeams.contains(teamName) == false && managementMenuAddedTeams.size() < 16) {
+					teamc.addTeamsToTournament(tournamentID, id);
+					managementMenuAddedTeams.add(i,teamName);
+					//managementMenuAddedTeams.add(teamName);
+					i ++;
+					int index = avTeams.indexOf(teamName);
+					avTeams.remove(index);
+				}
+			}
+		});
+		addTeamButton.setBounds(264, 554, 316, 35);
+		tournamentManagementMenu.add(addTeamButton);
+		
+		JButton removeTeamButton = new JButton("Remove team");
+		removeTeamButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String tournamentName = nameBar.getText();
+				int tournamentID = tournamentc.getTournamentID(tournamentName);
+				String teamName = (String) addedTeamList.getSelectedValue();
+				Team team = teamc.findTeamByName(teamName);
+				int teamID = team.getTeamID();
+				teamc.removeTeamFromTournament(tournamentID, teamID);
+				int index = managementMenuAddedTeams.indexOf(teamName);
+				managementMenuAddedTeams.remove(index);
+				int indexAT = availableTeamList.getLastVisibleIndex();
+				avTeams.add(indexAT + 1, teamName);
+				managementMenuAddedTeams.removeElement(teamName);
+			}
+		});
+		removeTeamButton.setBounds(687, 554, 316, 35);
+		tournamentManagementMenu.add(removeTeamButton);
+				
+		JScrollPane scrollPane_8_1 = new JScrollPane();
+		scrollPane_8_1.setBounds(10, 467, 206, 121);
+		tournamentManagementMenu.add(scrollPane_8_1);
+		
+		DefaultListModel statusListM = new DefaultListModel();
+		JList statusList1 = new JList(statusListM);
+		scrollPane_8_1.setViewportView(statusList1);
+		for(int i = 0;i < status.length; i++) {
+			statusListM.add(i, status[i]);
+		}
+		scrollPane_8_1.setVisible(false);
+		
+		JButton confirmButton = new JButton("Confirm update");
+		confirmButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String updatedName = (String) nameBar.getText();
+				String updatedDate = (String) dateBar.getText();
+				String updatedVenue = (String) venueList1.getSelectedValue();
+				String updatedStatus = (String) statusList1.getSelectedValue();
+				String previousName = storeName.getText();
+				
+				
+				tournamentc.updateTournament(updatedName, updatedDate, updatedVenue, updatedStatus, previousName);
+				
+				btnModifyTournamentDetails.setVisible(true);
+				confirmButton.setVisible(false);
+				updateLabel.setText("Details modified");
+				venueField.setVisible(true);
+				scrollPane_8.setVisible(false);
+				venueList1.setVisible(false);
+				scrollPane_8_1.setVisible(false);
+				statusField.setVisible(true);
+				
+				managementMenuAddedTeams.removeAllElements();
+				
+				avTeams.removeAllElements();
+				for(int i = 0;i < availiableTeamsList.size(); i++) {
+					avTeams.add(i, availiableTeamsList.get(i).getTeamName());
+				}
+				
+				venueField.setText("");
+				statusField.setText("");
+				nameBar.setText("");
+				dateBar.setText("");
+			}
+		});
+		confirmButton.setBounds(1046, 618, 202, 35);
+		tournamentManagementMenu.add(confirmButton);
+		confirmButton.setVisible(false);
+		
+		tournamentSearchBar = new JTextField();
+		tournamentSearchBar.setColumns(10);
+		tournamentSearchBar.setBounds(1042, 194, 206, 26);
+		tournamentManagementMenu.add(tournamentSearchBar);
+		
+		nameBar = new JTextField();
+		nameBar.setColumns(10);
+		nameBar.setBounds(10, 176, 206, 26);
+		tournamentManagementMenu.add(nameBar);
+		
+		dateBar = new JTextField();
+		dateBar.setColumns(10);
+		dateBar.setBounds(10, 242, 206, 26);
+		tournamentManagementMenu.add(dateBar);
+		
+		JLabel lblNewLabel_4_2_1_1_1 = new JLabel("Status");
+		lblNewLabel_4_2_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_4_2_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblNewLabel_4_2_1_1_1.setBounds(20, 433, 188, 34);
+		tournamentManagementMenu.add(lblNewLabel_4_2_1_1_1);
+				
+			
+		venueField = new JTextField();
+		venueField.setColumns(10);
+		venueField.setBounds(10, 324, 206, 26);
+		tournamentManagementMenu.add(venueField);
+		
+		statusField = new JTextField();
+		statusField.setColumns(10);
+		statusField.setBounds(10, 463, 206, 26);
+		tournamentManagementMenu.add(statusField);
+		
+		
+		btnModifyTournamentDetails.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				venueList1.setSelectedValue(venueField.getText(), true);
+				statusList1.setSelectedValue(statusField.getText(), true);
+				
+				
+				
+				confirmButton.setVisible(true);
+				btnModifyTournamentDetails.setVisible(false);
+				updateLabel.setText("");
+				venueField.setVisible(false);
+				scrollPane_8.setVisible(true);
+				venueList1.setVisible(true);
+				scrollPane_8_1.setVisible(true);
+				statusField.setVisible(false);
+			}
+		});
+		btnModifyTournamentDetails.setBounds(1046, 554, 202, 35);
+		tournamentManagementMenu.add(btnModifyTournamentDetails);
+		btnModifyTournamentDetails.setVisible(false);
+		
+		
+		
+		
+		//
 		JPanel teamSearchMenu = new JPanel();
 		teamSearchMenu.setLayout(null);
 		frame.getContentPane().add(teamSearchMenu, "teamSearchMenu");
