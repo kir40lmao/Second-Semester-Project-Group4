@@ -19,7 +19,8 @@ public class MatchDAO implements MatchDAOIF{
 	@Override
 	public void createMatch(Match match) {
 		String sql = "INSERT INTO Matches ([Team One Score], [Team Two Score], DATE) VALUES (?, ?, ?)";
-		String sql2 = "INSERT INTO MatchTeam (MatchID, TeamOneID, TeamTwoID) VALUES ((SELECT MatchID FROM Matches WHERE MatchID = ?), (SELECT TeamID FROM Teams WHERE TeamID = ?), (SELECT TeamID FROM Teams WHERE TeamID = ?))";
+		String sql2 = "INSERT INTO MatchTeam (MatchID, TeamOneID, TeamTwoID) VALUES ((SELECT MatchID FROM Matches WHERE MatchID = ?),"
+				+ " (SELECT TeamID FROM Teams WHERE TeamID = ?), (SELECT TeamID FROM Teams WHERE TeamID = ?))";
 		String sql3 = "INSERT INTO MatchPlayerStats (MatchID, PlayerID, [Player Kills], [Player Deaths]) VALUES (?, ?, ?, ?)";
 		
 		String sql_getPlayers = "SELECT * FROM PlayerTeam where TeamID = ? or TeamID = ?";
@@ -33,7 +34,6 @@ public class MatchDAO implements MatchDAOIF{
 			statement.setInt(2, match.getTeamTwoScore());
 			statement.setDate(3, java.sql.Date.valueOf(match.getDate()));
 			statement.executeUpdate();
-			
 			
 			statement = conn.prepareStatement(sql_getMatchID);
 			ResultSet rs = statement.executeQuery();
@@ -51,19 +51,16 @@ public class MatchDAO implements MatchDAOIF{
 			statement_players.setInt(2, match.getTeamTwoID());
 			
 			ResultSet resultSetPlayers = statement_players.executeQuery();
-	
 			conn.commit();
 			while (resultSetPlayers.next()) {
 				int playerID = resultSetPlayers.getInt("PlayerID");
-				System.out.println(playerID);
 				statement = conn.prepareStatement(sql3);
 				statement.setInt(1, matchID);
 				statement.setInt(2, playerID);
 				statement.setInt(3, 0);
 				statement.setInt(4, 0);
 				statement.executeUpdate();
-			}
-			
+			}	
 		}
 		 catch (SQLException e) {
 			try {
@@ -79,7 +76,6 @@ public class MatchDAO implements MatchDAOIF{
 				e.printStackTrace();
 			}
 		}
-		
 	}
 
 	@Override
@@ -227,11 +223,13 @@ public class MatchDAO implements MatchDAOIF{
 			statement.setString(1, date);
 			statement.setInt(2, matchID);
 			statement.executeUpdate();
+			
 			statement = conn.prepareStatement(sqlTeam);
 			statement.setInt(1, teamOneID);
 			statement.setInt(2, teamTwoID);
 			statement.setInt(3, matchID);
 			statement.executeUpdate();
+			
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
