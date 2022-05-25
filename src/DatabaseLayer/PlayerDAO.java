@@ -200,7 +200,7 @@ public class PlayerDAO implements PlayerDAOIF{
 		while(result.next()) {
 			prevKills=result.getInt("Total Kills");
 			prevDeaths=result.getInt("Total Deaths");
-			gamerTag=result.getString("GamerTag");
+			gamerTag=result.getString("Gammer Tag");
 		}
 		statement = conn.prepareStatement(sql);
 		statement.setInt(3, (prevKills+totalKills));
