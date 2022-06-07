@@ -34,10 +34,11 @@ public class Login extends JFrame {
 
 	
 	public Login() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 500, 450);
-		setIconImage(Toolkit.getDefaultToolkit().getImage("src\\res\\logo_icon.jpg"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("logo_icon.png"));
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -97,6 +98,8 @@ public class Login extends JFrame {
 		contentPane.add(btnNewButton);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setForeground(Color.GRAY);
+		lblNewLabel_1.setBackground(Color.GRAY);
 		lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\Hidden\\eclipse-workspace\\Orders\\src\\res\\1.jpg"));

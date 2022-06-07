@@ -63,11 +63,6 @@ public class TournamentDAO implements TournamentDAOIF{
 				result3.next();
 				int teamID = result3.getInt(1);
 				
-				statement = con.prepareStatement(sql3);
-				statement.setInt(1, SQLtournamentID);
-				statement.setInt(2, teamID);
-				statement.executeUpdate();
-				
 			}
 			
 		}catch (SQLException e) {
@@ -78,8 +73,8 @@ public class TournamentDAO implements TournamentDAOIF{
 	     Calendar cal = Calendar.getInstance();
 	     Date date = cal.getTime();
 	     String todaysdate = dateFormat.format(date);
-	     System.out.println(todaysdate);
-	     System.out.print(teams.size());
+	     //System.out.println(todaysdate);
+	     //System.out.print(teams.size());
 		for(int i = 0; i < teams.size(); i +=2) {
 			Team team1, team2;
 			team1 = teams.get(i);
