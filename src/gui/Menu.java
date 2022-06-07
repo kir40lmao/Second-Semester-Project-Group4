@@ -3,6 +3,7 @@ package gui;
 
 import java.awt.EventQueue;
 
+import java.awt.*;
 import javax.swing.JFrame;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
@@ -41,16 +42,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
+import javax.swing.ImageIcon;
 
 public class Menu {
 
 	private static CardLayout cl_base;
 	public static JFrame frame;
 	private JTextField txt_gamer_tag;
-	private JTextField txtSearchTeamName;
-	private JTextField txtSearchPlayerMenu;
-	private JTextField textField_5;
-	private JTextField txtTournamentHistoryMenu;
 	private JTextField tournamentNameField;
 	private JTextField tournamentDateField;
 	private JTextField teamNameField;
@@ -69,8 +67,6 @@ public class Menu {
 	private JTextField txt_search_team;
 	private JTextField textField_4;
 	private JTextField textTeamNameInput;
-	private JTextField textField;
-	private JTextField textField_2;
 	JFrame popup = new JFrame("Tournament Details");
 	private JTextField tournamentSearchBar;
 	private JTextField nameBar;
@@ -100,6 +96,9 @@ public class Menu {
 	 */
 	public Menu() {
 		initialize();
+		Image icon = Toolkit.getDefaultToolkit().getImage("logo_icon.png");    
+		frame.setIconImage(icon); 
+		
 	}
 	
 	public void newLogin() {
@@ -113,7 +112,6 @@ public class Menu {
 		cl_base.show(frame.getContentPane(), "managerMenu");
 	}
 		
-
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -229,25 +227,31 @@ public class Menu {
 		JButton btnNewButton = new JButton("Exit");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cl_base.show(frame.getContentPane(), "managerMenu");
-				//frame.getContentPane().add(managerMenu, "name_15084022880400");
+				System.exit(0);
 			}
 		});
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 17));
+		btnNewButton.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 17));
 		btnNewButton.setBounds(40, 632, 160, 56);
 		userMenu.add(btnNewButton);
 		
 		JLabel lblNewLabel_2 = new JLabel("News");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_2.setForeground(Color.WHITE);
+		lblNewLabel_2.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 14));
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2.setBounds(313, 168, 249, 28);
 		userMenu.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_2_1 = new JLabel("On-Going Tournaments");
+		lblNewLabel_2_1.setForeground(Color.WHITE);
 		lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_2_1.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 14));
 		lblNewLabel_2_1.setBounds(747, 177, 249, 28);
 		userMenu.add(lblNewLabel_2_1);
+		
+		JLabel lblNewLabel_6 = new JLabel("");
+		lblNewLabel_6.setIcon(new ImageIcon("BackGround Custom.png"));
+		lblNewLabel_6.setBounds(0, 34, 1904, 1007);
+		userMenu.add(lblNewLabel_6);
 		
 		JPanel managerMenu = new JPanel();
 		frame.getContentPane().add(managerMenu, "managerMenu");
@@ -278,12 +282,13 @@ public class Menu {
 		frame.getContentPane().add(teamManagementMenu, "teamManagementMenu");
 		
 		JLabel label_for_team_id = new JLabel("<<team id>>");
+		label_for_team_id.setForeground(Color.WHITE);
 		label_for_team_id.setBounds(516, 157, 135, 30);
 		teamManagementMenu.add(label_for_team_id);
 		
 		JLabel lblNewLabel_5 = new JLabel("");
 		lblNewLabel_5.setForeground(Color.GREEN);
-		lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNewLabel_5.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 11));
 		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_5.setBounds(441, 284, 210, 30);
 		teamManagementMenu.add(lblNewLabel_5);
@@ -319,12 +324,13 @@ public class Menu {
 		frame.getContentPane().add(playerManagementMenu, "playerManagementMenu");
 		
 		JLabel label_for_player_id = new JLabel("<<player id>>");
+		label_for_player_id.setForeground(Color.WHITE);
 		label_for_player_id.setBounds(538, 173, 135, 30);
 		playerManagementMenu.add(label_for_player_id);
 		
 		JLabel lblNewLabel_4 = new JLabel("");
 		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNewLabel_4.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 11));
 		lblNewLabel_4.setForeground(Color.GREEN);
 		lblNewLabel_4.setBounds(463, 341, 210, 23);
 		playerManagementMenu.add(lblNewLabel_4);
@@ -394,7 +400,7 @@ public class Menu {
 		JButton btnNewButton_2 = new JButton("Quit");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cl_base.show(frame.getContentPane(), "userMenu");
+				System.exit(0);
 			}
 		});
 		btnNewButton_2.setBounds(49, 634, 135, 41);
@@ -403,10 +409,16 @@ public class Menu {
 		managerMenu.add(btnNewButton_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("Welcome!");
+		lblNewLabel_3.setForeground(Color.WHITE);
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblNewLabel_3.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 16));
 		lblNewLabel_3.setBounds(419, 86, 343, 52);
 		managerMenu.add(lblNewLabel_3);
+		
+		JLabel lblNewLabel_6_1 = new JLabel("");
+		lblNewLabel_6_1.setIcon(new ImageIcon("BackGround Custom.png"));
+		lblNewLabel_6_1.setBounds(0, 34, 1904, 1007);
+		managerMenu.add(lblNewLabel_6_1);
 		
 		JPanel teamCreationMenu = new JPanel();
 		teamCreationMenu.setLayout(null);
@@ -517,19 +529,26 @@ public class Menu {
 		menuBar1.add(separator_51);
 		menuBar1.add(mntmNewMenuItem_61);
 		
-		JButton btnNewButton_2_1 = new JButton("Quit");
+		JButton btnNewButton_2_1 = new JButton("Back");
+		btnNewButton_2_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cl_base.show(frame.getContentPane(),"managerMenu");
+			}
+		});
 		btnNewButton_2_1.setBounds(40, 647, 135, 41);
 		teamCreationMenu.add(btnNewButton_2_1);
 		
 		JLabel lblNewLabel_1_5 = new JLabel("Team Creation Menu");
+		lblNewLabel_1_5.setForeground(Color.WHITE);
 		lblNewLabel_1_5.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_5.setFont(new Font("Tahoma", Font.BOLD, 17));
+		lblNewLabel_1_5.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 17));
 		lblNewLabel_1_5.setBounds(463, 44, 359, 35);
 		teamCreationMenu.add(lblNewLabel_1_5);
 		
 		JLabel lblTeamName = new JLabel("Team Name");
+		lblTeamName.setForeground(Color.WHITE);
 		lblTeamName.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTeamName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTeamName.setFont(new Font("Franklin Gothic Demi", Font.PLAIN, 14));
 		lblTeamName.setBounds(40, 162, 135, 35);
 		teamCreationMenu.add(lblTeamName);
 		
@@ -550,6 +569,11 @@ public class Menu {
 		});
 		btnNewButton_2_1_1.setBounds(365, 171, 151, 41);
 		teamCreationMenu.add(btnNewButton_2_1_1);
+		
+		JLabel lblNewLabel_6_4 = new JLabel("");
+		lblNewLabel_6_4.setIcon(new ImageIcon("BackGround Custom.png"));
+		lblNewLabel_6_4.setBounds(0, 34, 1904, 1007);
+		teamCreationMenu.add(lblNewLabel_6_4);
 		
 		JMenuBar menuBar11 = new JMenuBar();
 		menuBar11.setBackground(Color.LIGHT_GRAY);
@@ -656,22 +680,30 @@ public class Menu {
 		menuBar11.add(separator_511);
 		menuBar11.add(mntmNewMenuItem_611);
 		
-		JButton btnNewButton_2_2 = new JButton("Quit");
-		btnNewButton_2_2.setBounds(40, 647, 135, 41);
-		teamManagementMenu.add(btnNewButton_2_2);
+		JButton btnBackFromTeamManagement = new JButton("Back");
+		btnBackFromTeamManagement.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cl_base.show(frame.getContentPane(),"managerMenu");
+			}
+		});
+		btnBackFromTeamManagement.setBounds(40, 647, 135, 41);
+		teamManagementMenu.add(btnBackFromTeamManagement);
 		
 		JLabel lblNewLabel_1_4 = new JLabel("Team Management Menu");
+		lblNewLabel_1_4.setForeground(Color.WHITE);
 		lblNewLabel_1_4.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_4.setFont(new Font("Tahoma", Font.BOLD, 17));
+		lblNewLabel_1_4.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 17));
 		lblNewLabel_1_4.setBounds(463, 44, 359, 35);
 		teamManagementMenu.add(lblNewLabel_1_4);
 		
 		JLabel search_team_label_1 = new JLabel("Search team");
-		search_team_label_1.setFont(new Font("Tahoma", Font.BOLD, 12));
+		search_team_label_1.setForeground(Color.WHITE);
+		search_team_label_1.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 12));
 		search_team_label_1.setBounds(103, 157, 210, 35);
 		teamManagementMenu.add(search_team_label_1);
 		
 		JLabel info_label_player_1_1 = new JLabel("Team name");
+		info_label_player_1_1.setForeground(Color.WHITE);
 		info_label_player_1_1.setBounds(103, 198, 83, 30);
 		teamManagementMenu.add(info_label_player_1_1);
 		
@@ -686,6 +718,7 @@ public class Menu {
 		teamManagementMenu.add(textField_4);
 		
 		JButton search_team_button_1 = new JButton("Find");
+		search_team_button_1.setForeground(Color.WHITE);
 		search_team_button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String team_name = txt_search_team.getText();
@@ -703,11 +736,12 @@ public class Menu {
 		JLabel info_label_search_team = new JLabel("");
 		info_label_search_team.setHorizontalAlignment(SwingConstants.CENTER);
 		info_label_search_team.setForeground(Color.RED);
-		info_label_search_team.setFont(new Font("Tahoma", Font.BOLD, 12));
+		info_label_search_team.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 12));
 		info_label_search_team.setBounds(103, 284, 210, 30);
 		teamManagementMenu.add(info_label_search_team);
 		
 		JButton save_changes_button_player_1 = new JButton("Save changes");
+		save_changes_button_player_1.setForeground(Color.WHITE);
 		save_changes_button_player_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int teamID = Integer.parseInt(label_for_team_id.getText());
@@ -724,14 +758,22 @@ public class Menu {
 		teamManagementMenu.add(save_changes_button_player_1);
 		
 		JLabel info_label_player_3 = new JLabel("Team name");
+		info_label_player_3.setForeground(Color.WHITE);
 		info_label_player_3.setBounds(441, 198, 83, 30);
 		teamManagementMenu.add(info_label_player_3);
 		
 		JLabel info_label_team_id_1 = new JLabel("Team ID");
+		info_label_team_id_1.setForeground(Color.WHITE);
 		info_label_team_id_1.setBounds(441, 157, 83, 30);
 		teamManagementMenu.add(info_label_team_id_1);
 		
+		JLabel lblNewLabel_6_2 = new JLabel("");
+		lblNewLabel_6_2.setIcon(new ImageIcon("BackGround Custom.png"));
+		lblNewLabel_6_2.setBounds(0, 34, 1904, 1007);
+		teamManagementMenu.add(lblNewLabel_6_2);
+		
 		JPanel playerCreationMenu = new JPanel();
+		playerCreationMenu.setForeground(Color.WHITE);
 		playerCreationMenu.setLayout(null);
 		frame.getContentPane().add(playerCreationMenu, "playerCreationMenu");
 		
@@ -840,19 +882,26 @@ public class Menu {
 		menuBar111.add(separator_5111);
 		menuBar111.add(mntmNewMenuItem_6111);
 		
-		JButton btnNewButton_2_5 = new JButton("Quit");
+		JButton btnNewButton_2_5 = new JButton("Back");
+		btnNewButton_2_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cl_base.show(frame.getContentPane(),"managerMenu");
+			}
+		});
 		btnNewButton_2_5.setBounds(40, 647, 135, 41);
 		playerCreationMenu.add(btnNewButton_2_5);
 		
 		JLabel lblNewLabel_1_3 = new JLabel("Player Creation Menu");
+		lblNewLabel_1_3.setForeground(Color.WHITE);
 		lblNewLabel_1_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_3.setFont(new Font("Tahoma", Font.BOLD, 17));
+		lblNewLabel_1_3.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 17));
 		lblNewLabel_1_3.setBounds(463, 44, 359, 35);
 		playerCreationMenu.add(lblNewLabel_1_3);
 		
 		JLabel lblPlayerGamerTag = new JLabel("Player Gamer Tag");
+		lblPlayerGamerTag.setForeground(Color.WHITE);
 		lblPlayerGamerTag.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPlayerGamerTag.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblPlayerGamerTag.setFont(new Font("Franklin Gothic Demi", Font.PLAIN, 14));
 		lblPlayerGamerTag.setBounds(68, 180, 135, 35);
 		playerCreationMenu.add(lblPlayerGamerTag);
 		
@@ -874,6 +923,11 @@ public class Menu {
 		});
 		btnNewButton_6.setBounds(521, 182, 135, 35);
 		playerCreationMenu.add(btnNewButton_6);
+		
+		JLabel lblNewLabel_6_4_1 = new JLabel("");
+		lblNewLabel_6_4_1.setIcon(new ImageIcon("BackGround Custom.png"));
+		lblNewLabel_6_4_1.setBounds(0, 34, 1904, 1007);
+		playerCreationMenu.add(lblNewLabel_6_4_1);
 		
 		JMenuBar menuBar1111 = new JMenuBar();
 		menuBar1111.setBackground(Color.LIGHT_GRAY);
@@ -981,7 +1035,12 @@ public class Menu {
 		menuBar1111.add(separator_51111);
 		menuBar1111.add(mntmNewMenuItem_61111);
 		
-		JButton btnNewButton_2_51 = new JButton("Quit");
+		JButton btnNewButton_2_51 = new JButton("Back");
+		btnNewButton_2_51.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cl_base.show(frame.getContentPane(),"managerMenu");
+			}
+		});
 		btnNewButton_2_51.setBounds(40, 647, 135, 41);
 		playerManagementMenu.add(btnNewButton_2_51);
 		
@@ -991,22 +1050,26 @@ public class Menu {
 		txt_gamer_tag.setColumns(10);
 		
 		JLabel lblNewLabel_1_2 = new JLabel("Player Management Menu");
+		lblNewLabel_1_2.setForeground(Color.WHITE);
 		lblNewLabel_1_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.BOLD, 17));
+		lblNewLabel_1_2.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 17));
 		lblNewLabel_1_2.setBounds(463, 44, 359, 35);
 		playerManagementMenu.add(lblNewLabel_1_2);
 		
 		JLabel info_label_player = new JLabel("Gamer tag");
+		info_label_player.setForeground(Color.WHITE);
 		info_label_player.setBounds(463, 214, 83, 30);
 		playerManagementMenu.add(info_label_player);
 		
 		JLabel info_label_player_id = new JLabel("Player ID");
+		info_label_player_id.setForeground(Color.WHITE);
 		info_label_player_id.setBounds(463, 173, 83, 30);
 		playerManagementMenu.add(info_label_player_id);
 		
 		
 		
 		JButton save_changes_button_player = new JButton("Save changes");
+		save_changes_button_player.setForeground(Color.BLACK);
 		save_changes_button_player.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int playerID = Integer.parseInt(label_for_player_id.getText());
@@ -1025,6 +1088,7 @@ public class Menu {
 		playerManagementMenu.add(save_changes_button_player);
 		
 		JLabel info_label_player_1 = new JLabel("Gamer tag");
+		info_label_player_1.setForeground(Color.WHITE);
 		info_label_player_1.setBounds(125, 214, 83, 30);
 		playerManagementMenu.add(info_label_player_1);
 		
@@ -1036,11 +1100,12 @@ public class Menu {
 		JLabel info_label_search_player = new JLabel("");
 		info_label_search_player.setHorizontalAlignment(SwingConstants.CENTER);
 		info_label_search_player.setForeground(Color.RED);
-		info_label_search_player.setFont(new Font("Tahoma", Font.BOLD, 12));
+		info_label_search_player.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 12));
 		info_label_search_player.setBounds(125, 300, 210, 30);
 		playerManagementMenu.add(info_label_search_player);
 		
 		JButton search_player_button = new JButton("Find");
+		search_player_button.setForeground(Color.BLACK);
 		search_player_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String gamer_tag = textField_search_gamer.getText();
@@ -1064,11 +1129,13 @@ public class Menu {
 		playerManagementMenu.add(search_player_button);
 		
 		JLabel search_player_label = new JLabel("Search player");
-		search_player_label.setFont(new Font("Tahoma", Font.BOLD, 12));
+		search_player_label.setForeground(Color.WHITE);
+		search_player_label.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 12));
 		search_player_label.setBounds(125, 173, 210, 35);
 		playerManagementMenu.add(search_player_label);
 		
 		JLabel info_label_player_2 = new JLabel("Team ID");
+		info_label_player_2.setForeground(Color.WHITE);
 		info_label_player_2.setBounds(463, 255, 83, 30);
 		playerManagementMenu.add(info_label_player_2);
 		
@@ -1076,6 +1143,11 @@ public class Menu {
 		txt_player_team_ID.setColumns(10);
 		txt_player_team_ID.setBounds(538, 255, 135, 30);
 		playerManagementMenu.add(txt_player_team_ID);
+		
+		JLabel lblNewLabel_6_3 = new JLabel("");
+		lblNewLabel_6_3.setIcon(new ImageIcon("BackGround Custom.png"));
+		lblNewLabel_6_3.setBounds(0, 34, 1904, 1007);
+		playerManagementMenu.add(lblNewLabel_6_3);
 		
 		JPanel tournamentCreationMenu = new JPanel();
 		tournamentCreationMenu.setLayout(null);
@@ -1186,13 +1258,19 @@ public class Menu {
 		menuBar11111.add(separator_511111);
 		menuBar11111.add(mntmNewMenuItem_611111);
 		
-		JButton btnNewButton_2_511 = new JButton("Quit");
+		JButton btnNewButton_2_511 = new JButton("Back");
+		btnNewButton_2_511.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cl_base.show(frame.getContentPane(),"managerMenu");
+			}
+		});
 		btnNewButton_2_511.setBounds(40, 679, 135, 41);
 		tournamentCreationMenu.add(btnNewButton_2_511);
 		
 		JLabel lblNewLabel = new JLabel("Name");
+		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel.setFont(new Font("Franklin Gothic Demi", Font.PLAIN, 14));
 		lblNewLabel.setBounds(40, 117, 135, 35);
 		tournamentCreationMenu.add(lblNewLabel);
 		
@@ -1202,8 +1280,9 @@ public class Menu {
 		tournamentNameField.setColumns(10);
 		
 		JLabel lblVenue = new JLabel("Venue");
+		lblVenue.setForeground(Color.WHITE);
 		lblVenue.setHorizontalAlignment(SwingConstants.CENTER);
-		lblVenue.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblVenue.setFont(new Font("Franklin Gothic Demi", Font.PLAIN, 14));
 		lblVenue.setBounds(40, 316, 135, 35);
 		tournamentCreationMenu.add(lblVenue);
 		
@@ -1225,8 +1304,9 @@ public class Menu {
 		
 		
 		JLabel lblDate = new JLabel("Date");
+		lblDate.setForeground(Color.WHITE);
 		lblDate.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDate.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblDate.setFont(new Font("Franklin Gothic Demi", Font.PLAIN, 14));
 		lblDate.setBounds(40, 218, 135, 35);
 		tournamentCreationMenu.add(lblDate);
 		
@@ -1236,15 +1316,17 @@ public class Menu {
 		tournamentCreationMenu.add(tournamentDateField);
 		
 		JLabel lblAvailableTeams = new JLabel("Available Teams");
+		lblAvailableTeams.setForeground(Color.WHITE);
 		lblAvailableTeams.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAvailableTeams.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblAvailableTeams.setFont(new Font("Franklin Gothic Demi", Font.PLAIN, 14));
 		lblAvailableTeams.setBounds(411, 117, 135, 35);
 		tournamentCreationMenu.add(lblAvailableTeams);
 		lblAvailableTeams.setVisible(false);
 		
 		JLabel lblAddedTeams = new JLabel("Added Teams");
+		lblAddedTeams.setForeground(Color.WHITE);
 		lblAddedTeams.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAddedTeams.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblAddedTeams.setFont(new Font("Franklin Gothic Demi", Font.PLAIN, 14));
 		lblAddedTeams.setBounds(809, 117, 135, 35);
 		tournamentCreationMenu.add(lblAddedTeams);
 		lblAddedTeams.setVisible(false);
@@ -1272,6 +1354,8 @@ public class Menu {
 		addedTeamsScroll.setViewportView(addedTeamsList);
 		
 		JLabel lblStatus = new JLabel("Status");
+		lblStatus.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 11));
+		lblStatus.setForeground(Color.WHITE);
 		lblStatus.setVisible(false);
 		lblStatus.setBounds(85, 499, 46, 14);
 		tournamentCreationMenu.add(lblStatus);
@@ -1303,7 +1387,7 @@ public class Menu {
 				tournamentc.createMatchUps((ArrayList<Team>) teamList, tournamentID);
 			}
 		});
-		generateBracket.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		generateBracket.setFont(new Font("Franklin Gothic Demi", Font.PLAIN, 16));
 		generateBracket.setBounds(1049, 589, 222, 54);
 		tournamentCreationMenu.add(generateBracket);
 		generateBracket.setVisible(false);
@@ -1383,7 +1467,7 @@ public class Menu {
 				
 			}
 		});
-		confirmTournamentCreation.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		confirmTournamentCreation.setFont(new Font("Franklin Gothic Demi", Font.PLAIN, 16));
 		confirmTournamentCreation.setBounds(1049, 670, 222, 54);
 		tournamentCreationMenu.add(confirmTournamentCreation);
 		
@@ -1399,15 +1483,21 @@ public class Menu {
 			}
 		});
 		
-		confirmTournamentVenue.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		confirmTournamentVenue.setFont(new Font("Franklin Gothic Demi", Font.PLAIN, 16));
 		confirmTournamentVenue.setBounds(1049, 670, 222, 54);
 		tournamentCreationMenu.add(confirmTournamentVenue);
 		
 		JLabel lblNewLabel_1 = new JLabel("Tournament Creation Menu");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 17));
+		lblNewLabel_1.setForeground(Color.WHITE);
+		lblNewLabel_1.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 17));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setBounds(463, 44, 359, 35);
 		tournamentCreationMenu.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_6_4_2 = new JLabel("");
+		lblNewLabel_6_4_2.setIcon(new ImageIcon("BackGround Custom.png"));
+		lblNewLabel_6_4_2.setBounds(0, 34, 1904, 1007);
+		tournamentCreationMenu.add(lblNewLabel_6_4_2);
 		
 		JPanel tournamentManagementMenu = new JPanel();
 		tournamentManagementMenu.setLayout(null);
@@ -1521,13 +1611,19 @@ public class Menu {
 		menuBar111111.add(separator_5111111);
 		menuBar111111.add(mntmNewMenuItem_6111111);
 		
-		JButton btnNewButton_2_6 = new JButton("Quit");
+		JButton btnNewButton_2_6 = new JButton("Back");
+		btnNewButton_2_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cl_base.show(frame.getContentPane(),"managerMenu");
+			}
+		});
 		btnNewButton_2_6.setBounds(40, 647, 135, 41);
 		tournamentManagementMenu.add(btnNewButton_2_6);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Tournament Management Menu");
+		lblNewLabel_1_1.setForeground(Color.WHITE);
 		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.BOLD, 17));
+		lblNewLabel_1_1.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 17));
 		lblNewLabel_1_1.setBounds(463, 44, 359, 35);
 		tournamentManagementMenu.add(lblNewLabel_1_1);
 		
@@ -1546,37 +1642,42 @@ public class Menu {
 		DefaultListModel avTeams = new DefaultListModel();
 		JList availableTeamList = new JList(avTeams);
 		scrollPane_9_1.setViewportView(availableTeamList);
-		for(int i = 0;i < availiableTeamsList.size(); i++) {
+		/*for(int i = 0;i < availiableTeamsList.size(); i++) {
 			avTeams.add(i, availiableTeamsList.get(i).getTeamName());
-		}
+		}*/
 			
 		JLabel lblNewLabel_41 = new JLabel("Available teams");
+		lblNewLabel_41.setForeground(Color.WHITE);
 		lblNewLabel_41.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_41.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblNewLabel_41.setFont(new Font("Franklin Gothic Demi", Font.PLAIN, 17));
 		lblNewLabel_41.setBounds(327, 112, 188, 34);
 		tournamentManagementMenu.add(lblNewLabel_41);
 		
 		JLabel lblNewLabel_4_1 = new JLabel("Added teams");
+		lblNewLabel_4_1.setForeground(Color.WHITE);
 		lblNewLabel_4_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_4_1.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblNewLabel_4_1.setFont(new Font("Franklin Gothic Demi", Font.PLAIN, 17));
 		lblNewLabel_4_1.setBounds(748, 112, 188, 34);
 		tournamentManagementMenu.add(lblNewLabel_4_1);
 		
 		JLabel lblNewLabel_4_2 = new JLabel("Name");
+		lblNewLabel_4_2.setForeground(Color.WHITE);
 		lblNewLabel_4_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_4_2.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblNewLabel_4_2.setFont(new Font("Franklin Gothic Demi", Font.PLAIN, 17));
 		lblNewLabel_4_2.setBounds(20, 146, 188, 34);
 		tournamentManagementMenu.add(lblNewLabel_4_2);
 		
 		JLabel lblNewLabel_4_2_1 = new JLabel("Date");
+		lblNewLabel_4_2_1.setForeground(Color.WHITE);
 		lblNewLabel_4_2_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_4_2_1.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblNewLabel_4_2_1.setFont(new Font("Franklin Gothic Demi", Font.PLAIN, 17));
 		lblNewLabel_4_2_1.setBounds(20, 212, 188, 34);
 		tournamentManagementMenu.add(lblNewLabel_4_2_1);
 		
 		JLabel lblNewLabel_4_2_1_1 = new JLabel("Venue");
+		lblNewLabel_4_2_1_1.setForeground(Color.WHITE);
 		lblNewLabel_4_2_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_4_2_1_1.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblNewLabel_4_2_1_1.setFont(new Font("Franklin Gothic Demi", Font.PLAIN, 17));
 		lblNewLabel_4_2_1_1.setBounds(20, 279, 188, 34);
 		tournamentManagementMenu.add(lblNewLabel_4_2_1_1);
 		
@@ -1595,8 +1696,9 @@ public class Menu {
 				
 		
 		JLabel lblNewLabel_4_2_2 = new JLabel("Tournament search bar");
+		lblNewLabel_4_2_2.setForeground(Color.WHITE);
 		lblNewLabel_4_2_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_4_2_2.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblNewLabel_4_2_2.setFont(new Font("Franklin Gothic Demi", Font.PLAIN, 17));
 		lblNewLabel_4_2_2.setBounds(1048, 159, 188, 34);
 		tournamentManagementMenu.add(lblNewLabel_4_2_2);
 		
@@ -1608,7 +1710,7 @@ public class Menu {
 		storeName.setVisible(false);
 		
 		JLabel updateLabel = new JLabel("");
-		updateLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		updateLabel.setFont(new Font("Franklin Gothic Demi", Font.PLAIN, 14));
 		updateLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		updateLabel.setForeground(Color.GREEN);
 		updateLabel.setBounds(1048, 497, 202, 46);
@@ -1644,6 +1746,10 @@ public class Menu {
 							List <Team> teamsInTournament = teamc.getTeamsInTournament(tournamentSearch);
 							for(int i = 0;i < teamsInTournament.size(); i++) {
 								managementMenuAddedTeams.add(i, teamsInTournament.get(i).getTeamName());
+							}
+							
+							for(int i = 0;i < availiableTeamsList.size(); i++) {
+								avTeams.add(i, availiableTeamsList.get(i).getTeamName());
 							}
 							
 							for(int i = 0;i < teamsInTournament.size(); i++) {
@@ -1746,6 +1852,7 @@ public class Menu {
 				statusField.setText("");
 				nameBar.setText("");
 				dateBar.setText("");
+				avTeams.clear();
 			}
 		});
 		confirmButton.setBounds(1046, 618, 202, 35);
@@ -1768,8 +1875,9 @@ public class Menu {
 		tournamentManagementMenu.add(dateBar);
 		
 		JLabel lblNewLabel_4_2_1_1_1 = new JLabel("Status");
+		lblNewLabel_4_2_1_1_1.setForeground(Color.WHITE);
 		lblNewLabel_4_2_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_4_2_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblNewLabel_4_2_1_1_1.setFont(new Font("Franklin Gothic Demi", Font.PLAIN, 17));
 		lblNewLabel_4_2_1_1_1.setBounds(20, 433, 188, 34);
 		tournamentManagementMenu.add(lblNewLabel_4_2_1_1_1);
 				
@@ -1804,6 +1912,11 @@ public class Menu {
 		});
 		btnModifyTournamentDetails.setBounds(1046, 554, 202, 35);
 		tournamentManagementMenu.add(btnModifyTournamentDetails);
+		
+		JLabel BackGround = new JLabel("");
+		BackGround.setIcon(new ImageIcon("BackGround Custom.png"));
+		BackGround.setBounds(0, 34, 1904, 1007);
+		tournamentManagementMenu.add(BackGround);
 		btnModifyTournamentDetails.setVisible(false);
 		
 		
@@ -1819,19 +1932,14 @@ public class Menu {
 		menuBar_1_1.setBounds(0, 0, 1281, 35);
 		teamSearchMenu.add(menuBar_1_1);
 		
-		txtSearchTeamName = new JTextField();
-		txtSearchTeamName.setText("Team name:");
-		txtSearchTeamName.setHorizontalAlignment(SwingConstants.CENTER);
-		txtSearchTeamName.setFont(new Font("Tahoma", Font.BOLD, 14));
-		txtSearchTeamName.setColumns(10);
-		txtSearchTeamName.setBorder(null);
-		txtSearchTeamName.setBackground(SystemColor.menu);
-		txtSearchTeamName.setBounds(158, 199, 130, 35);
-		teamSearchMenu.add(txtSearchTeamName);
-		
-		JButton btnNewButton_1 = new JButton("Exit");
-		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 17));
-		btnNewButton_1.setBounds(159, 644, 160, 56);
+		JButton btnNewButton_1 = new JButton("Back");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cl_base.show(frame.getContentPane(),"userMenu");
+			}
+		});
+		btnNewButton_1.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 17));
+		btnNewButton_1.setBounds(39, 632, 160, 56);
 		teamSearchMenu.add(btnNewButton_1);
 		
 		textTeamNameInput = new JTextField();
@@ -1847,11 +1955,15 @@ public class Menu {
 		
 		
 		JLabel lblWinsLosses = new JLabel();
+		lblWinsLosses.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 12));
+		lblWinsLosses.setForeground(Color.WHITE);
 		lblWinsLosses.setBounds(351, 342, 152, 50);
 		teamSearchMenu.add(lblWinsLosses);
 		lblWinsLosses.setVisible(false);
 		
 		JLabel lblTeamStats = new JLabel("Team Stats:");
+		lblTeamStats.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 12));
+		lblTeamStats.setForeground(Color.WHITE);
 		lblTeamStats.setBounds(351, 317, 152, 14);
 		teamSearchMenu.add(lblTeamStats);
 		lblTeamStats.setVisible(false);
@@ -1921,6 +2033,17 @@ public class Menu {
 		btnTeamSearch.setBounds(520, 207, 89, 23);
 		teamSearchMenu.add(btnTeamSearch);
 		
+		JLabel lblNewLabel_7 = new JLabel("Team Name:");
+		lblNewLabel_7.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 12));
+		lblNewLabel_7.setForeground(Color.WHITE);
+		lblNewLabel_7.setBounds(196, 211, 89, 14);
+		teamSearchMenu.add(lblNewLabel_7);
+		
+		JLabel lblNewLabel_6_4_3 = new JLabel("");
+		lblNewLabel_6_4_3.setIcon(new ImageIcon("BackGround Custom.png"));
+		lblNewLabel_6_4_3.setBounds(0, 34, 1904, 1007);
+		teamSearchMenu.add(lblNewLabel_6_4_3);
+		
 		JPanel playerSearchMenu = new JPanel();
 		playerSearchMenu.setLayout(null);
 		frame.getContentPane().add(playerSearchMenu, "playerSearchMenu");
@@ -1929,16 +2052,6 @@ public class Menu {
 		menuBar_1_2.setBackground(Color.LIGHT_GRAY);
 		menuBar_1_2.setBounds(0, 0, 1281, 35);
 		playerSearchMenu.add(menuBar_1_2);
-		
-		txtSearchPlayerMenu = new JTextField();
-		txtSearchPlayerMenu.setText("Player Gamer Tag");
-		txtSearchPlayerMenu.setHorizontalAlignment(SwingConstants.CENTER);
-		txtSearchPlayerMenu.setFont(new Font("Tahoma", Font.BOLD, 14));
-		txtSearchPlayerMenu.setColumns(10);
-		txtSearchPlayerMenu.setBorder(null);
-		txtSearchPlayerMenu.setBackground(SystemColor.menu);
-		txtSearchPlayerMenu.setBounds(112, 198, 180, 35);
-		playerSearchMenu.add(txtSearchPlayerMenu);
 		
 		JTextField textPlayerNameInput = new JTextField();
 		textPlayerNameInput.setBounds(295, 208, 196, 20);
@@ -1951,8 +2064,13 @@ public class Menu {
 		playerSearchMenu.add(lblFeedbackMessage2);
 		lblFeedbackMessage2.setVisible(false);
 		
-		JButton btnNewButton_3 = new JButton("Exit");
-		btnNewButton_3.setFont(new Font("Tahoma", Font.BOLD, 17));
+		JButton btnNewButton_3 = new JButton("Back");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cl_base.show(frame.getContentPane(),"userMenu");
+			}
+		});
+		btnNewButton_3.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 17));
 		btnNewButton_3.setBounds(39, 632, 160, 56);
 		playerSearchMenu.add(btnNewButton_3);
 		
@@ -1962,7 +2080,8 @@ public class Menu {
 		lblKillsDeaths.setVisible(false);
 		
 		JLabel lblStat = new JLabel("Player Stats:");
-		lblStat.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblStat.setForeground(Color.WHITE);
+		lblStat.setFont(new Font("Franklin Gothic Demi", Font.PLAIN, 16));
 		lblStat.setBounds(256, 296, 107, 35);
 		playerSearchMenu.add(lblStat);
 		lblStat.setVisible(false);
@@ -2018,6 +2137,17 @@ public class Menu {
 		btnPlayerSearch.setBounds(520, 207, 89, 23);
 		playerSearchMenu.add(btnPlayerSearch);
 		
+		JLabel lblNewLabel_8 = new JLabel("Player Tag:");
+		lblNewLabel_8.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 12));
+		lblNewLabel_8.setForeground(Color.WHITE);
+		lblNewLabel_8.setBounds(198, 210, 95, 17);
+		playerSearchMenu.add(lblNewLabel_8);
+		
+		JLabel lblNewLabel_6_4_4 = new JLabel("");
+		lblNewLabel_6_4_4.setIcon(new ImageIcon("BackGround Custom.png"));
+		lblNewLabel_6_4_4.setBounds(0, 34, 1904, 1007);
+		playerSearchMenu.add(lblNewLabel_6_4_4);
+		
 		
 		
 		JPanel tournamentHistoryMenu = new JPanel();
@@ -2028,16 +2158,6 @@ public class Menu {
 		menuBar_1_3.setBackground(Color.LIGHT_GRAY);
 		menuBar_1_3.setBounds(0, 0, 1281, 35);
 		tournamentHistoryMenu.add(menuBar_1_3);
-		
-		textField_5 = new JTextField();
-		textField_5.setText("On-Going Tournaments");
-		textField_5.setHorizontalAlignment(SwingConstants.CENTER);
-		textField_5.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textField_5.setColumns(10);
-		textField_5.setBorder(null);
-		textField_5.setBackground(SystemColor.menu);
-		textField_5.setBounds(515, 92, 230, 35);
-		tournamentHistoryMenu.add(textField_5);
 		
 		JScrollPane ongoingTournamentsScroll = new JScrollPane();
 		ongoingTournamentsScroll.setBounds(515, 138, 230, 216);
@@ -2075,18 +2195,13 @@ public class Menu {
 			DLM_scheduled.add(i, scheduledTournamentsList.get(i).getTournamentName());
 		}
 		
-		txtTournamentHistoryMenu = new JTextField();
-		txtTournamentHistoryMenu.setText("Tournament history menu");
-		txtTournamentHistoryMenu.setHorizontalAlignment(SwingConstants.CENTER);
-		txtTournamentHistoryMenu.setFont(new Font("Tahoma", Font.BOLD, 14));
-		txtTournamentHistoryMenu.setColumns(10);
-		txtTournamentHistoryMenu.setBorder(null);
-		txtTournamentHistoryMenu.setBackground(SystemColor.menu);
-		txtTournamentHistoryMenu.setBounds(460, 46, 230, 35);
-		tournamentHistoryMenu.add(txtTournamentHistoryMenu);
-		
-		JButton btnNewButton_4 = new JButton("Exit");
-		btnNewButton_4.setFont(new Font("Tahoma", Font.BOLD, 17));
+		JButton btnNewButton_4 = new JButton("Back");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cl_base.show(frame.getContentPane(),"userMenu");
+			}
+		});
+		btnNewButton_4.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 17));
 		btnNewButton_4.setBounds(39, 632, 160, 56);
 		tournamentHistoryMenu.add(btnNewButton_4);
 		
@@ -2098,25 +2213,6 @@ public class Menu {
 				btnPlayerSearch.doClick();
 			}
 		});
-		textField = new JTextField();
-		textField.setText("Finished Tournaments");
-		textField.setHorizontalAlignment(SwingConstants.CENTER);
-		textField.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textField.setColumns(10);
-		textField.setBorder(null);
-		textField.setBackground(SystemColor.menu);
-		textField.setBounds(948, 92, 230, 35);
-		tournamentHistoryMenu.add(textField);
-		
-		textField_2 = new JTextField();
-		textField_2.setText("Scheduled Tournaments");
-		textField_2.setHorizontalAlignment(SwingConstants.CENTER);
-		textField_2.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textField_2.setColumns(10);
-		textField_2.setBorder(null);
-		textField_2.setBackground(SystemColor.menu);
-		textField_2.setBounds(80, 92, 230, 35);
-		tournamentHistoryMenu.add(textField_2);
 		
 		popup.setSize(720, 480);
 		popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -2131,15 +2227,15 @@ public class Menu {
 		JList teamsInTournamentList = new JList(DLM_teamsInTournament);
 		teamsInTournamentScroll.setViewportView(teamsInTournamentList);
 		
-		JButton btnGoToTournamentDetails = new JButton("Go to Selected Tournament Details");
-		btnGoToTournamentDetails.setFont(new Font("Tahoma", Font.BOLD, 17));
-		btnGoToTournamentDetails.setBounds(1026, 458, 152, 45);
+		JButton btnGoToTournamentDetails = new JButton("Go to Tournament Details");
+		btnGoToTournamentDetails.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 17));
+		btnGoToTournamentDetails.setBounds(947, 458, 231, 45);
 		btnGoToTournamentDetails.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				popup.setVisible(true);
 				popup.getContentPane().add(tournamentDetails);
 				List<Team> teamsList = new ArrayList<>();
-				teamsList.clear();
+				//teamsList.clear();
 				DLM_teamsInTournament.clear();
 				if(!(finishedTournaments.getSelectedValue() == null)&&(scheduledTournaments.getSelectedValue() == null)&&(onGoingTournaments.getSelectedValue() == null)) {
 					String tournamentName = (String) finishedTournaments.getSelectedValue();
@@ -2163,6 +2259,39 @@ public class Menu {
 			
 		});
 		tournamentHistoryMenu.add(btnGoToTournamentDetails);
+		
+		JLabel lblNewLabel_9 = new JLabel("Scheduled Tournaments");
+		lblNewLabel_9.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_9.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 14));
+		lblNewLabel_9.setForeground(Color.WHITE);
+		lblNewLabel_9.setBounds(80, 92, 230, 35);
+		tournamentHistoryMenu.add(lblNewLabel_9);
+		
+		JLabel lblNewLabel_9_1 = new JLabel("Ongoing Tournaments");
+		lblNewLabel_9_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_9_1.setForeground(Color.WHITE);
+		lblNewLabel_9_1.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 14));
+		lblNewLabel_9_1.setBounds(515, 92, 230, 35);
+		tournamentHistoryMenu.add(lblNewLabel_9_1);
+		
+		JLabel lblNewLabel_9_2 = new JLabel("Finished Tournaments");
+		lblNewLabel_9_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_9_2.setForeground(Color.WHITE);
+		lblNewLabel_9_2.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 14));
+		lblNewLabel_9_2.setBounds(948, 92, 230, 35);
+		tournamentHistoryMenu.add(lblNewLabel_9_2);
+		
+		JLabel lblNewLabel_9_3 = new JLabel("Tournament History Menu");
+		lblNewLabel_9_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_9_3.setForeground(Color.WHITE);
+		lblNewLabel_9_3.setFont(new Font("Franklin Gothic Demi", Font.BOLD, 14));
+		lblNewLabel_9_3.setBounds(515, 46, 230, 35);
+		tournamentHistoryMenu.add(lblNewLabel_9_3);
+		
+		JLabel lblNewLabel_6_4_5 = new JLabel("");
+		lblNewLabel_6_4_5.setIcon(new ImageIcon("BackGround Custom.png"));
+		lblNewLabel_6_4_5.setBounds(0, 34, 1904, 1007);
+		tournamentHistoryMenu.add(lblNewLabel_6_4_5);
 		
 		btnShowTeamStats.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

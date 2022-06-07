@@ -6,17 +6,19 @@ import javax.swing.JPanel;
 import ModelLayer.Match;
 
 import javax.swing.JLabel;
-import java.awt.Font;
+import java.awt.*;
 import java.util.List;
 
 public class BracketGeneration {
-
+	static JFrame bracket = new JFrame();
+	
 	public static void main(String[] args) {
 		startBracketCreation();
+		Image icon = Toolkit.getDefaultToolkit().getImage("logo_icon.png");    
+		bracket.setIconImage(icon); 
 	}
 	
 	public static void startBracketCreation() {
-		JFrame bracket = new JFrame();
 		
 		bracket = new JFrame("Bracket for Tournament");
 		bracket.setSize(1080, 1080);
