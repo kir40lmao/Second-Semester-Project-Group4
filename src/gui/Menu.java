@@ -1,12 +1,8 @@
 package gui;
 
-import java.awt.EventQueue;
-
 import java.awt.*;
 import javax.swing.JFrame;
-import java.awt.CardLayout;
 import javax.swing.JPanel;
-import java.awt.Color;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.SwingConstants;
@@ -25,8 +21,6 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import java.awt.SystemColor;
-import java.awt.Font;
 import javax.swing.JList;
 import javax.swing.AbstractButton;
 import javax.swing.AbstractListModel;
@@ -72,6 +66,8 @@ public class Menu {
 	private JTextField dateBar;
 	private JTextField venueField;
 	private JTextField statusField;
+	private static int width;
+	
 
 	/**
 	 * Launch the application.
@@ -80,6 +76,12 @@ public class Menu {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					frame = new JFrame();
+					frame.setVisible(true);
+					frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+					int framewidth = frame.getWidth();
+					setWidth(framewidth);
+					frame.setVisible(false);
 					Menu window = new Menu();
 					window.frame.setVisible(true);
 					window.frame.setTitle("XtremeSports app");
@@ -117,7 +119,8 @@ public class Menu {
 	@SuppressWarnings({ "unchecked", "serial", "rawtypes" })
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1920, 1080);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		//frame.setUndecorated(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		cl_base = new CardLayout(0, 0);
 		frame.getContentPane().setLayout(cl_base);
@@ -131,10 +134,9 @@ public class Menu {
 		} else {
 			cl_base.show(frame.getContentPane(), "userMenu");
 		}
-
 		JMenuBar menuBar_1 = new JMenuBar();
-		menuBar_1.setBounds(0, 0, 1281, 35);
 		menuBar_1.setBackground(Color.LIGHT_GRAY);
+		menuBar_1.setBounds(0, 0, getWidth(), 35);
 		userMenu.add(menuBar_1);
 
 		JMenuItem mntmNewMenuItem_10 = new JMenuItem("Check Forum");
@@ -143,7 +145,7 @@ public class Menu {
 		mntmNewMenuItem_10.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ProcessBuilder builder = new ProcessBuilder(
-						"D:\\Desktop\\Second Semester Project\\Business\\site templates\\DarkMode\\run.bat");
+						"run.bat");
 				try {
 					Process process = builder.start();
 				} catch (IOException e1) {
@@ -249,9 +251,9 @@ public class Menu {
 		lblNewLabel_2_1.setBounds(747, 177, 249, 28);
 		userMenu.add(lblNewLabel_2_1);
 
-		JLabel lblNewLabel_6 = new JLabel("");
+		JLabel lblNewLabel_6 = new JLabel();
 		lblNewLabel_6.setIcon(new ImageIcon("BackGround Custom.png"));
-		lblNewLabel_6.setBounds(0, 34, 1904, 1007);
+		lblNewLabel_6.setBounds(0, 34, getWidth(), 1007);
 		userMenu.add(lblNewLabel_6);
 
 		JPanel managerMenu = new JPanel();
@@ -261,7 +263,7 @@ public class Menu {
 
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBackground(Color.LIGHT_GRAY);
-		menuBar.setBounds(0, 0, 1281, 35);
+		menuBar.setBounds(0, 0, getWidth(), 35);
 		managerMenu.add(menuBar);
 
 		JMenu mnNewMenu = new JMenu("Team Management");
@@ -413,9 +415,9 @@ public class Menu {
 		lblNewLabel_3.setBounds(419, 86, 343, 52);
 		managerMenu.add(lblNewLabel_3);
 
-		JLabel lblNewLabel_6_1 = new JLabel("");
+		JLabel lblNewLabel_6_1 = new JLabel();
 		lblNewLabel_6_1.setIcon(new ImageIcon("BackGround Custom.png"));
-		lblNewLabel_6_1.setBounds(0, 34, 1904, 1007);
+		lblNewLabel_6_1.setBounds(0, 34, getWidth(), 1007);
 		managerMenu.add(lblNewLabel_6_1);
 
 		JPanel teamCreationMenu = new JPanel();
@@ -424,7 +426,7 @@ public class Menu {
 
 		JMenuBar menuBar1 = new JMenuBar();
 		menuBar1.setBackground(Color.LIGHT_GRAY);
-		menuBar1.setBounds(0, 0, 1281, 35);
+		menuBar1.setBounds(0, 0, getWidth(), 35);
 		teamCreationMenu.add(menuBar1);
 
 		JMenu mnNewMenu1 = new JMenu("Team Management");
@@ -570,12 +572,12 @@ public class Menu {
 
 		JLabel lblNewLabel_6_4 = new JLabel("");
 		lblNewLabel_6_4.setIcon(new ImageIcon("BackGround Custom.png"));
-		lblNewLabel_6_4.setBounds(0, 34, 1904, 1007);
+		lblNewLabel_6_4.setBounds(0, 34, getWidth(), 1007);
 		teamCreationMenu.add(lblNewLabel_6_4);
 
 		JMenuBar menuBar11 = new JMenuBar();
 		menuBar11.setBackground(Color.LIGHT_GRAY);
-		menuBar11.setBounds(0, 0, 1281, 35);
+		menuBar11.setBounds(0, 0, getWidth(), 35);
 		teamManagementMenu.add(menuBar11);
 
 		JMenu mnNewMenu11 = new JMenu("Team Management");
@@ -767,7 +769,7 @@ public class Menu {
 
 		JLabel lblNewLabel_6_2 = new JLabel("");
 		lblNewLabel_6_2.setIcon(new ImageIcon("BackGround Custom.png"));
-		lblNewLabel_6_2.setBounds(0, 34, 1904, 1007);
+		lblNewLabel_6_2.setBounds(0, 34, getWidth(), 1007);
 		teamManagementMenu.add(lblNewLabel_6_2);
 
 		JPanel playerCreationMenu = new JPanel();
@@ -777,7 +779,7 @@ public class Menu {
 
 		JMenuBar menuBar111 = new JMenuBar();
 		menuBar111.setBackground(Color.LIGHT_GRAY);
-		menuBar111.setBounds(0, 0, 1281, 35);
+		menuBar111.setBounds(0, 0, getWidth(), 35);
 		playerCreationMenu.add(menuBar111);
 
 		JMenu mnNewMenu111 = new JMenu("Team Management");
@@ -924,12 +926,12 @@ public class Menu {
 
 		JLabel lblNewLabel_6_4_1 = new JLabel("");
 		lblNewLabel_6_4_1.setIcon(new ImageIcon("BackGround Custom.png"));
-		lblNewLabel_6_4_1.setBounds(0, 34, 1904, 1007);
+		lblNewLabel_6_4_1.setBounds(0, 34, getWidth(), 1007);
 		playerCreationMenu.add(lblNewLabel_6_4_1);
 
 		JMenuBar menuBar1111 = new JMenuBar();
 		menuBar1111.setBackground(Color.LIGHT_GRAY);
-		menuBar1111.setBounds(0, 0, 1281, 35);
+		menuBar1111.setBounds(0, 0, getWidth(), 35);
 		playerManagementMenu.add(menuBar1111);
 
 		JMenu mnNewMenu1111 = new JMenu("Team Management");
@@ -1141,7 +1143,7 @@ public class Menu {
 
 		JLabel lblNewLabel_6_3 = new JLabel("");
 		lblNewLabel_6_3.setIcon(new ImageIcon("BackGround Custom.png"));
-		lblNewLabel_6_3.setBounds(0, 34, 1904, 1007);
+		lblNewLabel_6_3.setBounds(0, 34, getWidth(), 1007);
 		playerManagementMenu.add(lblNewLabel_6_3);
 
 		JPanel tournamentCreationMenu = new JPanel();
@@ -1150,7 +1152,7 @@ public class Menu {
 
 		JMenuBar menuBar11111 = new JMenuBar();
 		menuBar11111.setBackground(Color.LIGHT_GRAY);
-		menuBar11111.setBounds(0, 0, 1281, 35);
+		menuBar11111.setBounds(0, 0, getWidth(), 35);
 		tournamentCreationMenu.add(menuBar11111);
 
 		JMenu mnNewMenu11111 = new JMenu("Team Management");
@@ -1489,7 +1491,7 @@ public class Menu {
 
 		JLabel lblNewLabel_6_4_2 = new JLabel("");
 		lblNewLabel_6_4_2.setIcon(new ImageIcon("BackGround Custom.png"));
-		lblNewLabel_6_4_2.setBounds(0, 34, 1904, 1007);
+		lblNewLabel_6_4_2.setBounds(0, 34, getWidth(), 1007);
 		tournamentCreationMenu.add(lblNewLabel_6_4_2);
 
 		JPanel tournamentManagementMenu = new JPanel();
@@ -1498,7 +1500,7 @@ public class Menu {
 
 		JMenuBar menuBar111111 = new JMenuBar();
 		menuBar111111.setBackground(Color.LIGHT_GRAY);
-		menuBar111111.setBounds(0, 0, 1281, 35);
+		menuBar111111.setBounds(0, 0, getWidth(), 35);
 		tournamentManagementMenu.add(menuBar111111);
 
 		JMenu mnNewMenu111111 = new JMenu("Team Management");
@@ -1900,7 +1902,7 @@ public class Menu {
 
 		JLabel BackGround = new JLabel("");
 		BackGround.setIcon(new ImageIcon("BackGround Custom.png"));
-		BackGround.setBounds(0, 34, 1904, 1007);
+		BackGround.setBounds(0, 34, getWidth(), 1007);
 		tournamentManagementMenu.add(BackGround);
 		btnModifyTournamentDetails.setVisible(false);
 
@@ -2022,7 +2024,7 @@ public class Menu {
 
 		JLabel lblNewLabel_6_4_3 = new JLabel("");
 		lblNewLabel_6_4_3.setIcon(new ImageIcon("BackGround Custom.png"));
-		lblNewLabel_6_4_3.setBounds(0, 34, 1904, 1007);
+		lblNewLabel_6_4_3.setBounds(0, 34, getWidth(), 1007);
 		teamSearchMenu.add(lblNewLabel_6_4_3);
 
 		JPanel playerSearchMenu = new JPanel();
@@ -2126,7 +2128,7 @@ public class Menu {
 
 		JLabel lblNewLabel_6_4_4 = new JLabel("");
 		lblNewLabel_6_4_4.setIcon(new ImageIcon("BackGround Custom.png"));
-		lblNewLabel_6_4_4.setBounds(0, 34, 1904, 1007);
+		lblNewLabel_6_4_4.setBounds(0, 34, getWidth(), 1007);
 		playerSearchMenu.add(lblNewLabel_6_4_4);
 
 		JPanel tournamentHistoryMenu = new JPanel();
@@ -2276,7 +2278,7 @@ public class Menu {
 
 		JLabel lblNewLabel_6_4_5 = new JLabel("");
 		lblNewLabel_6_4_5.setIcon(new ImageIcon("BackGround Custom.png"));
-		lblNewLabel_6_4_5.setBounds(0, 34, 1904, 1007);
+		lblNewLabel_6_4_5.setBounds(0, 34, getWidth(), 1007);
 		tournamentHistoryMenu.add(lblNewLabel_6_4_5);
 
 		btnShowTeamStats.addActionListener(new ActionListener() {
@@ -2286,5 +2288,13 @@ public class Menu {
 				btnTeamSearch.doClick();
 			}
 		});
+	}
+	
+	public static void setWidth(int size) {
+		width = size;
+	}
+	
+	public int getWidth() {
+		return width;
 	}
 }
