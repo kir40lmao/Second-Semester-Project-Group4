@@ -1,0 +1,13 @@
+.navtext:hover{
+color: black;
+}
+
+#header-button:hover {
+    background: rgb(189, 113, 0);
+    transition-duration: 0.5s;
+}
+
+/*.navs:hover{
+    visibility: hidden;
+
+}*/

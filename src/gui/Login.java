@@ -51,7 +51,7 @@ public class Login extends JFrame {
 		
 		JLabel logo_label = new JLabel("");
 		logo_label.setHorizontalAlignment(SwingConstants.CENTER);
-		logo_label.setIcon(new ImageIcon("C:\\Users\\Hidden\\eclipse-workspace\\EsportsManagment\\res\\es_logo2.png"));
+		logo_label.setIcon(new ImageIcon("logo_icon.png"));
 		logo_label.setBounds(50, 24, 287, 163);
 		contentPane.add(logo_label);
 		
@@ -102,7 +102,6 @@ public class Login extends JFrame {
 		lblNewLabel_1.setBackground(Color.GRAY);
 		lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\Hidden\\eclipse-workspace\\Orders\\src\\res\\1.jpg"));
 		lblNewLabel_1.setBounds(0, 0, 484, 411);
 		contentPane.add(lblNewLabel_1);
 	}
