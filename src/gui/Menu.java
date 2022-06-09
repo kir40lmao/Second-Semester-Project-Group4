@@ -67,7 +67,6 @@ public class Menu {
 	private JTextField venueField;
 	private JTextField statusField;
 	private static int width;
-	
 
 	/**
 	 * Launch the application.
@@ -78,7 +77,7 @@ public class Menu {
 				try {
 					frame = new JFrame();
 					frame.setVisible(true);
-					frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+					frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 					int framewidth = frame.getWidth();
 					setWidth(framewidth);
 					frame.setVisible(false);
@@ -119,8 +118,8 @@ public class Menu {
 	@SuppressWarnings({ "unchecked", "serial", "rawtypes" })
 	private void initialize() {
 		frame = new JFrame();
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		//frame.setUndecorated(true);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		// frame.setUndecorated(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		cl_base = new CardLayout(0, 0);
 		frame.getContentPane().setLayout(cl_base);
@@ -144,8 +143,7 @@ public class Menu {
 		mntmNewMenuItem_10.setHorizontalAlignment(SwingConstants.CENTER);
 		mntmNewMenuItem_10.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ProcessBuilder builder = new ProcessBuilder(
-						"run.bat");
+				ProcessBuilder builder = new ProcessBuilder("run.bat");
 				try {
 					Process process = builder.start();
 				} catch (IOException e1) {
@@ -2289,11 +2287,11 @@ public class Menu {
 			}
 		});
 	}
-	
+
 	public static void setWidth(int size) {
 		width = size;
 	}
-	
+
 	public int getWidth() {
 		return width;
 	}
