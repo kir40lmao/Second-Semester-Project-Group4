@@ -67,6 +67,7 @@ public class Menu {
 	private JTextField venueField;
 	private JTextField statusField;
 	private static int width;
+	private static int height;
 
 	/**
 	 * Launch the application.
@@ -79,7 +80,9 @@ public class Menu {
 					frame.setVisible(true);
 					frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 					int framewidth = frame.getWidth();
+					int frameheight = frame.getHeight();
 					setWidth(framewidth);
+					setHeight(frameheight);
 					frame.setVisible(false);
 					Menu window = new Menu();
 					window.frame.setVisible(true);
@@ -119,7 +122,7 @@ public class Menu {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		//frame.setUndecorated(true);
+		frame.setUndecorated(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		cl_base = new CardLayout(0, 0);
 		frame.getContentPane().setLayout(cl_base);
@@ -251,7 +254,7 @@ public class Menu {
 
 		JLabel userMenuBG = new JLabel();
 		userMenuBG.setIcon(new ImageIcon("BackGround Custom.png"));
-		userMenuBG.setBounds(0, 34, getWidth(), 1007);
+		userMenuBG.setBounds(0, 34, getWidth(), getHeight());
 		userMenu.add(userMenuBG);
 
 		JPanel managerMenu = new JPanel();
@@ -415,7 +418,7 @@ public class Menu {
 
 		JLabel manMenuBG = new JLabel();
 		manMenuBG.setIcon(new ImageIcon("BackGround Custom.png"));
-		manMenuBG.setBounds(0, 34, getWidth(), 1007);
+		manMenuBG.setBounds(0, 34, getWidth(), getHeight());
 		managerMenu.add(manMenuBG);
 
 		JPanel teamCreationMenu = new JPanel();
@@ -570,7 +573,7 @@ public class Menu {
 
 		JLabel teamCreationMenuBG = new JLabel("");
 		teamCreationMenuBG.setIcon(new ImageIcon("BackGround Custom.png"));
-		teamCreationMenuBG.setBounds(0, 34, getWidth(), 1007);
+		teamCreationMenuBG.setBounds(0, 34, getWidth(), getHeight());
 		teamCreationMenu.add(teamCreationMenuBG);
 
 		JMenuBar menuBar11 = new JMenuBar();
@@ -767,7 +770,7 @@ public class Menu {
 
 		JLabel teamManagementMenuBG = new JLabel("");
 		teamManagementMenuBG.setIcon(new ImageIcon("BackGround Custom.png"));
-		teamManagementMenuBG.setBounds(0, 34, getWidth(), 1007);
+		teamManagementMenuBG.setBounds(0, 34, getWidth(), getHeight());
 		teamManagementMenu.add(teamManagementMenuBG);
 
 		JPanel playerCreationMenu = new JPanel();
@@ -924,7 +927,7 @@ public class Menu {
 
 		JLabel playerCreationMenuBG = new JLabel("");
 		playerCreationMenuBG.setIcon(new ImageIcon("BackGround Custom.png"));
-		playerCreationMenuBG.setBounds(0, 34, getWidth(), 1007);
+		playerCreationMenuBG.setBounds(0, 34, getWidth(), getHeight());
 		playerCreationMenu.add(playerCreationMenuBG);
 
 		JMenuBar menuBar1111 = new JMenuBar();
@@ -1141,7 +1144,7 @@ public class Menu {
 
 		JLabel playerManagementMenuBG = new JLabel("");
 		playerManagementMenuBG.setIcon(new ImageIcon("BackGround Custom.png"));
-		playerManagementMenuBG.setBounds(0, 34, getWidth(), 1007);
+		playerManagementMenuBG.setBounds(0, 34, getWidth(), getHeight());
 		playerManagementMenu.add(playerManagementMenuBG);
 
 		JPanel tournamentCreationMenu = new JPanel();
@@ -1489,7 +1492,7 @@ public class Menu {
 
 		JLabel tournamentCreationMenuBG = new JLabel("");
 		tournamentCreationMenuBG.setIcon(new ImageIcon("BackGround Custom.png"));
-		tournamentCreationMenuBG.setBounds(0, 34, getWidth(), 1007);
+		tournamentCreationMenuBG.setBounds(0, 34, getWidth(), getHeight());
 		tournamentCreationMenu.add(tournamentCreationMenuBG);
 
 		JPanel tournamentManagementMenu = new JPanel();
@@ -1900,7 +1903,7 @@ public class Menu {
 
 		JLabel BackGround = new JLabel("");
 		BackGround.setIcon(new ImageIcon("BackGround Custom.png"));
-		BackGround.setBounds(0, 34, getWidth(), 1007);
+		BackGround.setBounds(0, 34, getWidth(), getHeight());
 		tournamentManagementMenu.add(BackGround);
 		btnModifyTournamentDetails.setVisible(false);
 
@@ -2022,7 +2025,7 @@ public class Menu {
 
 		JLabel teamSearchMenuBG = new JLabel("");
 		teamSearchMenuBG.setIcon(new ImageIcon("BackGround Custom.png"));
-		teamSearchMenuBG.setBounds(0, 34, getWidth(), 1007);
+		teamSearchMenuBG.setBounds(0, 34, getWidth(), getHeight());
 		teamSearchMenu.add(teamSearchMenuBG);
 
 		JPanel playerSearchMenu = new JPanel();
@@ -2126,7 +2129,7 @@ public class Menu {
 
 		JLabel playerSearchMenuBG = new JLabel("");
 		playerSearchMenuBG.setIcon(new ImageIcon("BackGround Custom.png"));
-		playerSearchMenuBG.setBounds(0, 34, getWidth(), 1007);
+		playerSearchMenuBG.setBounds(0, 34, getWidth(), getHeight());
 		playerSearchMenu.add(playerSearchMenuBG);
 
 		JPanel tournamentHistoryMenu = new JPanel();
@@ -2195,7 +2198,6 @@ public class Menu {
 
 		popup.setSize(720, 480);
 		popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		// popup.setLayout(null); FIX THIS LATER
 		JPanel tournamentDetails = new JPanel();
 
 		JScrollPane teamsInTournamentScroll = new JScrollPane();
@@ -2276,7 +2278,7 @@ public class Menu {
 
 		JLabel tournamentHistoryMenuBG = new JLabel("");
 		tournamentHistoryMenuBG.setIcon(new ImageIcon("BackGround Custom.png"));
-		tournamentHistoryMenuBG.setBounds(0, 34, getWidth(), 1007);
+		tournamentHistoryMenuBG.setBounds(0, 34, getWidth(), getHeight());
 		tournamentHistoryMenu.add(tournamentHistoryMenuBG);
 
 		btnShowTeamStats.addActionListener(new ActionListener() {
@@ -2288,11 +2290,19 @@ public class Menu {
 		});
 	}
 
-	public static void setWidth(int size) {
-		width = size;
+	public static void setWidth(int framewidth) {
+		width = framewidth;
 	}
 
 	public int getWidth() {
 		return width;
+	}
+	
+	public static void setHeight(int frameheight) {
+		height = frameheight;
+	}
+
+	public int getHeight() {
+		return height;
 	}
 }
