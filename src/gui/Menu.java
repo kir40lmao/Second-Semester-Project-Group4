@@ -67,7 +67,7 @@ public class Menu {
 	private JTextField venueField;
 	private JTextField statusField;
 	private static int width;
-	
+	private static int height;
 
 	/**
 	 * Launch the application.
@@ -78,9 +78,11 @@ public class Menu {
 				try {
 					frame = new JFrame();
 					frame.setVisible(true);
-					frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+					frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 					int framewidth = frame.getWidth();
+					int frameheight = frame.getHeight();
 					setWidth(framewidth);
+					setHeight(frameheight);
 					frame.setVisible(false);
 					Menu window = new Menu();
 					window.frame.setVisible(true);
@@ -119,8 +121,8 @@ public class Menu {
 	@SuppressWarnings({ "unchecked", "serial", "rawtypes" })
 	private void initialize() {
 		frame = new JFrame();
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		//frame.setUndecorated(true);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frame.setUndecorated(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		cl_base = new CardLayout(0, 0);
 		frame.getContentPane().setLayout(cl_base);
@@ -144,8 +146,7 @@ public class Menu {
 		mntmNewMenuItem_10.setHorizontalAlignment(SwingConstants.CENTER);
 		mntmNewMenuItem_10.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ProcessBuilder builder = new ProcessBuilder(
-						"run.bat");
+				ProcessBuilder builder = new ProcessBuilder("run.bat");
 				try {
 					Process process = builder.start();
 				} catch (IOException e1) {
@@ -251,10 +252,10 @@ public class Menu {
 		lblNewLabel_2_1.setBounds(747, 177, 249, 28);
 		userMenu.add(lblNewLabel_2_1);
 
-		JLabel lblNewLabel_6 = new JLabel();
-		lblNewLabel_6.setIcon(new ImageIcon("BackGround Custom.png"));
-		lblNewLabel_6.setBounds(0, 34, getWidth(), 1007);
-		userMenu.add(lblNewLabel_6);
+		JLabel userMenuBG = new JLabel();
+		userMenuBG.setIcon(new ImageIcon("BackGround Custom.png"));
+		userMenuBG.setBounds(0, 34, getWidth(), getHeight());
+		userMenu.add(userMenuBG);
 
 		JPanel managerMenu = new JPanel();
 		frame.getContentPane().add(managerMenu, "managerMenu");
@@ -415,10 +416,10 @@ public class Menu {
 		lblNewLabel_3.setBounds(419, 86, 343, 52);
 		managerMenu.add(lblNewLabel_3);
 
-		JLabel lblNewLabel_6_1 = new JLabel();
-		lblNewLabel_6_1.setIcon(new ImageIcon("BackGround Custom.png"));
-		lblNewLabel_6_1.setBounds(0, 34, getWidth(), 1007);
-		managerMenu.add(lblNewLabel_6_1);
+		JLabel manMenuBG = new JLabel();
+		manMenuBG.setIcon(new ImageIcon("BackGround Custom.png"));
+		manMenuBG.setBounds(0, 34, getWidth(), getHeight());
+		managerMenu.add(manMenuBG);
 
 		JPanel teamCreationMenu = new JPanel();
 		teamCreationMenu.setLayout(null);
@@ -570,10 +571,10 @@ public class Menu {
 		btnNewButton_2_1_1.setBounds(365, 171, 151, 41);
 		teamCreationMenu.add(btnNewButton_2_1_1);
 
-		JLabel lblNewLabel_6_4 = new JLabel("");
-		lblNewLabel_6_4.setIcon(new ImageIcon("BackGround Custom.png"));
-		lblNewLabel_6_4.setBounds(0, 34, getWidth(), 1007);
-		teamCreationMenu.add(lblNewLabel_6_4);
+		JLabel teamCreationMenuBG = new JLabel("");
+		teamCreationMenuBG.setIcon(new ImageIcon("BackGround Custom.png"));
+		teamCreationMenuBG.setBounds(0, 34, getWidth(), getHeight());
+		teamCreationMenu.add(teamCreationMenuBG);
 
 		JMenuBar menuBar11 = new JMenuBar();
 		menuBar11.setBackground(Color.LIGHT_GRAY);
@@ -767,10 +768,10 @@ public class Menu {
 		info_label_team_id_1.setBounds(441, 157, 83, 30);
 		teamManagementMenu.add(info_label_team_id_1);
 
-		JLabel lblNewLabel_6_2 = new JLabel("");
-		lblNewLabel_6_2.setIcon(new ImageIcon("BackGround Custom.png"));
-		lblNewLabel_6_2.setBounds(0, 34, getWidth(), 1007);
-		teamManagementMenu.add(lblNewLabel_6_2);
+		JLabel teamManagementMenuBG = new JLabel("");
+		teamManagementMenuBG.setIcon(new ImageIcon("BackGround Custom.png"));
+		teamManagementMenuBG.setBounds(0, 34, getWidth(), getHeight());
+		teamManagementMenu.add(teamManagementMenuBG);
 
 		JPanel playerCreationMenu = new JPanel();
 		playerCreationMenu.setForeground(Color.WHITE);
@@ -924,10 +925,10 @@ public class Menu {
 		btnNewButton_6.setBounds(521, 182, 135, 35);
 		playerCreationMenu.add(btnNewButton_6);
 
-		JLabel lblNewLabel_6_4_1 = new JLabel("");
-		lblNewLabel_6_4_1.setIcon(new ImageIcon("BackGround Custom.png"));
-		lblNewLabel_6_4_1.setBounds(0, 34, getWidth(), 1007);
-		playerCreationMenu.add(lblNewLabel_6_4_1);
+		JLabel playerCreationMenuBG = new JLabel("");
+		playerCreationMenuBG.setIcon(new ImageIcon("BackGround Custom.png"));
+		playerCreationMenuBG.setBounds(0, 34, getWidth(), getHeight());
+		playerCreationMenu.add(playerCreationMenuBG);
 
 		JMenuBar menuBar1111 = new JMenuBar();
 		menuBar1111.setBackground(Color.LIGHT_GRAY);
@@ -1141,10 +1142,10 @@ public class Menu {
 		txt_player_team_ID.setBounds(538, 255, 135, 30);
 		playerManagementMenu.add(txt_player_team_ID);
 
-		JLabel lblNewLabel_6_3 = new JLabel("");
-		lblNewLabel_6_3.setIcon(new ImageIcon("BackGround Custom.png"));
-		lblNewLabel_6_3.setBounds(0, 34, getWidth(), 1007);
-		playerManagementMenu.add(lblNewLabel_6_3);
+		JLabel playerManagementMenuBG = new JLabel("");
+		playerManagementMenuBG.setIcon(new ImageIcon("BackGround Custom.png"));
+		playerManagementMenuBG.setBounds(0, 34, getWidth(), getHeight());
+		playerManagementMenu.add(playerManagementMenuBG);
 
 		JPanel tournamentCreationMenu = new JPanel();
 		tournamentCreationMenu.setLayout(null);
@@ -1489,10 +1490,10 @@ public class Menu {
 		lblNewLabel_1.setBounds(463, 44, 359, 35);
 		tournamentCreationMenu.add(lblNewLabel_1);
 
-		JLabel lblNewLabel_6_4_2 = new JLabel("");
-		lblNewLabel_6_4_2.setIcon(new ImageIcon("BackGround Custom.png"));
-		lblNewLabel_6_4_2.setBounds(0, 34, getWidth(), 1007);
-		tournamentCreationMenu.add(lblNewLabel_6_4_2);
+		JLabel tournamentCreationMenuBG = new JLabel("");
+		tournamentCreationMenuBG.setIcon(new ImageIcon("BackGround Custom.png"));
+		tournamentCreationMenuBG.setBounds(0, 34, getWidth(), getHeight());
+		tournamentCreationMenu.add(tournamentCreationMenuBG);
 
 		JPanel tournamentManagementMenu = new JPanel();
 		tournamentManagementMenu.setLayout(null);
@@ -1902,7 +1903,7 @@ public class Menu {
 
 		JLabel BackGround = new JLabel("");
 		BackGround.setIcon(new ImageIcon("BackGround Custom.png"));
-		BackGround.setBounds(0, 34, getWidth(), 1007);
+		BackGround.setBounds(0, 34, getWidth(), getHeight());
 		tournamentManagementMenu.add(BackGround);
 		btnModifyTournamentDetails.setVisible(false);
 
@@ -2022,10 +2023,10 @@ public class Menu {
 		lblNewLabel_7.setBounds(196, 211, 89, 14);
 		teamSearchMenu.add(lblNewLabel_7);
 
-		JLabel lblNewLabel_6_4_3 = new JLabel("");
-		lblNewLabel_6_4_3.setIcon(new ImageIcon("BackGround Custom.png"));
-		lblNewLabel_6_4_3.setBounds(0, 34, getWidth(), 1007);
-		teamSearchMenu.add(lblNewLabel_6_4_3);
+		JLabel teamSearchMenuBG = new JLabel("");
+		teamSearchMenuBG.setIcon(new ImageIcon("BackGround Custom.png"));
+		teamSearchMenuBG.setBounds(0, 34, getWidth(), getHeight());
+		teamSearchMenu.add(teamSearchMenuBG);
 
 		JPanel playerSearchMenu = new JPanel();
 		playerSearchMenu.setLayout(null);
@@ -2126,10 +2127,10 @@ public class Menu {
 		lblNewLabel_8.setBounds(198, 210, 95, 17);
 		playerSearchMenu.add(lblNewLabel_8);
 
-		JLabel lblNewLabel_6_4_4 = new JLabel("");
-		lblNewLabel_6_4_4.setIcon(new ImageIcon("BackGround Custom.png"));
-		lblNewLabel_6_4_4.setBounds(0, 34, getWidth(), 1007);
-		playerSearchMenu.add(lblNewLabel_6_4_4);
+		JLabel playerSearchMenuBG = new JLabel("");
+		playerSearchMenuBG.setIcon(new ImageIcon("BackGround Custom.png"));
+		playerSearchMenuBG.setBounds(0, 34, getWidth(), getHeight());
+		playerSearchMenu.add(playerSearchMenuBG);
 
 		JPanel tournamentHistoryMenu = new JPanel();
 		tournamentHistoryMenu.setLayout(null);
@@ -2197,7 +2198,6 @@ public class Menu {
 
 		popup.setSize(720, 480);
 		popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		// popup.setLayout(null); FIX THIS LATER
 		JPanel tournamentDetails = new JPanel();
 
 		JScrollPane teamsInTournamentScroll = new JScrollPane();
@@ -2276,10 +2276,10 @@ public class Menu {
 		lblNewLabel_9_3.setBounds(515, 46, 230, 35);
 		tournamentHistoryMenu.add(lblNewLabel_9_3);
 
-		JLabel lblNewLabel_6_4_5 = new JLabel("");
-		lblNewLabel_6_4_5.setIcon(new ImageIcon("BackGround Custom.png"));
-		lblNewLabel_6_4_5.setBounds(0, 34, getWidth(), 1007);
-		tournamentHistoryMenu.add(lblNewLabel_6_4_5);
+		JLabel tournamentHistoryMenuBG = new JLabel("");
+		tournamentHistoryMenuBG.setIcon(new ImageIcon("BackGround Custom.png"));
+		tournamentHistoryMenuBG.setBounds(0, 34, getWidth(), getHeight());
+		tournamentHistoryMenu.add(tournamentHistoryMenuBG);
 
 		btnShowTeamStats.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -2289,12 +2289,20 @@ public class Menu {
 			}
 		});
 	}
-	
-	public static void setWidth(int size) {
-		width = size;
+
+	public static void setWidth(int framewidth) {
+		width = framewidth;
 	}
-	
+
 	public int getWidth() {
 		return width;
+	}
+	
+	public static void setHeight(int frameheight) {
+		height = frameheight;
+	}
+
+	public int getHeight() {
+		return height;
 	}
 }
