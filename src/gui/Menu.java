@@ -68,6 +68,7 @@ public class Menu {
 	private JTextField statusField;
 	private static int width;
 	private static int height;
+	private static Menu single_Instance = null;
 
 	/**
 	 * Launch the application.
@@ -84,7 +85,7 @@ public class Menu {
 					setWidth(framewidth);
 					setHeight(frameheight);
 					frame.setVisible(false);
-					Menu window = new Menu();
+					Menu window = getInstance();
 					window.frame.setVisible(true);
 					window.frame.setTitle("XtremeSports app");
 				} catch (Exception e) {
@@ -1273,9 +1274,9 @@ public class Menu {
 		tournamentCreationMenu.add(lblNewLabel);
 
 		tournamentNameField = new JTextField();
-		tournamentNameField.setBounds(40, 152, 135, 20);
-		tournamentCreationMenu.add(tournamentNameField);
-		tournamentNameField.setColumns(10);
+		getTournamentNameField().setBounds(40, 152, 135, 20);
+		tournamentCreationMenu.add(getTournamentNameField());
+		getTournamentNameField().setColumns(10);
 
 		JLabel lblVenue = new JLabel("Venue");
 		lblVenue.setForeground(Color.WHITE);
@@ -1372,8 +1373,7 @@ public class Menu {
 		JButton generateBracket = new JButton("Generate Bracket");
 		generateBracket.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BracketGeneration.startBracketCreation();
-				String tournamentName = tournamentNameField.getText();
+				String tournamentName = getTournamentNameField().getText();
 				int tournamentID = tournamentc.getTournamentID(tournamentName);
 				for (int i = 0; i < addedTeams.size(); i++) {
 					String teamName = addedTeams.get(i);
@@ -1381,6 +1381,7 @@ public class Menu {
 					teamList.add(team);
 				}
 				tournamentc.createMatchUps((ArrayList<Team>) teamList, tournamentID);
+				BracketGeneration.startBracketCreation();
 			}
 		});
 		generateBracket.setFont(new Font("Franklin Gothic Demi", Font.PLAIN, 16));
@@ -1391,7 +1392,7 @@ public class Menu {
 		JButton btnAddTeamsToTournament = new JButton("Add Selected Teams to Tournament");
 		btnAddTeamsToTournament.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String tournamentName = tournamentNameField.getText();
+				String tournamentName = getTournamentNameField().getText();
 				int tournamentID = tournamentc.getTournamentID(tournamentName);
 				String teamName = (String) availiableTeams.getSelectedValue();
 				Team team = teamc.findTeamByName(teamName);
@@ -1417,7 +1418,7 @@ public class Menu {
 		JButton btnRemoveTeamFromTournament = new JButton("Remove Selected Team From Tournament");
 		btnRemoveTeamFromTournament.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String tournamentName = tournamentNameField.getText();
+				String tournamentName = getTournamentNameField().getText();
 				int tournamentID = tournamentc.getTournamentID(tournamentName);
 				String teamName = (String) addedTeamsList.getSelectedValue();
 				Team team = teamc.findTeamByName(teamName);
@@ -1445,7 +1446,7 @@ public class Menu {
 		JButton confirmTournamentCreation = new JButton("Confirm Creation");
 		confirmTournamentCreation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String tournamentName = tournamentNameField.getText();
+				String tournamentName = getTournamentNameField().getText();
 				String Date = tournamentDateField.getText();
 				tournamentc.createTournament(tournamentName, Date);
 				confirmationTextTournamentCreation.setText("Tournament Created Successfully!");
@@ -1471,7 +1472,7 @@ public class Menu {
 		confirmTournamentVenue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String venue = (String) venueList.getSelectedValue();
-				String tournamentName = tournamentNameField.getText();
+				String tournamentName = getTournamentNameField().getText();
 				String Date = tournamentDateField.getText();
 				String status = (String) statusList.getSelectedValue();
 				tournamentc.updateTournament(tournamentName, Date, venue, status, tournamentName);
@@ -2305,4 +2306,14 @@ public class Menu {
 	public int getHeight() {
 		return height;
 	}
+
+	public JTextField getTournamentNameField() {
+		return tournamentNameField;
+	}
+    public static Menu getInstance(){
+        if (single_Instance == null)
+            single_Instance = new Menu();
+ 
+        return single_Instance;
+    }
 }
