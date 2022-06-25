@@ -41,6 +41,7 @@ public class Menu {
 
 	private static CardLayout cl_base;
 	public static JFrame frame;
+	public static JFrame frame1;
 	private JTextField txt_gamer_tag;
 	private JTextField tournamentNameField;
 	private JTextField tournamentDateField;
@@ -77,14 +78,14 @@ public class Menu {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					frame = new JFrame();
-					frame.setVisible(true);
-					frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-					int framewidth = frame.getWidth();
-					int frameheight = frame.getHeight();
+					frame1 = new JFrame();
+					frame1.setVisible(true);
+					frame1.setExtendedState(JFrame.MAXIMIZED_BOTH);
+					int framewidth = frame1.getWidth();
+					int frameheight = frame1.getHeight();
 					setWidth(framewidth);
 					setHeight(frameheight);
-					frame.setVisible(false);
+					frame1.setVisible(false);
 					Menu window = getInstance();
 					window.frame.setVisible(true);
 					window.frame.setTitle("XtremeSports app");
@@ -97,6 +98,7 @@ public class Menu {
 
 	/**
 	 * Create the application.
+	 * @wbp.parser.entryPoint
 	 */
 	public Menu() {
 		initialize();
@@ -2060,6 +2062,7 @@ public class Menu {
 		playerSearchMenu.add(btnNewButton_3);
 
 		JLabel lblKillsDeaths = new JLabel("");
+		lblKillsDeaths.setForeground(Color.WHITE);
 		lblKillsDeaths.setBounds(351, 342, 284, 50);
 		playerSearchMenu.add(lblKillsDeaths);
 		lblKillsDeaths.setVisible(false);
@@ -2072,6 +2075,7 @@ public class Menu {
 		lblStat.setVisible(false);
 
 		JLabel lblPlayerTeam = new JLabel();
+		lblPlayerTeam.setForeground(Color.WHITE);
 		lblPlayerTeam.setBounds(774, 198, 208, 50);
 		playerSearchMenu.add(lblPlayerTeam);
 		lblPlayerTeam.setVisible(false);
