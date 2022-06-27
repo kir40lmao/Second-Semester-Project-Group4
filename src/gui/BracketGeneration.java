@@ -142,7 +142,7 @@ public class BracketGeneration {
 		
 	}
 	
-	public static List<String> getTeamsInTournament(){
+/*	public static List<String> getTeamsInTournament(){
 		String tournamentName = menu.getTournamentName();
 		List<Team> teamsInTournament = teamC.getTeamsInTournament(tournamentName);
 		for (int i = 0; i < teamsInTournament.size(); i++) {
@@ -153,5 +153,5 @@ public class BracketGeneration {
 		}
 		startBracketCreation();
 		return teams;
-	}
+	}*/
 }
