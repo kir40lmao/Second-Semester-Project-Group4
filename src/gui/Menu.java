@@ -1917,8 +1917,72 @@ public class Menu {
 
 		JMenuBar menuBar_1_1 = new JMenuBar();
 		menuBar_1_1.setBackground(Color.LIGHT_GRAY);
-		menuBar_1_1.setBounds(0, 0, 1281, 35);
+		menuBar_1_1.setBounds(0, 0, getWidth(), 35);
 		teamSearchMenu.add(menuBar_1_1);
+		
+		JMenuItem mntmNewMenuItem_101 = new JMenuItem("Check Forum");
+		mntmNewMenuItem_101.setBackground(Color.LIGHT_GRAY);
+		mntmNewMenuItem_101.setHorizontalAlignment(SwingConstants.CENTER);
+		mntmNewMenuItem_101.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ProcessBuilder builder = new ProcessBuilder("run.bat");
+				try {
+					Process process = builder.start();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		menuBar_1_1.add(mntmNewMenuItem_101);
+
+		JMenuItem mntmNewMenuItem_91 = new JMenuItem("Search Team");
+		mntmNewMenuItem_91.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cl_base.show(frame.getContentPane(), "teamSearchMenu");
+			}
+		});
+		mntmNewMenuItem_91.setBackground(Color.LIGHT_GRAY);
+		mntmNewMenuItem_91.setHorizontalAlignment(SwingConstants.CENTER);
+		menuBar_1_1.add(mntmNewMenuItem_91);
+
+		JMenuItem mntmNewMenuItem_81 = new JMenuItem("Search Player");
+		mntmNewMenuItem_81.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cl_base.show(frame.getContentPane(), "playerSearchMenu");
+			}
+		});
+		mntmNewMenuItem_81.setBackground(Color.LIGHT_GRAY);
+		mntmNewMenuItem_81.setHorizontalAlignment(SwingConstants.CENTER);
+		menuBar_1_1.add(mntmNewMenuItem_81);
+
+		JMenuItem mntmNewMenuItem_71 = new JMenuItem("Tournament History");
+		mntmNewMenuItem_71.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cl_base.show(frame.getContentPane(), "tournamentHistoryMenu");
+			}
+		});
+		mntmNewMenuItem_71.setBackground(Color.LIGHT_GRAY);
+		mntmNewMenuItem_71.setHorizontalAlignment(SwingConstants.CENTER);
+		menuBar_1_1.add(mntmNewMenuItem_71);
+
+		JSeparator separator_11 = new JSeparator();
+		separator_11.setBorder(null);
+		separator_11.setBackground(Color.LIGHT_GRAY);
+		menuBar_1_1.add(separator_11);
+
+		JSeparator separator_61 = new JSeparator();
+		separator_61.setBackground(Color.LIGHT_GRAY);
+		menuBar_1_1.add(separator_61);
+
+		JMenuItem mntmNewMenuItem_121 = new JMenuItem("Log In Icon");
+		mntmNewMenuItem_121.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				newLogin();
+			}
+		});
+		mntmNewMenuItem_121.setBackground(Color.LIGHT_GRAY);
+		mntmNewMenuItem_121.setHorizontalAlignment(SwingConstants.TRAILING);
+		menuBar_1_1.add(mntmNewMenuItem_121);
 
 		JButton btnNewButton_1 = new JButton("Back");
 		btnNewButton_1.addActionListener(new ActionListener() {
@@ -2037,8 +2101,72 @@ public class Menu {
 
 		JMenuBar menuBar_1_2 = new JMenuBar();
 		menuBar_1_2.setBackground(Color.LIGHT_GRAY);
-		menuBar_1_2.setBounds(0, 0, 1281, 35);
+		menuBar_1_2.setBounds(0, 0, getWidth(), 35);
 		playerSearchMenu.add(menuBar_1_2);
+		
+		JMenuItem mntmNewMenuItem_1011 = new JMenuItem("Check Forum");
+		mntmNewMenuItem_1011.setBackground(Color.LIGHT_GRAY);
+		mntmNewMenuItem_1011.setHorizontalAlignment(SwingConstants.CENTER);
+		mntmNewMenuItem_1011.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ProcessBuilder builder = new ProcessBuilder("run.bat");
+				try {
+					Process process = builder.start();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		menuBar_1_2.add(mntmNewMenuItem_1011);
+
+		JMenuItem mntmNewMenuItem_911 = new JMenuItem("Search Team");
+		mntmNewMenuItem_911.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cl_base.show(frame.getContentPane(), "teamSearchMenu");
+			}
+		});
+		mntmNewMenuItem_911.setBackground(Color.LIGHT_GRAY);
+		mntmNewMenuItem_911.setHorizontalAlignment(SwingConstants.CENTER);
+		menuBar_1_2.add(mntmNewMenuItem_911);
+
+		JMenuItem mntmNewMenuItem_811 = new JMenuItem("Search Player");
+		mntmNewMenuItem_811.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cl_base.show(frame.getContentPane(), "playerSearchMenu");
+			}
+		});
+		mntmNewMenuItem_811.setBackground(Color.LIGHT_GRAY);
+		mntmNewMenuItem_811.setHorizontalAlignment(SwingConstants.CENTER);
+		menuBar_1_2.add(mntmNewMenuItem_811);
+
+		JMenuItem mntmNewMenuItem_711 = new JMenuItem("Tournament History");
+		mntmNewMenuItem_711.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cl_base.show(frame.getContentPane(), "tournamentHistoryMenu");
+			}
+		});
+		mntmNewMenuItem_711.setBackground(Color.LIGHT_GRAY);
+		mntmNewMenuItem_711.setHorizontalAlignment(SwingConstants.CENTER);
+		menuBar_1_2.add(mntmNewMenuItem_711);
+
+		JSeparator separator_111 = new JSeparator();
+		separator_111.setBorder(null);
+		separator_111.setBackground(Color.LIGHT_GRAY);
+		menuBar_1_2.add(separator_111);
+
+		JSeparator separator_611 = new JSeparator();
+		separator_611.setBackground(Color.LIGHT_GRAY);
+		menuBar_1_2.add(separator_611);
+
+		JMenuItem mntmNewMenuItem_1211 = new JMenuItem("Log In Icon");
+		mntmNewMenuItem_1211.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				newLogin();
+			}
+		});
+		mntmNewMenuItem_1211.setBackground(Color.LIGHT_GRAY);
+		mntmNewMenuItem_1211.setHorizontalAlignment(SwingConstants.TRAILING);
+		menuBar_1_2.add(mntmNewMenuItem_1211);
 
 		JTextField textPlayerNameInput = new JTextField();
 		textPlayerNameInput.setBounds(295, 208, 196, 20);
@@ -2143,8 +2271,72 @@ public class Menu {
 
 		JMenuBar menuBar_1_3 = new JMenuBar();
 		menuBar_1_3.setBackground(Color.LIGHT_GRAY);
-		menuBar_1_3.setBounds(0, 0, 1281, 35);
+		menuBar_1_3.setBounds(0, 0, getWidth(), 35);
 		tournamentHistoryMenu.add(menuBar_1_3);
+		
+		JMenuItem mntmNewMenuItem_10111 = new JMenuItem("Check Forum");
+		mntmNewMenuItem_10111.setBackground(Color.LIGHT_GRAY);
+		mntmNewMenuItem_10111.setHorizontalAlignment(SwingConstants.CENTER);
+		mntmNewMenuItem_10111.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ProcessBuilder builder = new ProcessBuilder("run.bat");
+				try {
+					Process process = builder.start();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		menuBar_1_3.add(mntmNewMenuItem_10111);
+
+		JMenuItem mntmNewMenuItem_9111 = new JMenuItem("Search Team");
+		mntmNewMenuItem_9111.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cl_base.show(frame.getContentPane(), "teamSearchMenu");
+			}
+		});
+		mntmNewMenuItem_9111.setBackground(Color.LIGHT_GRAY);
+		mntmNewMenuItem_9111.setHorizontalAlignment(SwingConstants.CENTER);
+		menuBar_1_3.add(mntmNewMenuItem_9111);
+
+		JMenuItem mntmNewMenuItem_8111 = new JMenuItem("Search Player");
+		mntmNewMenuItem_8111.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cl_base.show(frame.getContentPane(), "playerSearchMenu");
+			}
+		});
+		mntmNewMenuItem_8111.setBackground(Color.LIGHT_GRAY);
+		mntmNewMenuItem_8111.setHorizontalAlignment(SwingConstants.CENTER);
+		menuBar_1_3.add(mntmNewMenuItem_8111);
+
+		JMenuItem mntmNewMenuItem_7111 = new JMenuItem("Tournament History");
+		mntmNewMenuItem_7111.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cl_base.show(frame.getContentPane(), "tournamentHistoryMenu");
+			}
+		});
+		mntmNewMenuItem_7111.setBackground(Color.LIGHT_GRAY);
+		mntmNewMenuItem_7111.setHorizontalAlignment(SwingConstants.CENTER);
+		menuBar_1_3.add(mntmNewMenuItem_7111);
+
+		JSeparator separator_1111 = new JSeparator();
+		separator_1111.setBorder(null);
+		separator_1111.setBackground(Color.LIGHT_GRAY);
+		menuBar_1_3.add(separator_1111);
+
+		JSeparator separator_6111 = new JSeparator();
+		separator_6111.setBackground(Color.LIGHT_GRAY);
+		menuBar_1_3.add(separator_6111);
+
+		JMenuItem mntmNewMenuItem_12111 = new JMenuItem("Log In Icon");
+		mntmNewMenuItem_12111.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				newLogin();
+			}
+		});
+		mntmNewMenuItem_12111.setBackground(Color.LIGHT_GRAY);
+		mntmNewMenuItem_12111.setHorizontalAlignment(SwingConstants.TRAILING);
+		menuBar_1_3.add(mntmNewMenuItem_12111);
 
 		JScrollPane ongoingTournamentsScroll = new JScrollPane();
 		ongoingTournamentsScroll.setBounds(515, 138, 230, 216);
