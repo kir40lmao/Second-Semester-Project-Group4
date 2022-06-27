@@ -107,7 +107,7 @@ public class TeamDAO implements TeamDAOIF {
 		List<Team> eligibleTeams = new ArrayList<>();
 		for (int i = 0; i < allTeams.size(); i++) {
 			if (allTeams.get(i).getPlayers().size() > 4) {
-				Team team = allTeams.get(i);
+				team = allTeams.get(i);
 				eligibleTeams.add(team);
 			}
 		}
