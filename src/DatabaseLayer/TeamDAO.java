@@ -115,7 +115,7 @@ public class TeamDAO implements TeamDAOIF {
 	}
 
 	public List<Team> getAllTeams() {
-		String sql = "SELECT * FROM Teams";
+		String sql = "SELECT * FROM Teams WHERE NOT ([Team Name] = 'NULL')";
 		List<Team> allTeams = HigherOrderFunctionForGetMethods(() -> sql, () -> null);
 		return allTeams;
 	}
