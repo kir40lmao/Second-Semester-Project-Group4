@@ -100,7 +100,7 @@ public class Menu {
 	 * Create the application.
 	 * @wbp.parser.entryPoint
 	 */
-	public Menu() {
+	private Menu() {
 		initialize();
 		Image icon = Toolkit.getDefaultToolkit().getImage("logo_icon.png");
 		frame.setIconImage(icon);
@@ -1276,9 +1276,9 @@ public class Menu {
 		tournamentCreationMenu.add(lblNewLabel);
 
 		tournamentNameField = new JTextField();
-		getTournamentNameField().setBounds(40, 152, 135, 20);
-		tournamentCreationMenu.add(getTournamentNameField());
-		getTournamentNameField().setColumns(10);
+		tournamentNameField.setBounds(40, 152, 135, 20);
+		tournamentCreationMenu.add(tournamentNameField);
+		tournamentNameField.setColumns(10);
 
 		JLabel lblVenue = new JLabel("Venue");
 		lblVenue.setForeground(Color.WHITE);
@@ -1342,6 +1342,7 @@ public class Menu {
 
 		for (int i = 0; i < availiableTeamsList.size(); i++) {
 			DLM_AT.add(i, availiableTeamsList.get(i).getTeamName());
+			
 		}
 
 		JScrollPane addedTeamsScroll = new JScrollPane();
@@ -1375,7 +1376,7 @@ public class Menu {
 		JButton generateBracket = new JButton("Generate Bracket");
 		generateBracket.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String tournamentName = getTournamentNameField().getText();
+				String tournamentName = getTournamentName();
 				int tournamentID = tournamentc.getTournamentID(tournamentName);
 				for (int i = 0; i < addedTeams.size(); i++) {
 					String teamName = addedTeams.get(i);
@@ -1394,7 +1395,7 @@ public class Menu {
 		JButton btnAddTeamsToTournament = new JButton("Add Selected Teams to Tournament");
 		btnAddTeamsToTournament.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String tournamentName = getTournamentNameField().getText();
+				String tournamentName = getTournamentName();
 				int tournamentID = tournamentc.getTournamentID(tournamentName);
 				String teamName = (String) availiableTeams.getSelectedValue();
 				Team team = teamc.findTeamByName(teamName);
@@ -1420,7 +1421,7 @@ public class Menu {
 		JButton btnRemoveTeamFromTournament = new JButton("Remove Selected Team From Tournament");
 		btnRemoveTeamFromTournament.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String tournamentName = getTournamentNameField().getText();
+				String tournamentName = getTournamentName();
 				int tournamentID = tournamentc.getTournamentID(tournamentName);
 				String teamName = (String) addedTeamsList.getSelectedValue();
 				Team team = teamc.findTeamByName(teamName);
@@ -1448,7 +1449,7 @@ public class Menu {
 		JButton confirmTournamentCreation = new JButton("Confirm Creation");
 		confirmTournamentCreation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String tournamentName = getTournamentNameField().getText();
+				String tournamentName = getTournamentName();
 				String Date = tournamentDateField.getText();
 				tournamentc.createTournament(tournamentName, Date);
 				confirmationTextTournamentCreation.setText("Tournament Created Successfully!");
@@ -1474,7 +1475,7 @@ public class Menu {
 		confirmTournamentVenue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String venue = (String) venueList.getSelectedValue();
-				String tournamentName = getTournamentNameField().getText();
+				String tournamentName = getTournamentName();
 				String Date = tournamentDateField.getText();
 				String status = (String) statusList.getSelectedValue();
 				tournamentc.updateTournament(tournamentName, Date, venue, status, tournamentName);
@@ -2503,8 +2504,8 @@ public class Menu {
 		return height;
 	}
 
-	public JTextField getTournamentNameField() {
-		return tournamentNameField;
+	public String getTournamentName() {
+		return tournamentNameField.getText();
 	}
     public static Menu getInstance(){
         if (single_Instance == null)
