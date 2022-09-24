@@ -58,7 +58,7 @@ public class Menu {
 	List<String> addedTeams = new ArrayList<String>();
 	DefaultListModel managementMenuAddedTeams = new DefaultListModel();
 	List<Team> teamList = new ArrayList<>();
-	Login login_window;
+	Login login_window = new Login();
 	private JTextField textField_search_gamer;
 	
 	PlayerController pc = new PlayerController();
@@ -88,6 +88,7 @@ public class Menu {
 					Menu window = new Menu();
 					window.frame.setVisible(true);
 					window.frame.setTitle("XtremeSports app");
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -103,7 +104,10 @@ public class Menu {
 	}
 	
 	public void newLogin() {
+<<<<<<< Updated upstream
 		//setVisible(false);
+=======
+>>>>>>> Stashed changes
 		login_window = new Login();
 		login_window.show_new();
 
@@ -120,6 +124,7 @@ public class Menu {
 	@SuppressWarnings({ "unchecked", "serial", "rawtypes" })
 	private void initialize() {
 		frame = new JFrame();
+<<<<<<< Updated upstream
 		frame.setBounds(100, 100, 1920, 1080);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		cl_base = new CardLayout(0, 0);
@@ -130,11 +135,22 @@ public class Menu {
 		userMenu.setLayout(null);
 		
 		if(Login.logged_in) {
+=======
+		frame.setSize(1920, 1080);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frame.setUndecorated(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		cl_base = new CardLayout(0, 0);
+		frame.getContentPane().setLayout(cl_base);
+
+		if (Login.logged_in) {
+>>>>>>> Stashed changes
 			cl_base.show(frame.getContentPane(), "managerMenu");
 		}
 		else {
 			cl_base.show(frame.getContentPane(), "userMenu");
 		}
+<<<<<<< Updated upstream
 		
 		JMenuBar menuBar_1 = new JMenuBar();
 		menuBar_1.setBounds(0, 0, 1281, 35);
@@ -249,6 +265,9 @@ public class Menu {
 		lblNewLabel_2_1.setBounds(747, 177, 249, 28);
 		userMenu.add(lblNewLabel_2_1);
 		
+=======
+
+>>>>>>> Stashed changes
 		JPanel managerMenu = new JPanel();
 		frame.getContentPane().add(managerMenu, "managerMenu");
 		managerMenu.setLayout(null);
